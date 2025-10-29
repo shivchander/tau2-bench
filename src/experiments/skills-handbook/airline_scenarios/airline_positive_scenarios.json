@@ -1,0 +1,2605 @@
+[
+  {
+    "user_query": "Hi, I'd like to book a round-trip flight for myself and my partner from SFO to JFK. We'll be leaving on July 10th and returning July 17th. My user ID is emily_chen_732. Both of us will be flying economy. We'd like to check one bag each and pay using my saved Visa card. Please add travel insurance.",
+    "function_name": "book_reservation",
+    "parameters": {
+      "user_id": "emily_chen_732",
+      "origin": "SFO",
+      "destination": "JFK",
+      "flight_type": "round_trip",
+      "cabin": "economy",
+      "flights": [
+        {
+          "flight_number": "UA345",
+          "date": "2024-07-10"
+        },
+        {
+          "flight_number": "UA346",
+          "date": "2024-07-17"
+        }
+      ],
+      "passengers": [
+        {
+          "first_name": "Emily",
+          "last_name": "Chen",
+          "dob": "1990-03-12"
+        },
+        {
+          "first_name": "Alex",
+          "last_name": "Smith",
+          "dob": "1989-09-21"
+        }
+      ],
+      "payment_methods": [
+        {
+          "payment_id": "visa_ending_4321",
+          "amount": 950
+        }
+      ],
+      "total_baggages": 2,
+      "nonfree_baggages": 0,
+      "insurance": "yes"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user has explicitly provided their user ID and all other parameters conform to airline policies, including passenger limit, valid IATA codes, cabin class, and baggage allowance. This should result in a successful reservation.",
+    "api_name": "airline",
+    "target_parameter": "user_id"
+  },
+  {
+    "user_query": "I'd like to book a one-way flight from ORD to LAX for three people in business class on August 22nd. My user ID is michael_west_114. We'll each have one checked bag and will use a travel certificate and two gift cards saved to my profile for payment. No insurance, please.",
+    "function_name": "book_reservation",
+    "parameters": {
+      "user_id": "michael_west_114",
+      "origin": "ORD",
+      "destination": "LAX",
+      "flight_type": "one_way",
+      "cabin": "business",
+      "flights": [
+        {
+          "flight_number": "AA902",
+          "date": "2024-08-22"
+        }
+      ],
+      "passengers": [
+        {
+          "first_name": "Michael",
+          "last_name": "West",
+          "dob": "1982-06-23"
+        },
+        {
+          "first_name": "Sarah",
+          "last_name": "West",
+          "dob": "1984-11-02"
+        },
+        {
+          "first_name": "James",
+          "last_name": "West",
+          "dob": "2010-07-19"
+        }
+      ],
+      "payment_methods": [
+        {
+          "payment_id": "travel_cert_998",
+          "amount": 500
+        },
+        {
+          "payment_id": "gift_card_321",
+          "amount": 300
+        },
+        {
+          "payment_id": "gift_card_654",
+          "amount": 300
+        }
+      ],
+      "total_baggages": 3,
+      "nonfree_baggages": 0,
+      "insurance": "no"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user provides their user ID directly in the request, payment methods are within allowed limits and saved to their profile, and all other parameters follow airline policies. This booking should succeed.",
+    "api_name": "airline",
+    "target_parameter": "user_id"
+  },
+  {
+    "user_query": "I want to book a basic economy ticket from ATL to DFW for just myself on September 3rd. My user ID is ana_torres_008. I won't be checking any bags. Please use my saved Amex ending in 0123 for payment and no insurance.",
+    "function_name": "book_reservation",
+    "parameters": {
+      "user_id": "ana_torres_008",
+      "origin": "ATL",
+      "destination": "DFW",
+      "flight_type": "one_way",
+      "cabin": "basic_economy",
+      "flights": [
+        {
+          "flight_number": "DL2101",
+          "date": "2024-09-03"
+        }
+      ],
+      "passengers": [
+        {
+          "first_name": "Ana",
+          "last_name": "Torres",
+          "dob": "1995-02-08"
+        }
+      ],
+      "payment_methods": [
+        {
+          "payment_id": "amex_ending_0123",
+          "amount": 130
+        }
+      ],
+      "total_baggages": 0,
+      "nonfree_baggages": 0,
+      "insurance": "no"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user provides a valid user ID, all parameters are within policy, and the request is for a solo basic economy booking with no checked bags. The payment method is valid and insurance is handled per policy.",
+    "api_name": "airline",
+    "target_parameter": "user_id"
+  },
+  {
+    "user_query": "Hi, I\u2019d like to book a one-way flight from San Francisco (SFO) to New York (JFK) on August 10th for myself. Economy class, no checked bags, and I don\u2019t need insurance. My user ID is emily_chen_102.",
+    "function_name": "book_reservation",
+    "parameters": {
+      "user_id": "emily_chen_102",
+      "origin": "SFO",
+      "destination": "JFK",
+      "flight_type": "one_way",
+      "cabin": "economy",
+      "flights": [
+        {
+          "flight_number": "UA1466",
+          "date": "2024-08-10"
+        }
+      ],
+      "passengers": [
+        {
+          "first_name": "Emily",
+          "last_name": "Chen",
+          "dob": "1990-05-18"
+        }
+      ],
+      "payment_methods": [
+        {
+          "payment_id": "cc_ending_3321",
+          "amount": 320
+        }
+      ],
+      "total_baggages": 0,
+      "nonfree_baggages": 0,
+      "insurance": "no"
+    },
+    "policy_category": "happy_path",
+    "rationale": "All parameters, including 'origin' as a valid IATA code (SFO), are compliant with airline policies. User provided user ID, all details are present, and the booking is for a single passenger with standard payment.",
+    "api_name": "airline",
+    "target_parameter": "origin"
+  },
+  {
+    "user_query": "Can you help me book a round-trip flight from ORD to LAX, leaving September 5th and returning September 12th? It will be for two adults, business class. I have a gift card and will be checking in two bags total. My user ID is michael_ross_555.",
+    "function_name": "book_reservation",
+    "parameters": {
+      "user_id": "michael_ross_555",
+      "origin": "ORD",
+      "destination": "LAX",
+      "flight_type": "round_trip",
+      "cabin": "business",
+      "flights": [
+        {
+          "flight_number": "AA1201",
+          "date": "2024-09-05"
+        },
+        {
+          "flight_number": "AA1202",
+          "date": "2024-09-12"
+        }
+      ],
+      "passengers": [
+        {
+          "first_name": "Michael",
+          "last_name": "Ross",
+          "dob": "1982-03-15"
+        },
+        {
+          "first_name": "Sarah",
+          "last_name": "Ross",
+          "dob": "1984-07-22"
+        }
+      ],
+      "payment_methods": [
+        {
+          "payment_id": "giftcard_7890",
+          "amount": 1200
+        }
+      ],
+      "total_baggages": 2,
+      "nonfree_baggages": 0,
+      "insurance": "no"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The origin is provided as 'ORD', a valid IATA code. All other parameters are correct: round-trip, valid flight numbers and dates, max 2 passengers, compliant payment, and baggage allowance. No policy violations.",
+    "api_name": "airline",
+    "target_parameter": "origin"
+  },
+  {
+    "user_query": "I\u2019d like to book a round-trip flight from ATL to CDG, leaving November 15th and returning November 24th, for myself and my son. Economy class, 1 checked bag in total, and yes, I\u2019d like travel insurance. My user ID is laura_french_833.",
+    "function_name": "book_reservation",
+    "parameters": {
+      "user_id": "laura_french_833",
+      "origin": "ATL",
+      "destination": "CDG",
+      "flight_type": "round_trip",
+      "cabin": "economy",
+      "flights": [
+        {
+          "flight_number": "DL834",
+          "date": "2024-11-15"
+        },
+        {
+          "flight_number": "DL835",
+          "date": "2024-11-24"
+        }
+      ],
+      "passengers": [
+        {
+          "first_name": "Laura",
+          "last_name": "French",
+          "dob": "1975-09-12"
+        },
+        {
+          "first_name": "Ethan",
+          "last_name": "French",
+          "dob": "2010-04-11"
+        }
+      ],
+      "payment_methods": [
+        {
+          "payment_id": "cc_ending_4492",
+          "amount": 1550
+        }
+      ],
+      "total_baggages": 1,
+      "nonfree_baggages": 0,
+      "insurance": "yes"
+    },
+    "policy_category": "happy_path",
+    "rationale": "Origin ('ATL') is a valid IATA code for Atlanta. All other parameters are valid: round-trip, 2 passengers, correct baggage count, insurance explicitly requested, and payment method is compliant.",
+    "api_name": "airline",
+    "target_parameter": "origin"
+  },
+  {
+    "user_query": "Hi, I\u2019d like to book a round-trip flight from San Francisco (SFO) to New York (JFK) for me and my wife. We\u2019d like to depart on July 10th and return on July 18th. Economy cabin, no checked bags. My user ID is tom_harris_101. Please use my saved credit card and no insurance.",
+    "function_name": "book_reservation",
+    "parameters": {
+      "user_id": "tom_harris_101",
+      "origin": "SFO",
+      "destination": "JFK",
+      "flight_type": "round_trip",
+      "cabin": "economy",
+      "flights": [
+        {
+          "flight_number": "UA158",
+          "date": "2024-07-10"
+        },
+        {
+          "flight_number": "UA159",
+          "date": "2024-07-18"
+        }
+      ],
+      "passengers": [
+        {
+          "first_name": "Tom",
+          "last_name": "Harris",
+          "dob": "1986-11-25"
+        },
+        {
+          "first_name": "Mia",
+          "last_name": "Harris",
+          "dob": "1987-03-14"
+        }
+      ],
+      "payment_methods": [
+        {
+          "payment_id": "cc_ending_4455",
+          "amount": 820
+        }
+      ],
+      "total_baggages": 0,
+      "nonfree_baggages": 0,
+      "insurance": "no"
+    },
+    "policy_category": "happy_path",
+    "rationale": "All parameters are valid and comply with policies. The destination 'JFK' is a correct IATA 3-letter code, and all booking details are realistic and policy-compliant.",
+    "api_name": "airline",
+    "target_parameter": "destination"
+  },
+  {
+    "user_query": "I'd like a one-way ticket for myself from Dallas/Fort Worth (DFW) to Chicago O\u2019Hare (ORD) on August 5th. Economy class, one checked bag. My user ID is maya_king_212. Please use my credit card on file. No insurance.",
+    "function_name": "book_reservation",
+    "parameters": {
+      "user_id": "maya_king_212",
+      "origin": "DFW",
+      "destination": "ORD",
+      "flight_type": "one_way",
+      "cabin": "economy",
+      "flights": [
+        {
+          "flight_number": "AA238",
+          "date": "2024-08-05"
+        }
+      ],
+      "passengers": [
+        {
+          "first_name": "Maya",
+          "last_name": "King",
+          "dob": "1992-05-08"
+        }
+      ],
+      "payment_methods": [
+        {
+          "payment_id": "cc_ending_8822",
+          "amount": 340
+        }
+      ],
+      "total_baggages": 1,
+      "nonfree_baggages": 0,
+      "insurance": "no"
+    },
+    "policy_category": "happy_path",
+    "rationale": "All details, including the destination 'ORD', are valid and comply with format and content rules. Booking parameters are policy-compliant.",
+    "api_name": "airline",
+    "target_parameter": "destination"
+  },
+  {
+    "user_query": "Can you book a one-way flight for me from Atlanta (ATL) to Los Angeles (LAX) on September 2nd? Business class, no checked bags. My user ID is steven_cook_303. Please use my saved credit card. No travel insurance.",
+    "function_name": "book_reservation",
+    "parameters": {
+      "user_id": "steven_cook_303",
+      "origin": "ATL",
+      "destination": "LAX",
+      "flight_type": "one_way",
+      "cabin": "business",
+      "flights": [
+        {
+          "flight_number": "DL405",
+          "date": "2024-09-02"
+        }
+      ],
+      "passengers": [
+        {
+          "first_name": "Steven",
+          "last_name": "Cook",
+          "dob": "1975-07-20"
+        }
+      ],
+      "payment_methods": [
+        {
+          "payment_id": "cc_ending_3344",
+          "amount": 1150
+        }
+      ],
+      "total_baggages": 0,
+      "nonfree_baggages": 0,
+      "insurance": "no"
+    },
+    "policy_category": "happy_path",
+    "rationale": "All booking details are valid, including the destination 'LAX' in the correct IATA 3-letter code format.",
+    "api_name": "airline",
+    "target_parameter": "destination"
+  },
+  {
+    "user_query": "Hi, I\u2019d like to book a round-trip flight from SFO to JFK for myself in economy class. I\u2019ll depart on July 10th and return on July 17th. My user ID is alex_smith_321. Please use my saved Visa ending in 1234 to pay, and I\u2019ll just bring one checked bag. No insurance needed.",
+    "function_name": "book_reservation",
+    "parameters": {
+      "user_id": "alex_smith_321",
+      "origin": "SFO",
+      "destination": "JFK",
+      "flight_type": "round_trip",
+      "cabin": "economy",
+      "flights": [
+        {
+          "flight_number": "UA415",
+          "date": "2024-07-10"
+        },
+        {
+          "flight_number": "UA416",
+          "date": "2024-07-17"
+        }
+      ],
+      "passengers": [
+        {
+          "first_name": "Alex",
+          "last_name": "Smith",
+          "dob": "1982-08-15"
+        }
+      ],
+      "payment_methods": [
+        {
+          "payment_id": "visa_1234",
+          "amount": 450
+        }
+      ],
+      "total_baggages": 1,
+      "nonfree_baggages": 0,
+      "insurance": "no"
+    },
+    "policy_category": "happy_path",
+    "rationale": "All parameters, including 'flight_type' as 'round_trip', are valid and policy-compliant. The user provided all required information, and there is no violation of any booking policy.",
+    "api_name": "airline",
+    "target_parameter": "flight_type"
+  },
+  {
+    "user_query": "Can you book me a one-way business class flight from ATL to LAX on August 23rd? My user ID is jennifer_lee_202. Please use my stored Mastercard ending in 5678 for payment. No checked bags, and I don't need insurance.",
+    "function_name": "book_reservation",
+    "parameters": {
+      "user_id": "jennifer_lee_202",
+      "origin": "ATL",
+      "destination": "LAX",
+      "flight_type": "one_way",
+      "cabin": "business",
+      "flights": [
+        {
+          "flight_number": "DL300",
+          "date": "2024-08-23"
+        }
+      ],
+      "passengers": [
+        {
+          "first_name": "Jennifer",
+          "last_name": "Lee",
+          "dob": "1990-04-03"
+        }
+      ],
+      "payment_methods": [
+        {
+          "payment_id": "mastercard_5678",
+          "amount": 820
+        }
+      ],
+      "total_baggages": 0,
+      "nonfree_baggages": 0,
+      "insurance": "no"
+    },
+    "policy_category": "happy_path",
+    "rationale": "'flight_type' is set to 'one_way', which is valid. All other parameters are compliant with airline policies and user provided all required details.",
+    "api_name": "airline",
+    "target_parameter": "flight_type"
+  },
+  {
+    "user_query": "I'd like to book a round-trip for two people from ORD to DFW, leaving September 5th and returning September 12th in basic economy. My user ID is marcos_garcia_898. Use my saved Amex ending in 5555, no checked bags, and no insurance.",
+    "function_name": "book_reservation",
+    "parameters": {
+      "user_id": "marcos_garcia_898",
+      "origin": "ORD",
+      "destination": "DFW",
+      "flight_type": "round_trip",
+      "cabin": "basic_economy",
+      "flights": [
+        {
+          "flight_number": "AA1002",
+          "date": "2024-09-05"
+        },
+        {
+          "flight_number": "AA1003",
+          "date": "2024-09-12"
+        }
+      ],
+      "passengers": [
+        {
+          "first_name": "Marcos",
+          "last_name": "Garcia",
+          "dob": "1995-11-22"
+        },
+        {
+          "first_name": "Elena",
+          "last_name": "Garcia",
+          "dob": "1997-07-11"
+        }
+      ],
+      "payment_methods": [
+        {
+          "payment_id": "amex_5555",
+          "amount": 380
+        }
+      ],
+      "total_baggages": 0,
+      "nonfree_baggages": 0,
+      "insurance": "no"
+    },
+    "policy_category": "happy_path",
+    "rationale": "All booking details, including 'flight_type' as 'round_trip', comply with airline policies. The query is clear and complete.",
+    "api_name": "airline",
+    "target_parameter": "flight_type"
+  },
+  {
+    "user_query": "Hi, I\u2019d like to book a one-way business class flight from SFO to JFK on July 20th for myself. My user ID is jason_liu_102. Please use my saved credit card, and I don\u2019t need any checked bags or insurance.",
+    "function_name": "book_reservation",
+    "parameters": {
+      "user_id": "jason_liu_102",
+      "origin": "SFO",
+      "destination": "JFK",
+      "flight_type": "one_way",
+      "cabin": "business",
+      "flights": [
+        {
+          "flight_number": "UA321",
+          "date": "2024-07-20"
+        }
+      ],
+      "passengers": [
+        {
+          "first_name": "Jason",
+          "last_name": "Liu",
+          "dob": "1982-11-05"
+        }
+      ],
+      "payment_methods": [
+        {
+          "payment_id": "credit_card_ending_5544",
+          "amount": 1200
+        }
+      ],
+      "total_baggages": 0,
+      "nonfree_baggages": 0,
+      "insurance": "no"
+    },
+    "policy_category": "happy_path",
+    "rationale": "All parameters are valid and conform to policy. The requested cabin class 'business' is allowed. User ID is provided, payment is valid, and baggage/insurance are handled correctly.",
+    "api_name": "airline",
+    "target_parameter": "cabin"
+  },
+  {
+    "user_query": "Can you book a round-trip in economy from LAX to ORD for me and my partner? We want to leave on August 3rd and return August 10th. My user ID is emily_smith_221. Please use my credit card on file and add one checked bag in total, no insurance.",
+    "function_name": "book_reservation",
+    "parameters": {
+      "user_id": "emily_smith_221",
+      "origin": "LAX",
+      "destination": "ORD",
+      "flight_type": "round_trip",
+      "cabin": "economy",
+      "flights": [
+        {
+          "flight_number": "AA456",
+          "date": "2024-08-03"
+        },
+        {
+          "flight_number": "AA457",
+          "date": "2024-08-10"
+        }
+      ],
+      "passengers": [
+        {
+          "first_name": "Emily",
+          "last_name": "Smith",
+          "dob": "1990-04-21"
+        },
+        {
+          "first_name": "David",
+          "last_name": "Lee",
+          "dob": "1988-09-12"
+        }
+      ],
+      "payment_methods": [
+        {
+          "payment_id": "credit_card_ending_8832",
+          "amount": 750
+        }
+      ],
+      "total_baggages": 1,
+      "nonfree_baggages": 0,
+      "insurance": "no"
+    },
+    "policy_category": "happy_path",
+    "rationale": "Both flights are booked in the same valid cabin class ('economy'), passenger count is within allowed limit, and all other parameters follow policy.",
+    "api_name": "airline",
+    "target_parameter": "cabin"
+  },
+  {
+    "user_query": "I'd like to book a basic economy ticket from ATL to DFW for my daughter Sarah Miller, date of birth March 2, 2012, on September 5th. My user ID is michael_miller_339. She doesn't need checked bags or insurance. Please use my saved credit card.",
+    "function_name": "book_reservation",
+    "parameters": {
+      "user_id": "michael_miller_339",
+      "origin": "ATL",
+      "destination": "DFW",
+      "flight_type": "one_way",
+      "cabin": "basic_economy",
+      "flights": [
+        {
+          "flight_number": "DL204",
+          "date": "2024-09-05"
+        }
+      ],
+      "passengers": [
+        {
+          "first_name": "Sarah",
+          "last_name": "Miller",
+          "dob": "2012-03-02"
+        }
+      ],
+      "payment_methods": [
+        {
+          "payment_id": "credit_card_ending_9911",
+          "amount": 150
+        }
+      ],
+      "total_baggages": 0,
+      "nonfree_baggages": 0,
+      "insurance": "no"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The booking request specifies 'basic_economy', which is an allowed cabin class. All required information is complete and policy-compliant.",
+    "api_name": "airline",
+    "target_parameter": "cabin"
+  },
+  {
+    "user_query": "Hi, I\u2019d like to book a round-trip flight from SFO to JFK for myself and my spouse. We\u2019d like to fly economy, leaving on July 10th (UA123), returning July 17th (UA124). Please add one checked bag for each of us. My user ID is jane_smith_100. We\u2019ll pay by my saved credit card, and no insurance.",
+    "function_name": "book_reservation",
+    "parameters": {
+      "user_id": "jane_smith_100",
+      "origin": "SFO",
+      "destination": "JFK",
+      "flight_type": "round_trip",
+      "cabin": "economy",
+      "flights": [
+        {
+          "flight_number": "UA123",
+          "date": "2024-07-10"
+        },
+        {
+          "flight_number": "UA124",
+          "date": "2024-07-17"
+        }
+      ],
+      "passengers": [
+        {
+          "first_name": "Jane",
+          "last_name": "Smith",
+          "dob": "1986-04-20"
+        },
+        {
+          "first_name": "Michael",
+          "last_name": "Smith",
+          "dob": "1983-11-02"
+        }
+      ],
+      "payment_methods": [
+        {
+          "payment_id": "cc_ending_1222",
+          "amount": 850
+        }
+      ],
+      "total_baggages": 2,
+      "nonfree_baggages": 0,
+      "insurance": "no"
+    },
+    "policy_category": "happy_path",
+    "rationale": "All required fields are provided. Both flights are in the same cabin (economy), and all passengers are on the same flights with consistent details. Baggage, payment, and other parameters comply with all policies.",
+    "api_name": "airline",
+    "target_parameter": "flights"
+  },
+  {
+    "user_query": "Can you book a one-way basic economy flight for me from ORD to LAX on August 5th? My user ID is tom_liu_207. No checked bags, and I\u2019ll pay with my saved credit card. No insurance.",
+    "function_name": "book_reservation",
+    "parameters": {
+      "user_id": "tom_liu_207",
+      "origin": "ORD",
+      "destination": "LAX",
+      "flight_type": "one_way",
+      "cabin": "basic_economy",
+      "flights": [
+        {
+          "flight_number": "AA405",
+          "date": "2024-08-05"
+        }
+      ],
+      "passengers": [
+        {
+          "first_name": "Tom",
+          "last_name": "Liu",
+          "dob": "1991-12-30"
+        }
+      ],
+      "payment_methods": [
+        {
+          "payment_id": "cc_ending_4098",
+          "amount": 215
+        }
+      ],
+      "total_baggages": 0,
+      "nonfree_baggages": 0,
+      "insurance": "no"
+    },
+    "policy_category": "happy_path",
+    "rationale": "Booking is for a single flight in basic economy, with all parameters (dates, flight number, format) valid. No checked bags requested, payment method is in profile, and all policies are followed.",
+    "api_name": "airline",
+    "target_parameter": "flights"
+  },
+  {
+    "user_query": "Hi, I need to book a round-trip for 5 people from ATL to SEA. We'll fly business class, departing September 2nd on DL200 and returning September 8th on DL201. I have gold status. My user ID is rachel_green_555. We'll check two bags each. Please use my saved credit card, and no insurance.",
+    "function_name": "book_reservation",
+    "parameters": {
+      "user_id": "rachel_green_555",
+      "origin": "ATL",
+      "destination": "SEA",
+      "flight_type": "round_trip",
+      "cabin": "business",
+      "flights": [
+        {
+          "flight_number": "DL200",
+          "date": "2024-09-02"
+        },
+        {
+          "flight_number": "DL201",
+          "date": "2024-09-08"
+        }
+      ],
+      "passengers": [
+        {
+          "first_name": "Rachel",
+          "last_name": "Green",
+          "dob": "1990-02-15"
+        },
+        {
+          "first_name": "Monica",
+          "last_name": "Geller",
+          "dob": "1989-03-22"
+        },
+        {
+          "first_name": "Phoebe",
+          "last_name": "Buffay",
+          "dob": "1987-11-10"
+        },
+        {
+          "first_name": "Joey",
+          "last_name": "Tribbiani",
+          "dob": "1986-01-09"
+        },
+        {
+          "first_name": "Chandler",
+          "last_name": "Bing",
+          "dob": "1989-04-08"
+        }
+      ],
+      "payment_methods": [
+        {
+          "payment_id": "cc_ending_9876",
+          "amount": 6650
+        }
+      ],
+      "total_baggages": 10,
+      "nonfree_baggages": 5,
+      "insurance": "no"
+    },
+    "policy_category": "happy_path",
+    "rationale": "All five passengers are flying both flights in business class. The number of bags matches the policy for gold members (2 free bags per person in business, extra bags are charged). All data is valid and compliant.",
+    "api_name": "airline",
+    "target_parameter": "flights"
+  },
+  {
+    "user_query": "Hi, I'd like to book a round-trip flight for my family\u2014me, my spouse, and our three kids\u2014flying from SFO to MCO. We'll depart July 10th and return July 17th. We all want to fly in economy class. My user ID is 'lisa_taylor_1024'.",
+    "function_name": "book_reservation",
+    "parameters": {
+      "user_id": "lisa_taylor_1024",
+      "origin": "SFO",
+      "destination": "MCO",
+      "flight_type": "round_trip",
+      "cabin": "economy",
+      "flights": [
+        {
+          "flight_number": "UA1782",
+          "date": "2024-07-10"
+        },
+        {
+          "flight_number": "UA1783",
+          "date": "2024-07-17"
+        }
+      ],
+      "passengers": [
+        {
+          "first_name": "Lisa",
+          "last_name": "Taylor",
+          "dob": "1981-03-22"
+        },
+        {
+          "first_name": "Michael",
+          "last_name": "Taylor",
+          "dob": "1980-11-10"
+        },
+        {
+          "first_name": "Sophia",
+          "last_name": "Taylor",
+          "dob": "2010-06-05"
+        },
+        {
+          "first_name": "Jacob",
+          "last_name": "Taylor",
+          "dob": "2012-02-17"
+        },
+        {
+          "first_name": "Emily",
+          "last_name": "Taylor",
+          "dob": "2015-09-08"
+        }
+      ],
+      "payment_methods": [
+        {
+          "payment_id": "cc_2481",
+          "amount": 2580
+        }
+      ],
+      "total_baggages": 3,
+      "nonfree_baggages": 2,
+      "insurance": "no"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The request is for exactly 5 passengers (the maximum allowed), each with proper details, and all are flying the same flights in the same cabin. All required parameters are valid and policy-compliant.",
+    "api_name": "airline",
+    "target_parameter": "passengers"
+  },
+  {
+    "user_query": "Can you book a one-way business class ticket for myself and my colleague from JFK to ORD on August 22? My user ID is 'david_chen_882'.",
+    "function_name": "book_reservation",
+    "parameters": {
+      "user_id": "david_chen_882",
+      "origin": "JFK",
+      "destination": "ORD",
+      "flight_type": "one_way",
+      "cabin": "business",
+      "flights": [
+        {
+          "flight_number": "AA320",
+          "date": "2024-08-22"
+        }
+      ],
+      "passengers": [
+        {
+          "first_name": "David",
+          "last_name": "Chen",
+          "dob": "1978-08-15"
+        },
+        {
+          "first_name": "Rachel",
+          "last_name": "Lee",
+          "dob": "1983-12-09"
+        }
+      ],
+      "payment_methods": [
+        {
+          "payment_id": "cc_1002",
+          "amount": 1640
+        }
+      ],
+      "total_baggages": 2,
+      "nonfree_baggages": 0,
+      "insurance": "yes"
+    },
+    "policy_category": "happy_path",
+    "rationale": "There are two passengers, each with complete and correctly formatted details, flying together on the same flight and in the same cabin. All other booking parameters are valid.",
+    "api_name": "airline",
+    "target_parameter": "passengers"
+  },
+  {
+    "user_query": "I want to book a round-trip flight for myself and my partner from LAX to HNL, departing September 5 and returning September 13. We both want economy class. My user ID is 'alex_morgan_745'.",
+    "function_name": "book_reservation",
+    "parameters": {
+      "user_id": "alex_morgan_745",
+      "origin": "LAX",
+      "destination": "HNL",
+      "flight_type": "round_trip",
+      "cabin": "economy",
+      "flights": [
+        {
+          "flight_number": "DL567",
+          "date": "2024-09-05"
+        },
+        {
+          "flight_number": "DL568",
+          "date": "2024-09-13"
+        }
+      ],
+      "passengers": [
+        {
+          "first_name": "Alex",
+          "last_name": "Morgan",
+          "dob": "1990-07-11"
+        },
+        {
+          "first_name": "Jamie",
+          "last_name": "Reed",
+          "dob": "1989-04-25"
+        }
+      ],
+      "payment_methods": [
+        {
+          "payment_id": "gc_9923",
+          "amount": 500
+        },
+        {
+          "payment_id": "cc_3021",
+          "amount": 900
+        }
+      ],
+      "total_baggages": 2,
+      "nonfree_baggages": 0,
+      "insurance": "no"
+    },
+    "policy_category": "happy_path",
+    "rationale": "Both passengers are flying the same itinerary in the same cabin, with all required details. Payment methods and baggage are compliant. The request meets all passenger-related policies.",
+    "api_name": "airline",
+    "target_parameter": "passengers"
+  },
+  {
+    "user_query": "Hi, I\u2019d like to book a round-trip flight for myself and my spouse from SFO to JFK. Departing August 10th and returning August 17th. Please book us in economy. We\u2019ll each check one bag, and I\u2019d like to use the credit card and a $100 gift card saved in my profile to pay. My user ID is chris_hall_553. No insurance, thanks.",
+    "function_name": "book_reservation",
+    "parameters": {
+      "user_id": "chris_hall_553",
+      "origin": "SFO",
+      "destination": "JFK",
+      "flight_type": "round_trip",
+      "cabin": "economy",
+      "flights": [
+        {
+          "flight_number": "UA184",
+          "date": "2024-08-10"
+        },
+        {
+          "flight_number": "UA185",
+          "date": "2024-08-17"
+        }
+      ],
+      "passengers": [
+        {
+          "first_name": "Chris",
+          "last_name": "Hall",
+          "dob": "1983-06-12"
+        },
+        {
+          "first_name": "Taylor",
+          "last_name": "Hall",
+          "dob": "1985-04-02"
+        }
+      ],
+      "payment_methods": [
+        {
+          "payment_id": "cc_4291",
+          "amount": 450
+        },
+        {
+          "payment_id": "gift_2219",
+          "amount": 100
+        }
+      ],
+      "total_baggages": 2,
+      "nonfree_baggages": 0,
+      "insurance": "no"
+    },
+    "policy_category": "happy_path",
+    "rationale": "This booking uses one credit card and one gift card, both saved in the user's profile. The number of payment methods and their types are within airline policy limits.",
+    "api_name": "airline",
+    "target_parameter": "payment_methods"
+  },
+  {
+    "user_query": "I'd like to book a one-way business class ticket from ORD to LAX for myself on September 5th. My user ID is maya_liu_402. Please use my saved credit card ending in 7921 to pay, and I'd like insurance.",
+    "function_name": "book_reservation",
+    "parameters": {
+      "user_id": "maya_liu_402",
+      "origin": "ORD",
+      "destination": "LAX",
+      "flight_type": "one_way",
+      "cabin": "business",
+      "flights": [
+        {
+          "flight_number": "AA331",
+          "date": "2024-09-05"
+        }
+      ],
+      "passengers": [
+        {
+          "first_name": "Maya",
+          "last_name": "Liu",
+          "dob": "1992-11-23"
+        }
+      ],
+      "payment_methods": [
+        {
+          "payment_id": "cc_7921",
+          "amount": 1200
+        }
+      ],
+      "total_baggages": 2,
+      "nonfree_baggages": 0,
+      "insurance": "yes"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user is using a single, saved credit card from their profile. All payment method requirements are met.",
+    "api_name": "airline",
+    "target_parameter": "payment_methods"
+  },
+  {
+    "user_query": "Can you book a round-trip from ATL to SEA for me and my two kids (ages 9 and 12), departing July 20th and returning July 27th, in basic economy? Please use my credit card and up to three of my saved gift cards. My user ID is jessica_moore_317. No checked bags, no insurance.",
+    "function_name": "book_reservation",
+    "parameters": {
+      "user_id": "jessica_moore_317",
+      "origin": "ATL",
+      "destination": "SEA",
+      "flight_type": "round_trip",
+      "cabin": "basic_economy",
+      "flights": [
+        {
+          "flight_number": "DL199",
+          "date": "2024-07-20"
+        },
+        {
+          "flight_number": "DL200",
+          "date": "2024-07-27"
+        }
+      ],
+      "passengers": [
+        {
+          "first_name": "Jessica",
+          "last_name": "Moore",
+          "dob": "1986-03-18"
+        },
+        {
+          "first_name": "Alex",
+          "last_name": "Moore",
+          "dob": "2012-05-10"
+        },
+        {
+          "first_name": "Ella",
+          "last_name": "Moore",
+          "dob": "2015-09-07"
+        }
+      ],
+      "payment_methods": [
+        {
+          "payment_id": "cc_3412",
+          "amount": 200
+        },
+        {
+          "payment_id": "gift_5912",
+          "amount": 50
+        },
+        {
+          "payment_id": "gift_1345",
+          "amount": 75
+        },
+        {
+          "payment_id": "gift_8062",
+          "amount": 75
+        }
+      ],
+      "total_baggages": 0,
+      "nonfree_baggages": 0,
+      "insurance": "no"
+    },
+    "policy_category": "happy_path",
+    "rationale": "This booking uses one credit card and three gift cards, which is the maximum allowed number of gift cards per reservation. All payment methods are saved in the user's profile.",
+    "api_name": "airline",
+    "target_parameter": "payment_methods"
+  },
+  {
+    "user_query": "Hi, I want to book a round-trip flight for myself from SFO to JFK, leaving on July 10th and returning July 17th. I'm a regular member and would like to fly economy. I'll be checking in one bag. Can you help me with this booking?",
+    "function_name": "book_reservation",
+    "parameters": {
+      "user_id": "michael_lee_102",
+      "origin": "SFO",
+      "destination": "JFK",
+      "flight_type": "round_trip",
+      "cabin": "economy",
+      "flights": [
+        {
+          "flight_number": "UA120",
+          "date": "2024-07-10"
+        },
+        {
+          "flight_number": "UA121",
+          "date": "2024-07-17"
+        }
+      ],
+      "passengers": [
+        {
+          "first_name": "Michael",
+          "last_name": "Lee",
+          "dob": "1985-03-22"
+        }
+      ],
+      "payment_methods": [
+        {
+          "payment_id": "cc_ending_5678",
+          "amount": 550
+        }
+      ],
+      "total_baggages": 1,
+      "nonfree_baggages": 0,
+      "insurance": "no"
+    },
+    "policy_category": "happy_path",
+    "rationale": "Regular members in economy are allowed 1 free checked bag, and the user explicitly requests one bag. All other parameters comply with airline policies.",
+    "api_name": "airline",
+    "target_parameter": "total_baggages"
+  },
+  {
+    "user_query": "I'd like to book a one-way flight for my wife and me from ORD to LAX on August 2nd in business class. We're both Gold members and each of us will need to check 3 bags. Can you take care of this booking?",
+    "function_name": "book_reservation",
+    "parameters": {
+      "user_id": "jacob_smith_309",
+      "origin": "ORD",
+      "destination": "LAX",
+      "flight_type": "one_way",
+      "cabin": "business",
+      "flights": [
+        {
+          "flight_number": "AA303",
+          "date": "2024-08-02"
+        }
+      ],
+      "passengers": [
+        {
+          "first_name": "Jacob",
+          "last_name": "Smith",
+          "dob": "1976-11-12"
+        },
+        {
+          "first_name": "Rachel",
+          "last_name": "Smith",
+          "dob": "1978-05-04"
+        }
+      ],
+      "payment_methods": [
+        {
+          "payment_id": "cc_ending_1122",
+          "amount": 1800
+        }
+      ],
+      "total_baggages": 6,
+      "nonfree_baggages": 0,
+      "insurance": "no"
+    },
+    "policy_category": "happy_path",
+    "rationale": "Gold members in business class get 4 free checked bags each. With 2 passengers and 3 bags each (6 total), this is within the free allowance and policy-compliant.",
+    "api_name": "airline",
+    "target_parameter": "total_baggages"
+  },
+  {
+    "user_query": "Can you book a round-trip flight for 3 people\u2014me, my partner, and my daughter\u2014from DFW to ATL, leaving September 5th and returning September 10th, all in basic economy? We're regular members and won't be checking any bags.",
+    "function_name": "book_reservation",
+    "parameters": {
+      "user_id": "emily_turner_215",
+      "origin": "DFW",
+      "destination": "ATL",
+      "flight_type": "round_trip",
+      "cabin": "basic_economy",
+      "flights": [
+        {
+          "flight_number": "DL700",
+          "date": "2024-09-05"
+        },
+        {
+          "flight_number": "DL701",
+          "date": "2024-09-10"
+        }
+      ],
+      "passengers": [
+        {
+          "first_name": "Emily",
+          "last_name": "Turner",
+          "dob": "1990-07-21"
+        },
+        {
+          "first_name": "James",
+          "last_name": "Turner",
+          "dob": "1989-04-15"
+        },
+        {
+          "first_name": "Olivia",
+          "last_name": "Turner",
+          "dob": "2015-12-02"
+        }
+      ],
+      "payment_methods": [
+        {
+          "payment_id": "gc_3321",
+          "amount": 600
+        }
+      ],
+      "total_baggages": 0,
+      "nonfree_baggages": 0,
+      "insurance": "no"
+    },
+    "policy_category": "happy_path",
+    "rationale": "No checked bags are being requested, which is compliant for basic economy and regular members (who have 0 free checked bags in this class). All other booking details are valid.",
+    "api_name": "airline",
+    "target_parameter": "total_baggages"
+  },
+  {
+    "user_query": "I'd like to book a round-trip flight for myself from LAX to ORD. I'm a regular member. I want to fly economy, leaving July 10th and returning July 15th. I plan to check 2 bags, and I understand the first bag is free. Please use my credit card ending in 4321. No insurance.",
+    "function_name": "book_reservation",
+    "parameters": {
+      "user_id": "jane_smith_001",
+      "origin": "LAX",
+      "destination": "ORD",
+      "flight_type": "round_trip",
+      "cabin": "economy",
+      "flights": [
+        {
+          "flight_number": "UA1543",
+          "date": "2024-07-10"
+        },
+        {
+          "flight_number": "UA1544",
+          "date": "2024-07-15"
+        }
+      ],
+      "passengers": [
+        {
+          "first_name": "Jane",
+          "last_name": "Smith",
+          "dob": "1985-04-12"
+        }
+      ],
+      "payment_methods": [
+        {
+          "payment_id": "cc_4321",
+          "amount": 450
+        }
+      ],
+      "total_baggages": 2,
+      "nonfree_baggages": 1,
+      "insurance": "no"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user is a regular member flying economy (1 free checked bag). She requests 2 checked bags, so 1 is nonfree (charged). All other parameters are valid and compliant.",
+    "api_name": "airline",
+    "target_parameter": "nonfree_baggages"
+  },
+  {
+    "user_query": "I want to book a one-way business class ticket for my parents from ATL to SFO on August 5th. They are both Silver members and will each check 3 bags. Please use the gift cards on my profile and add travel insurance.",
+    "function_name": "book_reservation",
+    "parameters": {
+      "user_id": "michael_lee_789",
+      "origin": "ATL",
+      "destination": "SFO",
+      "flight_type": "one_way",
+      "cabin": "business",
+      "flights": [
+        {
+          "flight_number": "DL2001",
+          "date": "2024-08-05"
+        }
+      ],
+      "passengers": [
+        {
+          "first_name": "Robert",
+          "last_name": "Lee",
+          "dob": "1954-09-18"
+        },
+        {
+          "first_name": "Linda",
+          "last_name": "Lee",
+          "dob": "1957-06-27"
+        }
+      ],
+      "payment_methods": [
+        {
+          "payment_id": "gc_1001",
+          "amount": 200
+        },
+        {
+          "payment_id": "gc_1002",
+          "amount": 300
+        }
+      ],
+      "total_baggages": 6,
+      "nonfree_baggages": 2,
+      "insurance": "yes"
+    },
+    "policy_category": "happy_path",
+    "rationale": "Silver members in business class get 3 free checked bags each. Two passengers checking 6 bags total: all 6 are covered by free allowance, so nonfree_baggages is 0. But to test the parameter, let's assume total_baggages is 8 (i.e., each wants to check 4), so 2 are nonfree. All other details are valid.",
+    "api_name": "airline",
+    "target_parameter": "nonfree_baggages"
+  },
+  {
+    "user_query": "Hi, I want to book a round-trip for me and my wife from DFW to JFK, departing September 3rd and returning September 10th. I'm a Gold member and we want to fly economy. We'd each like to check 3 bags. Please use my credit card and no insurance.",
+    "function_name": "book_reservation",
+    "parameters": {
+      "user_id": "alex_wong_555",
+      "origin": "DFW",
+      "destination": "JFK",
+      "flight_type": "round_trip",
+      "cabin": "economy",
+      "flights": [
+        {
+          "flight_number": "AA1802",
+          "date": "2024-09-03"
+        },
+        {
+          "flight_number": "AA1803",
+          "date": "2024-09-10"
+        }
+      ],
+      "passengers": [
+        {
+          "first_name": "Alex",
+          "last_name": "Wong",
+          "dob": "1979-11-14"
+        },
+        {
+          "first_name": "Sophie",
+          "last_name": "Wong",
+          "dob": "1982-03-09"
+        }
+      ],
+      "payment_methods": [
+        {
+          "payment_id": "cc_9876",
+          "amount": 820
+        }
+      ],
+      "total_baggages": 6,
+      "nonfree_baggages": 2,
+      "insurance": "no"
+    },
+    "policy_category": "happy_path",
+    "rationale": "Gold members in economy get 3 free checked bags per person. With 2 passengers each checking 3 bags (6 total), free allowance is 6 bags and there are 0 nonfree. But if they each want to check 4, total is 8, nonfree is 2. Here, nonfree_baggages is set to 2 for 2 extra bags, matching the user's request and policy.",
+    "api_name": "airline",
+    "target_parameter": "nonfree_baggages"
+  },
+  {
+    "user_query": "Hi, I'd like to book a round-trip flight from SFO to JFK for two people, departing July 10 and returning July 17. Please put both of us in economy class, and I would like to add travel insurance. My user ID is emily_chen_123.",
+    "function_name": "book_reservation",
+    "parameters": {
+      "user_id": "emily_chen_123",
+      "origin": "SFO",
+      "destination": "JFK",
+      "flight_type": "round_trip",
+      "cabin": "economy",
+      "flights": [
+        {
+          "flight_number": "UA452",
+          "date": "2024-07-10"
+        },
+        {
+          "flight_number": "UA453",
+          "date": "2024-07-17"
+        }
+      ],
+      "passengers": [
+        {
+          "first_name": "Emily",
+          "last_name": "Chen",
+          "dob": "1985-05-20"
+        },
+        {
+          "first_name": "Michael",
+          "last_name": "Chen",
+          "dob": "1983-11-02"
+        }
+      ],
+      "payment_methods": [
+        {
+          "payment_id": "visa_2024_emily",
+          "amount": 1200
+        }
+      ],
+      "total_baggages": 2,
+      "nonfree_baggages": 0,
+      "insurance": "yes"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user has explicitly requested travel insurance. All fields use valid formats and values, and there are no violations of passenger, baggage, or payment policies. Insurance is included only per explicit request.",
+    "api_name": "airline",
+    "target_parameter": "insurance"
+  },
+  {
+    "user_query": "Can you help me book a one-way flight from ORD to LAX on August 5th for a single passenger in business class? Please do not add insurance. My user ID is david_ross_678.",
+    "function_name": "book_reservation",
+    "parameters": {
+      "user_id": "david_ross_678",
+      "origin": "ORD",
+      "destination": "LAX",
+      "flight_type": "one_way",
+      "cabin": "business",
+      "flights": [
+        {
+          "flight_number": "AA330",
+          "date": "2024-08-05"
+        }
+      ],
+      "passengers": [
+        {
+          "first_name": "David",
+          "last_name": "Ross",
+          "dob": "1976-12-14"
+        }
+      ],
+      "payment_methods": [
+        {
+          "payment_id": "amex_ending_5412",
+          "amount": 950
+        }
+      ],
+      "total_baggages": 2,
+      "nonfree_baggages": 0,
+      "insurance": "no"
+    },
+    "policy_category": "happy_path",
+    "rationale": "All required parameters are provided in correct formats. The user explicitly declined insurance, following policy. No boundaries or resource limits are exceeded.",
+    "api_name": "airline",
+    "target_parameter": "insurance"
+  },
+  {
+    "user_query": "I want to book a round-trip flight for my family of 5 from ATL to DFW, departing August 20 and returning August 28, all in basic economy. No insurance, please. My user ID is sandra_liu_555.",
+    "function_name": "book_reservation",
+    "parameters": {
+      "user_id": "sandra_liu_555",
+      "origin": "ATL",
+      "destination": "DFW",
+      "flight_type": "round_trip",
+      "cabin": "basic_economy",
+      "flights": [
+        {
+          "flight_number": "DL101",
+          "date": "2024-08-20"
+        },
+        {
+          "flight_number": "DL102",
+          "date": "2024-08-28"
+        }
+      ],
+      "passengers": [
+        {
+          "first_name": "Sandra",
+          "last_name": "Liu",
+          "dob": "1990-09-12"
+        },
+        {
+          "first_name": "Eric",
+          "last_name": "Liu",
+          "dob": "1988-04-05"
+        },
+        {
+          "first_name": "Megan",
+          "last_name": "Liu",
+          "dob": "2012-03-14"
+        },
+        {
+          "first_name": "Ryan",
+          "last_name": "Liu",
+          "dob": "2014-07-09"
+        },
+        {
+          "first_name": "Jenna",
+          "last_name": "Liu",
+          "dob": "2017-11-23"
+        }
+      ],
+      "payment_methods": [
+        {
+          "payment_id": "visa_liu",
+          "amount": 1800
+        }
+      ],
+      "total_baggages": 0,
+      "nonfree_baggages": 0,
+      "insurance": "no"
+    },
+    "policy_category": "happy_path",
+    "rationale": "All five passengers are within the policy limit, and all required details are provided. Insurance is set to 'no' as the user explicitly declined it. All other parameters are valid.",
+    "api_name": "airline",
+    "target_parameter": "insurance"
+  },
+  {
+    "user_query": "I'm trying to estimate the total baggage cost for my upcoming flight. If each checked bag costs $35 and I have 2 bags, can you tell me what the total cost will be?",
+    "function_name": "calculate",
+    "parameters": {
+      "expression": "35 * 2"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user is asking for a straightforward calculation using valid numbers and operators, which complies with the function's requirements.",
+    "api_name": "airline",
+    "target_parameter": "expression"
+  },
+  {
+    "user_query": "My outbound flight from LAX to ATL is at 7:00 am, and my return from ATL to LAX is at 3:00 pm. How many total hours will I be traveling if both flights are 4 hours each?",
+    "function_name": "calculate",
+    "parameters": {
+      "expression": "4 + 4"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user asks for the sum of two flight durations. The expression is valid and uses only numbers and allowed operators.",
+    "api_name": "airline",
+    "target_parameter": "expression"
+  },
+  {
+    "user_query": "I want to split the total fare of $1200 equally between 3 passengers on our booking from SFO to JFK. Can you tell me how much each person should pay?",
+    "function_name": "calculate",
+    "parameters": {
+      "expression": "1200 / 3"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user provides a valid division expression using numbers and the '/' operator, complying with the allowed format.",
+    "api_name": "airline",
+    "target_parameter": "expression"
+  },
+  {
+    "user_query": "Hi, I'd like to cancel my reservation ZFA04Y for my upcoming flight from SFO to JFK on July 15th. I booked it less than 24 hours ago and plans have changed. Can you help me with the cancellation?",
+    "function_name": "cancel_reservation",
+    "parameters": {
+      "reservation_id": "ZFA04Y"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user provides an explicit, valid reservation ID and meets the 24-hour cancellation policy. All required information is present and policy-compliant, so the cancellation should succeed.",
+    "api_name": "airline",
+    "target_parameter": "reservation_id"
+  },
+  {
+    "user_query": "Please cancel reservation GJ928K. Unfortunately, my business class flight from ORD to LAX on September 20th was cancelled by the airline. The reservation number is GJ928K.",
+    "function_name": "cancel_reservation",
+    "parameters": {
+      "reservation_id": "GJ928K"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user provides a valid reservation ID and cites airline-initiated cancellation, which is an approved reason. All required details are included and policy is satisfied.",
+    "api_name": "airline",
+    "target_parameter": "reservation_id"
+  },
+  {
+    "user_query": "Hi, please cancel reservation FQZ6R1 for my economy ticket from ATL to SEA on October 5th. I have travel insurance and my doctor just sent a note about a covered medical issue. Reservation ID FQZ6R1.",
+    "function_name": "cancel_reservation",
+    "parameters": {
+      "reservation_id": "FQZ6R1"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user provides a valid reservation ID and is eligible for cancellation under the insurance-covered reason. All details are appropriate and meet the required policy.",
+    "api_name": "airline",
+    "target_parameter": "reservation_id"
+  },
+  {
+    "user_query": "Hi, can you tell me the current status of United flight UA238 from San Francisco to New York on 2024-07-10? My cousin is on that flight and I want to make sure it's on time.",
+    "function_name": "get_flight_status",
+    "parameters": {
+      "flight_number": "UA238",
+      "date": "2024-07-10"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The flight number 'UA238' follows the standard airline format (two letters + numbers), and the date is in the correct 'YYYY-MM-DD' format. This is a straightforward, policy-compliant status check.",
+    "api_name": "airline",
+    "target_parameter": "flight_number"
+  },
+  {
+    "user_query": "Could you please give me the status of Delta flight DL450 on August 2nd, 2024? I have a connecting flight and want to make sure there are no delays.",
+    "function_name": "get_flight_status",
+    "parameters": {
+      "flight_number": "DL450",
+      "date": "2024-08-02"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The flight number 'DL450' is valid and includes the airline code as required. The date is in the correct format. All parameters comply with policy.",
+    "api_name": "airline",
+    "target_parameter": "flight_number"
+  },
+  {
+    "user_query": "I\u2019m tracking a friend\u2019s American Airlines flight AA101 to London on 2024-09-15. Can you update me on its status?",
+    "function_name": "get_flight_status",
+    "parameters": {
+      "flight_number": "AA101",
+      "date": "2024-09-15"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The flight number 'AA101' includes a valid airline code and number, complying with the required format, and the date is correct.",
+    "api_name": "airline",
+    "target_parameter": "flight_number"
+  },
+  {
+    "user_query": "Hi, could you tell me the status of Delta flight DL456 on June 12th, 2024?",
+    "function_name": "get_flight_status",
+    "parameters": {
+      "flight_number": "DL456",
+      "date": "2024-06-12"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The customer is requesting the status for a valid flight number and provides the date in the required 'YYYY-MM-DD' format, which complies with all function policies.",
+    "api_name": "airline",
+    "target_parameter": "date"
+  },
+  {
+    "user_query": "What\u2019s the current status of United flight UA789 scheduled for July 5, 2024?",
+    "function_name": "get_flight_status",
+    "parameters": {
+      "flight_number": "UA789",
+      "date": "2024-07-05"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The flight number and date are valid, with the date properly formatted as '2024-07-05', meeting all function requirements.",
+    "api_name": "airline",
+    "target_parameter": "date"
+  },
+  {
+    "user_query": "Can you check the status of American Airlines flight AA320 departing on 2024-08-15?",
+    "function_name": "get_flight_status",
+    "parameters": {
+      "flight_number": "AA320",
+      "date": "2024-08-15"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user provides both a correct flight number and a date in the required 'YYYY-MM-DD' format, fully complying with the function's policies.",
+    "api_name": "airline",
+    "target_parameter": "date"
+  },
+  {
+    "user_query": "Hi, can you pull up the details for my reservation with ID 8JX2WO? I want to check my flight times for my trip from LAX to ORD next month.",
+    "function_name": "get_reservation_details",
+    "parameters": {
+      "reservation_id": "8JX2WO"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user provided a reservation ID in the correct alphanumeric format (6 characters, e.g., '8JX2WO'). This complies with all format requirements for reservation_id.",
+    "api_name": "airline",
+    "target_parameter": "reservation_id"
+  },
+  {
+    "user_query": "I want to confirm the details of my booking. My reservation code is AB12CD for my flight from SFO to JFK on July 12th.",
+    "function_name": "get_reservation_details",
+    "parameters": {
+      "reservation_id": "AB12CD"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The reservation_id 'AB12CD' is correctly formatted (6-character alphanumeric), matching policy requirements for reservation_id.",
+    "api_name": "airline",
+    "target_parameter": "reservation_id"
+  },
+  {
+    "user_query": "Can you give me the details of reservation 3QK7VM? I want to check baggage allowance for my upcoming trip from ATL to DFW.",
+    "function_name": "get_reservation_details",
+    "parameters": {
+      "reservation_id": "3QK7VM"
+    },
+    "policy_category": "happy_path",
+    "rationale": "Reservation ID '3QK7VM' is a proper 6-character alphanumeric code, satisfying the required format for reservation_id.",
+    "api_name": "airline",
+    "target_parameter": "reservation_id"
+  },
+  {
+    "user_query": "Hi, can you pull up the details for my account? My user ID is emily_clark_234.",
+    "function_name": "get_user_details",
+    "parameters": {
+      "user_id": "emily_clark_234"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user ID 'emily_clark_234' matches the required airline format of [first_last_number], so this request is compliant and should succeed.",
+    "api_name": "airline",
+    "target_parameter": "user_id"
+  },
+  {
+    "user_query": "I'd like to see my flight reservations. My user ID is michael_jones_775.",
+    "function_name": "get_user_details",
+    "parameters": {
+      "user_id": "michael_jones_775"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user ID provided is in the correct airline format, so this is a valid request.",
+    "api_name": "airline",
+    "target_parameter": "user_id"
+  },
+  {
+    "user_query": "Can you show me my account details? My user ID is sarah_liu_542.",
+    "function_name": "get_user_details",
+    "parameters": {
+      "user_id": "sarah_liu_542"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user ID 'sarah_liu_542' matches the required airline format and is thus policy-compliant.",
+    "api_name": "airline",
+    "target_parameter": "user_id"
+  },
+  {
+    "user_query": "Hi, I\u2019d like to find nonstop flights from JFK to LAX for June 22, 2024. Can you show me the available options?",
+    "function_name": "search_direct_flight",
+    "parameters": {
+      "origin": "JFK",
+      "destination": "LAX",
+      "date": "2024-06-22"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The origin parameter uses the valid three-letter IATA code 'JFK', fully complying with the required format, and all other inputs are valid.",
+    "api_name": "airline",
+    "target_parameter": "origin"
+  },
+  {
+    "user_query": "Can you help me find direct flights from SFO to ORD for July 10, 2024? I want to compare morning departure times.",
+    "function_name": "search_direct_flight",
+    "parameters": {
+      "origin": "SFO",
+      "destination": "ORD",
+      "date": "2024-07-10"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The origin 'SFO' is a valid IATA code, and all other parameters meet the format requirements. The query is clear and policy-compliant.",
+    "api_name": "airline",
+    "target_parameter": "origin"
+  },
+  {
+    "user_query": "Show me all direct flights from DFW to ATL on August 5, 2024.",
+    "function_name": "search_direct_flight",
+    "parameters": {
+      "origin": "DFW",
+      "destination": "ATL",
+      "date": "2024-08-05"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The query provides 'DFW' as the origin, which is the correct IATA code, and all other parameters are valid and policy compliant.",
+    "api_name": "airline",
+    "target_parameter": "origin"
+  },
+  {
+    "user_query": "Hi, I\u2019d like to check for direct flights from SFO to LAX on July 10th, 2024. I\u2019m planning a business trip and want to see what\u2019s available.",
+    "function_name": "search_direct_flight",
+    "parameters": {
+      "origin": "SFO",
+      "destination": "LAX",
+      "date": "2024-07-10"
+    },
+    "policy_category": "happy_path",
+    "rationale": "All parameters (origin, destination, date) are in the correct format. The destination uses a valid three-letter IATA code ('LAX'), so this request fully complies with all policies.",
+    "api_name": "airline",
+    "target_parameter": "destination"
+  },
+  {
+    "user_query": "I want to see direct flights departing from JFK to ORD on August 20th, 2024. Can you help me find options?",
+    "function_name": "search_direct_flight",
+    "parameters": {
+      "origin": "JFK",
+      "destination": "ORD",
+      "date": "2024-08-20"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user correctly provides both origin and destination as three-letter IATA codes ('JFK', 'ORD') and the date in the required format. This meets all the function\u2019s policies.",
+    "api_name": "airline",
+    "target_parameter": "destination"
+  },
+  {
+    "user_query": "Can you check if there are direct flights from ATL to MIA on September 2nd, 2024?",
+    "function_name": "search_direct_flight",
+    "parameters": {
+      "origin": "ATL",
+      "destination": "MIA",
+      "date": "2024-09-02"
+    },
+    "policy_category": "happy_path",
+    "rationale": "This request uses valid IATA codes for both origin ('ATL') and destination ('MIA') and the date is formatted correctly. All policies are satisfied.",
+    "api_name": "airline",
+    "target_parameter": "destination"
+  },
+  {
+    "user_query": "Hi, can you help me find a nonstop flight from SFO to JFK on 2024-07-15? I want to travel in mid-July.",
+    "function_name": "search_direct_flight",
+    "parameters": {
+      "origin": "SFO",
+      "destination": "JFK",
+      "date": "2024-07-15"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user provided valid IATA codes for both origin and destination, and the date is correctly formatted as 'YYYY-MM-DD', complying with all input policies.",
+    "api_name": "airline",
+    "target_parameter": "date"
+  },
+  {
+    "user_query": "I'm planning to visit Los Angeles from Chicago. Could you show me direct flights from ORD to LAX on 2024-09-08?",
+    "function_name": "search_direct_flight",
+    "parameters": {
+      "origin": "ORD",
+      "destination": "LAX",
+      "date": "2024-09-08"
+    },
+    "policy_category": "happy_path",
+    "rationale": "All parameters are valid: 'ORD' and 'LAX' are proper IATA codes, and the date is in the correct 'YYYY-MM-DD' format.",
+    "api_name": "airline",
+    "target_parameter": "date"
+  },
+  {
+    "user_query": "I'm looking to travel from ATL to DFW on 2024-08-22. Can you show me the available direct flights for that day?",
+    "function_name": "search_direct_flight",
+    "parameters": {
+      "origin": "ATL",
+      "destination": "DFW",
+      "date": "2024-08-22"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user supplied all information in proper formats: correct IATA codes and a date that is properly formatted as 'YYYY-MM-DD'.",
+    "api_name": "airline",
+    "target_parameter": "date"
+  },
+  {
+    "user_query": "Hi, can you help me find a one-stop flight from SFO to JFK on August 12th? I need to leave from San Francisco International Airport.",
+    "function_name": "search_onestop_flight",
+    "parameters": {
+      "origin": "SFO",
+      "destination": "JFK",
+      "date": "2024-08-12"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user specifies a valid three-letter IATA code ('SFO') for the origin, as required by policy. The destination and date are also formatted correctly. All parameters are compliant, so the function call should proceed.",
+    "api_name": "airline",
+    "target_parameter": "origin"
+  },
+  {
+    "user_query": "I'm planning a trip and would like to see one-stop flights from ATL to LAX for September 5th. Can you show me the options departing from Atlanta?",
+    "function_name": "search_onestop_flight",
+    "parameters": {
+      "origin": "ATL",
+      "destination": "LAX",
+      "date": "2024-09-05"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The origin ('ATL') and destination ('LAX') are both valid IATA codes, and the date is in the correct format. All parameters comply with the function's policies.",
+    "api_name": "airline",
+    "target_parameter": "origin"
+  },
+  {
+    "user_query": "Can you list one-stop flights from ORD to BOS on November 14th? I'm flying out from Chicago O'Hare.",
+    "function_name": "search_onestop_flight",
+    "parameters": {
+      "origin": "ORD",
+      "destination": "BOS",
+      "date": "2024-11-14"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user has provided 'ORD' as the origin, which is the correct IATA code for Chicago O'Hare, and all other parameters are also valid. The request is compliant with all policies.",
+    "api_name": "airline",
+    "target_parameter": "origin"
+  },
+  {
+    "user_query": "Hi, I need to find a one-stop flight from Chicago O'Hare (ORD) to Los Angeles (LAX) for July 12, 2024. Can you help me with options?",
+    "function_name": "search_onestop_flight",
+    "parameters": {
+      "origin": "ORD",
+      "destination": "LAX",
+      "date": "2024-07-12"
+    },
+    "policy_category": "happy_path",
+    "rationale": "All parameters use valid formats: origin and destination are IATA codes (ORD, LAX), date is in 'YYYY-MM-DD'. This is a standard search and complies with all policies.",
+    "api_name": "airline",
+    "target_parameter": "destination"
+  },
+  {
+    "user_query": "Can you check one-stop flights for me from Atlanta (ATL) to San Francisco (SFO) on August 20th, 2024?",
+    "function_name": "search_onestop_flight",
+    "parameters": {
+      "origin": "ATL",
+      "destination": "SFO",
+      "date": "2024-08-20"
+    },
+    "policy_category": "happy_path",
+    "rationale": "All parameters are valid: destination is 'SFO', which is a correct IATA code; the date is formatted properly; and the origin is also valid. This meets all function policy requirements.",
+    "api_name": "airline",
+    "target_parameter": "destination"
+  },
+  {
+    "user_query": "I'm planning a trip from Dallas/Fort Worth (DFW) to New York JFK (JFK) on September 2, 2024. Could you show me one-stop flight options?",
+    "function_name": "search_onestop_flight",
+    "parameters": {
+      "origin": "DFW",
+      "destination": "JFK",
+      "date": "2024-09-02"
+    },
+    "policy_category": "happy_path",
+    "rationale": "All inputs are valid: the destination 'JFK' is a proper IATA code, as required by policy. The date and origin are also correctly formatted.",
+    "api_name": "airline",
+    "target_parameter": "destination"
+  },
+  {
+    "user_query": "Hi, can you check one-stop flights from SFO to LAX for me? I want to travel on 2024-07-10.",
+    "function_name": "search_onestop_flight",
+    "parameters": {
+      "origin": "SFO",
+      "destination": "LAX",
+      "date": "2024-07-10"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user provided valid IATA codes for both origin and destination, and the date is in the required 'YYYY-MM-DD' format. All parameters comply with the API policy.",
+    "api_name": "airline",
+    "target_parameter": "date"
+  },
+  {
+    "user_query": "I want to see one-stop flights from JFK to ORD on 2024-08-22. Can you help with that?",
+    "function_name": "search_onestop_flight",
+    "parameters": {
+      "origin": "JFK",
+      "destination": "ORD",
+      "date": "2024-08-22"
+    },
+    "policy_category": "happy_path",
+    "rationale": "All parameters are valid: JFK and ORD are IATA codes, and date is in the correct format, so the tool call should succeed.",
+    "api_name": "airline",
+    "target_parameter": "date"
+  },
+  {
+    "user_query": "Can you search for one-stop flights from ATL to DFW on 2024-09-15?",
+    "function_name": "search_onestop_flight",
+    "parameters": {
+      "origin": "ATL",
+      "destination": "DFW",
+      "date": "2024-09-15"
+    },
+    "policy_category": "happy_path",
+    "rationale": "Origin and destination use valid IATA codes and the date is correctly formatted per policy, so this is a policy-compliant request.",
+    "api_name": "airline",
+    "target_parameter": "date"
+  },
+  {
+    "user_query": "Hi, my name is Lucas Turner (user ID: lucas_turner_812). I'm a silver member and my flight AA124 from JFK to SFO on 2024-07-10 was cancelled. Can I please get a compensation certificate for this?",
+    "function_name": "send_certificate",
+    "parameters": {
+      "user_id": "lucas_turner_812",
+      "amount": 100
+    },
+    "policy_category": "happy_path",
+    "rationale": "Lucas is a silver member who experienced a cancelled flight. Silver members are eligible for compensation according to policy, and the scenario involves a valid compensation reason and explicit user request.",
+    "api_name": "airline",
+    "target_parameter": "user_id"
+  },
+  {
+    "user_query": "Hi, this is Priya Mehta (user ID: priya_mehta_119). I'm flying business class on UA789 from LAX to ORD on 2024-08-05, and my flight was delayed by 3 hours. I would like to request a compensation certificate.",
+    "function_name": "send_certificate",
+    "parameters": {
+      "user_id": "priya_mehta_119",
+      "amount": 50
+    },
+    "policy_category": "happy_path",
+    "rationale": "Priya is eligible for compensation because she flew business class. The flight delay is a valid compensation reason, and she explicitly requested a certificate.",
+    "api_name": "airline",
+    "target_parameter": "user_id"
+  },
+  {
+    "user_query": "Good afternoon, this is Sophia Lin (user ID: sophia_lin_704). I'm a gold member and my flight DL622 from SFO to JFK on 2024-09-12 was cancelled due to weather. I'd like to request a compensation certificate, please.",
+    "function_name": "send_certificate",
+    "parameters": {
+      "user_id": "sophia_lin_704",
+      "amount": 100
+    },
+    "policy_category": "happy_path",
+    "rationale": "Sophia is a gold member who experienced a cancelled flight and has explicitly requested compensation. This is fully compliant with the eligibility policy.",
+    "api_name": "airline",
+    "target_parameter": "user_id"
+  },
+  {
+    "user_query": "Hi, I\u2019m a gold member and my family of 3 was on AA123 from SFO to JFK on 2024-05-08. Our flight was cancelled last minute. Can I get compensation certificates for all of us?",
+    "function_name": "send_certificate",
+    "parameters": {
+      "user_id": "michael_clark_782",
+      "amount": 300
+    },
+    "policy_category": "happy_path",
+    "rationale": "Flight was cancelled, user is a gold member, requesting compensation for 3 passengers; $100 per passenger is policy-compliant for cancelled flights (3 x $100 = $300).",
+    "api_name": "airline",
+    "target_parameter": "amount"
+  },
+  {
+    "user_query": "Hello, I'm Sarah (user ID: sarah_liu_119). My partner and I (2 passengers) were delayed 3 hours on DL456 from ORD to LAX on 2024-05-04. We're both silver members. Could I receive compensation for the delay?",
+    "function_name": "send_certificate",
+    "parameters": {
+      "user_id": "sarah_liu_119",
+      "amount": 100
+    },
+    "policy_category": "happy_path",
+    "rationale": "Delayed flight with two eligible passengers (silver member), requesting $50 per passenger ($50 x 2 = $100) aligns with policy for delayed flights.",
+    "api_name": "airline",
+    "target_parameter": "amount"
+  },
+  {
+    "user_query": "Hi, I\u2019m Daniel (user ID: daniel_nguyen_301). My wife and I (2 passengers) are both in business class on UA789 from ATL to SEA on 2024-05-12. Our flight was cancelled. Can you send us compensation certificates?",
+    "function_name": "send_certificate",
+    "parameters": {
+      "user_id": "daniel_nguyen_301",
+      "amount": 200
+    },
+    "policy_category": "happy_path",
+    "rationale": "Cancelled flight for 2 business class passengers; policy allows $100 per passenger, so $200 is correct.",
+    "api_name": "airline",
+    "target_parameter": "amount"
+  },
+  {
+    "user_query": "Hi, I need to speak to a human agent. I tried to cancel my flight from LAX to JFK for June 20, but the system says I can't because it's less than 24 hours before departure. Can you help transfer me to someone who can resolve this?",
+    "function_name": "transfer_to_human_agents",
+    "parameters": {
+      "summary": "User is unable to cancel LAX to JFK flight (June 20) due to system restriction and requests transfer to human agent for further assistance."
+    },
+    "policy_category": "happy_path",
+    "rationale": "User explicitly requests a human agent for an issue that cannot be resolved by available automated tools, which matches policy for transfer.",
+    "api_name": "airline",
+    "target_parameter": "summary"
+  },
+  {
+    "user_query": "I\u2019m trying to change my reservation for my family\u20144 passengers\u2014on flight AA123 from ORD to ATL, departing July 10. The online tool keeps giving me an error and I\u2019d like to speak with a human agent to resolve this.",
+    "function_name": "transfer_to_human_agents",
+    "parameters": {
+      "summary": "User unable to modify reservation for 4 passengers (AA123 ORD to ATL, July 10) due to system error; requests transfer to a human agent."
+    },
+    "policy_category": "happy_path",
+    "rationale": "User explicitly asks for a human agent due to an error that automated tools cannot resolve, and the group size (4) is within policy limits.",
+    "api_name": "airline",
+    "target_parameter": "summary"
+  },
+  {
+    "user_query": "I\u2019d like to speak to a human agent. My flight DL456 from SFO to CDG on August 2 is in basic economy, but I need to change the date. The website says basic economy tickets cannot be changed. Can you transfer me to someone who can help?",
+    "function_name": "transfer_to_human_agents",
+    "parameters": {
+      "summary": "User requests transfer to human agent to change date of basic economy ticket (DL456 SFO to CDG, August 2) which is not permitted online."
+    },
+    "policy_category": "happy_path",
+    "rationale": "User explicitly asks for transfer and the issue (changing basic economy) cannot be resolved online according to policy.",
+    "api_name": "airline",
+    "target_parameter": "summary"
+  },
+  {
+    "user_query": "Hi, I'd like to add an extra checked bag to my reservation from LAX to JFK on June 20th. My reservation number is ZFA04Y. I have a regular membership and I'm flying economy. Please use my saved credit card for payment.",
+    "function_name": "update_reservation_baggages",
+    "parameters": {
+      "reservation_id": "ZFA04Y",
+      "total_baggages": 2,
+      "nonfree_baggages": 1,
+      "payment_id": "credit_card_7815826"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The reservation_id is explicitly provided and matches the expected format. The user confirms their reservation, membership tier, and payment method from their profile. All required information is supplied and policy-compliant.",
+    "api_name": "airline",
+    "target_parameter": "reservation_id"
+  },
+  {
+    "user_query": "I'd like to increase my checked bag allowance on reservation QWE789X for my business class flight from SFO to ORD on August 5th. Please add one more bag and charge my gift card ending in 826.",
+    "function_name": "update_reservation_baggages",
+    "parameters": {
+      "reservation_id": "QWE789X",
+      "total_baggages": 3,
+      "nonfree_baggages": 0,
+      "payment_id": "gift_card_7815826"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user provides a valid reservation_id in the correct format and confirms all necessary details. The baggage addition is within business class Gold tier allowance (3 free bags), and payment uses a saved gift card.",
+    "api_name": "airline",
+    "target_parameter": "reservation_id"
+  },
+  {
+    "user_query": "Can you add two bags to my upcoming ATL to BOS economy flight? My reservation number is LMI567. I'm a Silver member and would like to pay the extra fee with my saved certificate.",
+    "function_name": "update_reservation_baggages",
+    "parameters": {
+      "reservation_id": "LMI567",
+      "total_baggages": 2,
+      "nonfree_baggages": 0,
+      "payment_id": "certificate_7815826"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The reservation_id is provided and valid. Silver members in economy are allowed 2 free checked bags. The payment method is from the user's profile. All policies are satisfied.",
+    "api_name": "airline",
+    "target_parameter": "reservation_id"
+  },
+  {
+    "user_query": "Hi, I'm flying from LAX to JFK on June 20th with reservation ID ZFA04Y. I'm a Silver member traveling in economy, and I want to add a second checked bag to my reservation. I understand I get one free checked bag, so I'll need to pay for the second. Please use my credit card ending in 5826 on file.",
+    "function_name": "update_reservation_baggages",
+    "parameters": {
+      "reservation_id": "ZFA04Y",
+      "total_baggages": 2,
+      "nonfree_baggages": 1,
+      "payment_id": "credit_card_7815826"
+    },
+    "policy_category": "happy_path",
+    "rationale": "Silver members in economy are allowed 1 free checked bag. Adding a second bag results in 1 nonfree bag, which is properly charged using a valid payment method linked to the user profile. All policies are followed.",
+    "api_name": "airline",
+    "target_parameter": "total_baggages"
+  },
+  {
+    "user_query": "Hello, my reservation ID is QWE123. I'm a Gold member flying business class from ORD to SFO on July 12th. I currently have 2 checked bags but want to add a third. Please charge my gift card ending in 7815826.",
+    "function_name": "update_reservation_baggages",
+    "parameters": {
+      "reservation_id": "QWE123",
+      "total_baggages": 3,
+      "nonfree_baggages": 1,
+      "payment_id": "gift_card_7815826"
+    },
+    "policy_category": "happy_path",
+    "rationale": "Gold members in business class are allowed up to 4 checked bags (3 free, 1 paid for the 4th). Adding a third checked bag brings total to 3, within the free allowance, but the scenario charges for the third to be safe. Payment uses a valid method.",
+    "api_name": "airline",
+    "target_parameter": "total_baggages"
+  },
+  {
+    "user_query": "Hi, I'm a regular member with reservation ID XYP567 flying from ATL to BOS on August 5th in basic economy. I currently have no checked bags but would like to add one. Please use my certificate ending in 7815826 for payment.",
+    "function_name": "update_reservation_baggages",
+    "parameters": {
+      "reservation_id": "XYP567",
+      "total_baggages": 1,
+      "nonfree_baggages": 1,
+      "payment_id": "certificate_7815826"
+    },
+    "policy_category": "happy_path",
+    "rationale": "Regular members in basic economy are typically not given free checked bags. Adding one bag is permitted and charged as nonfree. Payment uses a valid certificate in the user's profile.",
+    "api_name": "airline",
+    "target_parameter": "total_baggages"
+  },
+  {
+    "user_query": "Hi, I'd like to add a third checked bag to my reservation from SFO to JFK on June 18th. I'm a regular member flying economy, and I understand I'll need to pay for the extra bag. Please use my saved credit card ending in 5826.",
+    "function_name": "update_reservation_baggages",
+    "parameters": {
+      "reservation_id": "ZFA04Y",
+      "total_baggages": 3,
+      "nonfree_baggages": 2,
+      "payment_id": "credit_card_7815826"
+    },
+    "policy_category": "happy_path",
+    "rationale": "Regular members in economy class have a free checked bag allowance of 1. Adding 3 bags results in 2 nonfree bags, which matches the correct calculation. The payment method is from the user profile, and all other parameters comply with policies.",
+    "api_name": "airline",
+    "target_parameter": "nonfree_baggages"
+  },
+  {
+    "user_query": "Hello, I have a business class ticket from LAX to ORD on July 2nd. I'm a silver member and would like to bring three checked bags. Please charge my gift card ending in 8382 for the one extra bag.",
+    "function_name": "update_reservation_baggages",
+    "parameters": {
+      "reservation_id": "XJH21B",
+      "total_baggages": 3,
+      "nonfree_baggages": 1,
+      "payment_id": "gift_card_78382"
+    },
+    "policy_category": "happy_path",
+    "rationale": "Silver members in business class receive 2 free checked bags. Bringing 3 bags means only one nonfree bag, which is policy-compliant. The payment method is valid and all information is provided.",
+    "api_name": "airline",
+    "target_parameter": "nonfree_baggages"
+  },
+  {
+    "user_query": "Hi there! I\u2019m a gold member flying economy from ATL to MIA on August 5th, reservation code JKL456. I\u2019d like to check in three bags total, so I believe only one will be charged. Please use my stored certificate to pay.",
+    "function_name": "update_reservation_baggages",
+    "parameters": {
+      "reservation_id": "JKL456",
+      "total_baggages": 3,
+      "nonfree_baggages": 1,
+      "payment_id": "certificate_128391"
+    },
+    "policy_category": "happy_path",
+    "rationale": "Gold members in economy class get 2 free checked bags; a 3rd bag is nonfree. The calculation is correct and the payment method is in profile. All policy requirements are met.",
+    "api_name": "airline",
+    "target_parameter": "nonfree_baggages"
+  },
+  {
+    "user_query": "Hi, I'd like to add one checked bag to my reservation from SFO to JFK on June 22. My reservation code is ZFA04Y. I'm a regular member in economy class, and I'd like to pay for the extra bag using my credit card ending in 5826 that's saved in my profile. Can you confirm the fee and proceed?",
+    "function_name": "update_reservation_baggages",
+    "parameters": {
+      "reservation_id": "ZFA04Y",
+      "total_baggages": 1,
+      "nonfree_baggages": 1,
+      "payment_id": "credit_card_7815826"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user provides a valid reservation ID, confirms their membership and cabin class, requests to add 1 checked bag (which is above the free allowance for a regular member in economy), and chooses a payment method that is already stored in their user profile. Explicit confirmation is given. All policies are satisfied.",
+    "api_name": "airline",
+    "target_parameter": "payment_id"
+  },
+  {
+    "user_query": "I want to check a third bag for my ORD to ATL flight on July 5th. My reservation code is XF21LM. I'm a Silver member flying business class. Please use my travel certificate ending in 826 from my profile to pay for the extra bag. Can you confirm the cost and finalize this?",
+    "function_name": "update_reservation_baggages",
+    "parameters": {
+      "reservation_id": "XF21LM",
+      "total_baggages": 3,
+      "nonfree_baggages": 1,
+      "payment_id": "certificate_7815826"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user is a Silver member in business class (free allowance is 2 bags), requests to add a 3rd bag (1 nonfree), and uses a certificate stored in their profile as payment. Explicit confirmation is given. All policies are met.",
+    "api_name": "airline",
+    "target_parameter": "payment_id"
+  },
+  {
+    "user_query": "I'm flying from LAX to BOS on August 12th with reservation code GH56TR. I'm a Gold member in economy class and want to add a fourth checked bag. Please use my saved gift card ending in 5826 for the payment, and let me know the total charge before proceeding.",
+    "function_name": "update_reservation_baggages",
+    "parameters": {
+      "reservation_id": "GH56TR",
+      "total_baggages": 4,
+      "nonfree_baggages": 1,
+      "payment_id": "gift_card_7815826"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user is a Gold member in economy (free allowance is 3 bags), adding a 4th bag (1 nonfree), and uses a single gift card stored in their profile for payment. The request is explicit and complete, meeting all policies.",
+    "api_name": "airline",
+    "target_parameter": "payment_id"
+  },
+  {
+    "user_query": "Hi, this is Samantha Lee (DOB 1985-04-17). I\u2019d like to change my return flight for reservation ZFA04Y from JFK to SFO to a later date. The reservation is under my account, and I want to keep the same cabin class (economy). Please use my saved credit card ending in 8256 for any fare difference.",
+    "function_name": "update_reservation_flights",
+    "parameters": {
+      "reservation_id": "ZFA04Y",
+      "cabin": "economy",
+      "flights": [
+        {
+          "flight_number": "AA123",
+          "date": "2024-07-08"
+        },
+        {
+          "flight_number": "AA456",
+          "date": "2024-07-15"
+        }
+      ],
+      "payment_id": "credit_card_7815826"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user provides both her identity and the reservation ID, requests a permitted modification, uses a valid payment method, and confirms all essential details. This fully complies with reservation_id safety and other related policies.",
+    "api_name": "airline",
+    "target_parameter": "reservation_id"
+  },
+  {
+    "user_query": "Hello, this is David Chen (DOB 1992-10-05). I want to switch my outbound flight on reservation JKL789 from LAX to ORD to a different date, keeping the same economy cabin. Please use my stored gift card (7815826) for any additional charges.",
+    "function_name": "update_reservation_flights",
+    "parameters": {
+      "reservation_id": "JKL789",
+      "cabin": "economy",
+      "flights": [
+        {
+          "flight_number": "UA456",
+          "date": "2024-08-10"
+        },
+        {
+          "flight_number": "UA457",
+          "date": "2024-08-17"
+        }
+      ],
+      "payment_id": "gift_card_7815826"
+    },
+    "policy_category": "happy_path",
+    "rationale": "User provides both user and reservation IDs and requests a permitted change with all required information. The request is policy-compliant and should succeed.",
+    "api_name": "airline",
+    "target_parameter": "reservation_id"
+  },
+  {
+    "user_query": "Hi, I\u2019m Maria Gomez (DOB 1977-02-20). I\u2019d like to upgrade my reservation QWE123 to business class for both flights from ATL to DFW and back. Please confirm the changes and charge my stored certificate 7815826.",
+    "function_name": "update_reservation_flights",
+    "parameters": {
+      "reservation_id": "QWE123",
+      "cabin": "business",
+      "flights": [
+        {
+          "flight_number": "DL890",
+          "date": "2024-09-01"
+        },
+        {
+          "flight_number": "DL891",
+          "date": "2024-09-07"
+        }
+      ],
+      "payment_id": "certificate_7815826"
+    },
+    "policy_category": "happy_path",
+    "rationale": "Maria provides both her user details and the reservation ID, requests a permitted change, and uses a valid payment method. All required details are present and compliant with policies.",
+    "api_name": "airline",
+    "target_parameter": "reservation_id"
+  },
+  {
+    "user_query": "Hi, I'd like to upgrade my upcoming reservation ZFA04Y for myself from economy to business class on both legs: San Francisco (SFO) to New York (JFK) on 2024-07-10 (flight AA123), and the return on 2024-07-15 (flight AA124). Please use my saved credit card ending in 5826.",
+    "function_name": "update_reservation_flights",
+    "parameters": {
+      "reservation_id": "ZFA04Y",
+      "cabin": "business",
+      "flights": [
+        {
+          "flight_number": "AA123",
+          "date": "2024-07-10"
+        },
+        {
+          "flight_number": "AA124",
+          "date": "2024-07-15"
+        }
+      ],
+      "payment_id": "credit_card_7815826"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The customer is requesting a cabin change to a valid option ('business'), for a reservation that is fully unflown, and is using a saved payment method. The cabin will be the same for all segments. All policies are satisfied.",
+    "api_name": "airline",
+    "target_parameter": "cabin"
+  },
+  {
+    "user_query": "Can I change my reservation YXK781 from economy to basic economy for my upcoming Chicago (ORD) to Atlanta (ATL) flight DL456 on 2024-08-05? Please use my gift card ending in 7815826.",
+    "function_name": "update_reservation_flights",
+    "parameters": {
+      "reservation_id": "YXK781",
+      "cabin": "basic_economy",
+      "flights": [
+        {
+          "flight_number": "DL456",
+          "date": "2024-08-05"
+        }
+      ],
+      "payment_id": "gift_card_7815826"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The customer is changing the cabin to a valid value ('basic_economy') before any flights have been taken. All parameters are valid and within policy.",
+    "api_name": "airline",
+    "target_parameter": "cabin"
+  },
+  {
+    "user_query": "I want to update my round-trip reservation QWE321 for myself and my partner from Dallas (DFW) to Los Angeles (LAX): departing on 2024-09-01 (UA789) and returning 2024-09-07 (UA790), both in economy class. Please use my saved certificate ending in 7815826.",
+    "function_name": "update_reservation_flights",
+    "parameters": {
+      "reservation_id": "QWE321",
+      "cabin": "economy",
+      "flights": [
+        {
+          "flight_number": "UA789",
+          "date": "2024-09-01"
+        },
+        {
+          "flight_number": "UA790",
+          "date": "2024-09-07"
+        }
+      ],
+      "payment_id": "certificate_7815826"
+    },
+    "policy_category": "happy_path",
+    "rationale": "Customer is updating both segments of a round-trip reservation to the same valid cabin ('economy') for all passengers and segments. All policy checks are passed.",
+    "api_name": "airline",
+    "target_parameter": "cabin"
+  },
+  {
+    "user_query": "Hi, I'd like to change my reservation ZFA04Y for my round-trip from SFO to JFK. Please move my outbound flight to June 15th (flight AA100) and keep my return on June 20th (flight AA101). I want to stay in economy. Please use my saved credit card ending in 5826.",
+    "function_name": "update_reservation_flights",
+    "parameters": {
+      "reservation_id": "ZFA04Y",
+      "cabin": "economy",
+      "flights": [
+        {
+          "flight_number": "AA100",
+          "date": "2024-06-15"
+        },
+        {
+          "flight_number": "AA101",
+          "date": "2024-06-20"
+        }
+      ],
+      "payment_id": "credit_card_7815826"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The customer is modifying their reservation by changing one segment's date but keeping the origin, destination, and trip type unchanged, in compliance with all modification policies. The cabin class is valid, payment method is from the user's profile, and all flight segments are included as required.",
+    "api_name": "airline",
+    "target_parameter": "flights"
+  },
+  {
+    "user_query": "I'd like to update my business class reservation A1B2C3 for my trip from LAX to ORD on July 10th (UA500), and ORD to LAX on July 15th (UA501). Please change both flights to July 11th (UA520) and July 16th (UA521) respectively. Use my stored gift card for any fee.",
+    "function_name": "update_reservation_flights",
+    "parameters": {
+      "reservation_id": "A1B2C3",
+      "cabin": "business",
+      "flights": [
+        {
+          "flight_number": "UA520",
+          "date": "2024-07-11"
+        },
+        {
+          "flight_number": "UA521",
+          "date": "2024-07-16"
+        }
+      ],
+      "payment_id": "gift_card_7815826"
+    },
+    "policy_category": "happy_path",
+    "rationale": "Both flight segments are being updated, but the trip's origin, destination, and round-trip type are unchanged. The cabin class is consistent and allowed, and the payment method is from the user's profile.",
+    "api_name": "airline",
+    "target_parameter": "flights"
+  },
+  {
+    "user_query": "I want to adjust my reservation 9Z8Y7X from ATL to SEA. Please update my flight to DL300 on August 5th. Economy cabin. Please use my saved certificate for the change fee.",
+    "function_name": "update_reservation_flights",
+    "parameters": {
+      "reservation_id": "9Z8Y7X",
+      "cabin": "economy",
+      "flights": [
+        {
+          "flight_number": "DL300",
+          "date": "2024-08-05"
+        }
+      ],
+      "payment_id": "certificate_7815826"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The customer requests to update the flight within the same route and cabin class. All required fields are present, the payment method is allowed, and only one certificate is used for payment.",
+    "api_name": "airline",
+    "target_parameter": "flights"
+  },
+  {
+    "user_query": "Hi, I need to change my upcoming round-trip reservation (ID: ZFA04Y) from SFO to JFK for July 10th (UA123) and return on July 15th (UA124), both in economy. Please use my saved credit card ending in 5826 to pay any fare difference.",
+    "function_name": "update_reservation_flights",
+    "parameters": {
+      "reservation_id": "ZFA04Y",
+      "cabin": "economy",
+      "flights": [
+        {
+          "flight_number": "UA123",
+          "date": "2024-07-10"
+        },
+        {
+          "flight_number": "UA124",
+          "date": "2024-07-15"
+        }
+      ],
+      "payment_id": "credit_card_7815826"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user is using a payment method (credit_card_7815826) saved in their profile, requests a valid update, and all other parameters comply with relevant airline policies. Only one payment method is used, and explicit details are provided.",
+    "api_name": "airline",
+    "target_parameter": "payment_id"
+  },
+  {
+    "user_query": "I want to change my ORD-LAX reservation (ID: QWE123) for August 5th (AA456) in business class to a later flight on the same day (AA789). Please use my gift card on file (ending 826) for any additional charges.",
+    "function_name": "update_reservation_flights",
+    "parameters": {
+      "reservation_id": "QWE123",
+      "cabin": "business",
+      "flights": [
+        {
+          "flight_number": "AA789",
+          "date": "2024-08-05"
+        }
+      ],
+      "payment_id": "gift_card_7815826"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The request uses a single, valid gift card stored in the user's profile to pay for the change. Only one payment method is used, and all flight and cabin information adheres to policy.",
+    "api_name": "airline",
+    "target_parameter": "payment_id"
+  },
+  {
+    "user_query": "I'd like to switch my ATL-DFW reservation (ID: LKM456) on September 2nd (DL321) in economy to a later flight (DL654) that same day. Can you apply my unused travel certificate (ending 826) saved to my profile for this change?",
+    "function_name": "update_reservation_flights",
+    "parameters": {
+      "reservation_id": "LKM456",
+      "cabin": "economy",
+      "flights": [
+        {
+          "flight_number": "DL654",
+          "date": "2024-09-02"
+        }
+      ],
+      "payment_id": "certificate_7815826"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user is requesting to use a single valid certificate saved in their profile, which is allowed. All other parameters are policy-compliant.",
+    "api_name": "airline",
+    "target_parameter": "payment_id"
+  },
+  {
+    "user_query": "Hi, I need to update my reservation for flight DL456 from JFK to ATL on July 12th. My reservation ID is ZFA04Y. There was a typo in one of the passenger names\u2014can you please correct Emily Smith's name to Emily Smyth? The other passenger is John Smith, dob 1980-04-22. Please confirm the details before making any changes.",
+    "function_name": "update_reservation_passengers",
+    "parameters": {
+      "reservation_id": "ZFA04Y",
+      "passengers": [
+        {
+          "first_name": "Emily",
+          "last_name": "Smyth",
+          "dob": "1990-10-15"
+        },
+        {
+          "first_name": "John",
+          "last_name": "Smith",
+          "dob": "1980-04-22"
+        }
+      ]
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user provides a valid reservation ID (ZFA04Y), explicitly confirms the details, and requests only a correction to existing passenger information without changing the number of passengers. All parameters comply with required formats and policies.",
+    "api_name": "airline",
+    "target_parameter": "reservation_id"
+  },
+  {
+    "user_query": "Hi, I\u2019d like to update the date of birth for one of the passengers on my reservation. The reservation ID is BQ9012. The correct details are: Michael Lee, dob 1985-06-30, and Sarah Lee, dob 1988-11-22. Can you please confirm the change before proceeding?",
+    "function_name": "update_reservation_passengers",
+    "parameters": {
+      "reservation_id": "BQ9012",
+      "passengers": [
+        {
+          "first_name": "Michael",
+          "last_name": "Lee",
+          "dob": "1985-06-30"
+        },
+        {
+          "first_name": "Sarah",
+          "last_name": "Lee",
+          "dob": "1988-11-22"
+        }
+      ]
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user supplies a valid reservation ID (BQ9012), requests an update to passenger details without changing the count, and asks for confirmation before the update. All policy requirements are satisfied.",
+    "api_name": "airline",
+    "target_parameter": "reservation_id"
+  },
+  {
+    "user_query": "I\u2019d like to correct the spelling of my son\u2019s name on our reservation. Reservation ID: XJ7K21. Passengers are: Daniel Brown, dob 2010-09-18, and Karen Brown, dob 1982-03-05. Please confirm the details before updating.",
+    "function_name": "update_reservation_passengers",
+    "parameters": {
+      "reservation_id": "XJ7K21",
+      "passengers": [
+        {
+          "first_name": "Daniel",
+          "last_name": "Brown",
+          "dob": "2010-09-18"
+        },
+        {
+          "first_name": "Karen",
+          "last_name": "Brown",
+          "dob": "1982-03-05"
+        }
+      ]
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user provides a valid reservation ID and all required passenger details, requests only to correct a name, and asks for confirmation before any update. This fully complies with all reservation_id policies.",
+    "api_name": "airline",
+    "target_parameter": "reservation_id"
+  },
+  {
+    "user_query": "Hi, I'd like to update the spelling of my daughter's last name on our reservation ZFA04Y for our upcoming trip from SFO to JFK on July 12th. There are four of us traveling: James Miller (1980-11-05), Linda Miller (1983-04-18), Emily Miller (2010-09-22), and Ava Miller (2012-07-19). Please correct Emily's last name from 'Miler' to 'Miller'.",
+    "function_name": "update_reservation_passengers",
+    "parameters": {
+      "reservation_id": "ZFA04Y",
+      "passengers": [
+        {
+          "first_name": "James",
+          "last_name": "Miller",
+          "dob": "1980-11-05"
+        },
+        {
+          "first_name": "Linda",
+          "last_name": "Miller",
+          "dob": "1983-04-18"
+        },
+        {
+          "first_name": "Emily",
+          "last_name": "Miller",
+          "dob": "2010-09-22"
+        },
+        {
+          "first_name": "Ava",
+          "last_name": "Miller",
+          "dob": "2012-07-19"
+        }
+      ]
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user requests a correction for a passenger detail without changing the number of passengers. All passengers' required fields (first name, last name, dob) are provided. This complies with all update policies.",
+    "api_name": "airline",
+    "target_parameter": "passengers"
+  },
+  {
+    "user_query": "I'd like to update the date of birth for Mark Robinson on reservation FD82LK for our LAX to ORD trip. There are two passengers: Mark Robinson (1992-06-11) and Jessica Lee (1989-10-25). Mark's correct date of birth is 1992-06-12.",
+    "function_name": "update_reservation_passengers",
+    "parameters": {
+      "reservation_id": "FD82LK",
+      "passengers": [
+        {
+          "first_name": "Mark",
+          "last_name": "Robinson",
+          "dob": "1992-06-12"
+        },
+        {
+          "first_name": "Jessica",
+          "last_name": "Lee",
+          "dob": "1989-10-25"
+        }
+      ]
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user is updating a passenger's date of birth without changing the number of passengers. All required fields are present and correctly formatted.",
+    "api_name": "airline",
+    "target_parameter": "passengers"
+  },
+  {
+    "user_query": "I'd like to fix my last name on my reservation QK29MP for my flight from ATL to DFW on September 2nd. It's just me: Sarah Thompson, born 1995-08-30. The last name should be 'Thompson,' not 'Thomson.'",
+    "function_name": "update_reservation_passengers",
+    "parameters": {
+      "reservation_id": "QK29MP",
+      "passengers": [
+        {
+          "first_name": "Sarah",
+          "last_name": "Thompson",
+          "dob": "1995-08-30"
+        }
+      ]
+    },
+    "policy_category": "happy_path",
+    "rationale": "Single passenger reservation with all required fields. The user is only correcting a spelling error, not modifying the number of passengers or omitting any required information.",
+    "api_name": "airline",
+    "target_parameter": "passengers"
+  }
+]

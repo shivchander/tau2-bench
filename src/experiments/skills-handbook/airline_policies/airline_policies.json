@@ -1,0 +1,810 @@
+{
+  "api_name": "airline",
+  "functions": [
+    {
+      "name": "book_reservation",
+      "policies": {
+        "user_id": [
+          {
+            "type": "safety",
+            "description": "User ID must be provided by the user before booking.",
+            "constraint": "User must provide their user ID to proceed.",
+            "violation_examples": [
+              "Booking a reservation without first collecting the user ID from the user."
+            ],
+            "depends_on": [],
+            "applies_when": "Always"
+          }
+        ],
+        "flight_type": [
+          {
+            "type": "enum",
+            "description": "Trip type must be either 'one_way' or 'round_trip'.",
+            "constraint": "Allowed values: 'one_way', 'round_trip'.",
+            "violation_examples": [
+              "Providing 'multi_city' as a trip type."
+            ],
+            "depends_on": [],
+            "applies_when": "Always"
+          }
+        ],
+        "origin": [
+          {
+            "type": "format",
+            "description": "Origin must be in IATA 3-letter code format.",
+            "constraint": "Must be a valid IATA code (e.g., 'SFO').",
+            "violation_examples": [
+              "Providing 'San Francisco' instead of 'SFO'."
+            ],
+            "depends_on": [],
+            "applies_when": "Always"
+          }
+        ],
+        "destination": [
+          {
+            "type": "format",
+            "description": "Destination must be in IATA 3-letter code format.",
+            "constraint": "Must be a valid IATA code (e.g., 'JFK').",
+            "violation_examples": [
+              "Providing 'New York' instead of 'JFK'."
+            ],
+            "depends_on": [],
+            "applies_when": "Always"
+          }
+        ],
+        "cabin": [
+          {
+            "type": "enum",
+            "description": "Cabin class must be one of the three allowed values.",
+            "constraint": "Allowed values: 'basic_economy', 'economy', 'business'.",
+            "violation_examples": [
+              "Selecting 'premium_economy' as a cabin class."
+            ],
+            "depends_on": [],
+            "applies_when": "Always"
+          }
+        ],
+        "flights": [
+          {
+            "type": "multi_parameter",
+            "description": "All flights in the reservation must have the same cabin class.",
+            "constraint": "Cabin class must be consistent across all flights in the reservation.",
+            "violation_examples": [
+              "Booking a reservation with outbound in economy and return in business."
+            ],
+            "depends_on": [
+              "cabin"
+            ],
+            "applies_when": "Multiple flights in reservation"
+          }
+        ],
+        "passengers": [
+          {
+            "type": "boundary",
+            "description": "Maximum 5 passengers per reservation.",
+            "constraint": "1-5 passengers allowed per reservation.",
+            "violation_examples": [
+              "Booking a reservation for 6 passengers."
+            ],
+            "depends_on": [],
+            "applies_when": "Always"
+          },
+          {
+            "type": "format",
+            "description": "Each passenger must have first name, last name, and date of birth.",
+            "constraint": "All passenger details must include these fields.",
+            "violation_examples": [
+              "Omitting date of birth for a passenger."
+            ],
+            "depends_on": [],
+            "applies_when": "Always"
+          },
+          {
+            "type": "multi_parameter",
+            "description": "All passengers must fly the same flights in the same cabin.",
+            "constraint": "No variation of itinerary or cabin among passengers in one reservation.",
+            "violation_examples": [
+              "Booking some passengers in business and others in economy in one reservation."
+            ],
+            "depends_on": [
+              "flights",
+              "cabin"
+            ],
+            "applies_when": "Multiple passengers"
+          }
+        ],
+        "payment_methods": [
+          {
+            "type": "resource_limit",
+            "description": "Limit on payment method usage per reservation.",
+            "constraint": "At most one travel certificate, one credit card, up to three gift cards per reservation.",
+            "violation_examples": [
+              "Using two travel certificates in one booking."
+            ],
+            "depends_on": [],
+            "applies_when": "Always"
+          },
+          {
+            "type": "safety",
+            "description": "All payment methods must be already in user profile.",
+            "constraint": "Do not use payment methods not saved to the user's profile.",
+            "violation_examples": [
+              "Entering a new credit card not present in the user's profile."
+            ],
+            "depends_on": [
+              "user_id"
+            ],
+            "applies_when": "Always"
+          }
+        ],
+        "total_baggages": [
+          {
+            "type": "multi_parameter",
+            "description": "Free checked bag allowance depends on membership level and cabin class.",
+            "constraint": "Regular: 0 (basic econ), 1 (econ), 2 (business); Silver: 1, 2, 3; Gold: 2, 3, 4. Each extra bag: $50.",
+            "violation_examples": [
+              "Assigning 2 free bags to a regular member in economy."
+            ],
+            "depends_on": [
+              "cabin",
+              "user_id (membership)"
+            ],
+            "applies_when": "Booking with checked bags"
+          },
+          {
+            "type": "conditional",
+            "description": "Do not add checked bags unless user explicitly requests them.",
+            "constraint": "Only include checked bags as needed.",
+            "violation_examples": [
+              "Automatically adding checked bags that the user didn't ask for."
+            ],
+            "depends_on": [],
+            "applies_when": "Always"
+          }
+        ],
+        "nonfree_baggages": [
+          {
+            "type": "multi_parameter",
+            "description": "Extra baggage above free allowance costs $50 per bag.",
+            "constraint": "Calculate nonfree bags as total minus free allowance.",
+            "violation_examples": [
+              "Not charging for extra bag above free allowance."
+            ],
+            "depends_on": [
+              "total_baggages",
+              "cabin",
+              "user_id (membership)"
+            ],
+            "applies_when": "Total checked bags exceeds free allowance"
+          }
+        ],
+        "insurance": [
+          {
+            "type": "enum",
+            "description": "Travel insurance can be 'yes' or 'no'.",
+            "constraint": "Allowed values: 'yes', 'no'.",
+            "violation_examples": [
+              "Entering 'maybe' for insurance."
+            ],
+            "depends_on": [],
+            "applies_when": "Always"
+          },
+          {
+            "type": "conditional",
+            "description": "Agent must ask user if they want insurance.",
+            "constraint": "Do not add insurance without explicit user request.",
+            "violation_examples": [
+              "Adding insurance by default without asking."
+            ],
+            "depends_on": [],
+            "applies_when": "Always"
+          }
+        ]
+      },
+      "global_policies": [
+        {
+          "type": "safety",
+          "description": "Must obtain explicit user confirmation with complete action details before booking.",
+          "constraint": "List action details and get a 'yes' confirmation before calling the API.",
+          "violation_examples": [
+            "Booking flight without summarizing and confirming with user."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "update_reservation_flights",
+      "policies": {
+        "reservation_id": [
+          {
+            "type": "safety",
+            "description": "User must provide user ID and reservation ID before modification.",
+            "constraint": "Cannot proceed without both IDs.",
+            "violation_examples": [
+              "Updating a reservation without confirming user and reservation ID."
+            ],
+            "depends_on": [],
+            "applies_when": "Always"
+          }
+        ],
+        "cabin": [
+          {
+            "type": "enum",
+            "description": "Cabin class must be one of three allowed values.",
+            "constraint": "Allowed: 'basic_economy', 'economy', 'business'.",
+            "violation_examples": [
+              "Changing cabin to 'premium_economy'."
+            ],
+            "depends_on": [],
+            "applies_when": "Always"
+          },
+          {
+            "type": "state_dependency",
+            "description": "Cabin cannot be changed if any flight in reservation has already been flown.",
+            "constraint": "If any segment has flown, cabin change not allowed.",
+            "violation_examples": [
+              "Trying to upgrade to business after part of trip is flown."
+            ],
+            "depends_on": [],
+            "applies_when": "Any segment already flown"
+          },
+          {
+            "type": "multi_parameter",
+            "description": "Cabin class must be the same for all flights in the reservation.",
+            "constraint": "No mixed cabin per reservation.",
+            "violation_examples": [
+              "Changing only outbound to business, return remains economy."
+            ],
+            "depends_on": [
+              "flights"
+            ],
+            "applies_when": "Multiple flights in reservation"
+          }
+        ],
+        "flights": [
+          {
+            "type": "state_dependency",
+            "description": "Basic economy reservations cannot be modified.",
+            "constraint": "No flight changes allowed for basic economy bookings.",
+            "violation_examples": [
+              "Changing flights for a basic economy reservation."
+            ],
+            "depends_on": [
+              "cabin"
+            ],
+            "applies_when": "Cabin is basic_economy"
+          },
+          {
+            "type": "conditional",
+            "description": "Origin, destination, and trip type cannot be changed when modifying flights.",
+            "constraint": "Must keep origin, destination, and trip type unchanged.",
+            "violation_examples": [
+              "Changing origin from SFO to OAK in a modification."
+            ],
+            "depends_on": [],
+            "applies_when": "Always"
+          },
+          {
+            "type": "multi_parameter",
+            "description": "Some flight segments can be kept, but their prices are not updated.",
+            "constraint": "If keeping existing segments, price remains as originally booked.",
+            "violation_examples": [
+              "Repricing an unchanged kept segment."
+            ],
+            "depends_on": [],
+            "applies_when": "Retaining any flight segment"
+          }
+        ],
+        "payment_id": [
+          {
+            "type": "safety",
+            "description": "Payment method for modifications must be in user profile.",
+            "constraint": "Only use payment_ids saved to user profile.",
+            "violation_examples": [
+              "Entering a new credit card for modification payment/refund."
+            ],
+            "depends_on": [
+              "user_id"
+            ],
+            "applies_when": "Always"
+          },
+          {
+            "type": "resource_limit",
+            "description": "Only a single gift card or credit card can be used for payment/refund in modification.",
+            "constraint": "Cannot combine multiple payment methods for modifications.",
+            "violation_examples": [
+              "Using two gift cards to pay for change fee."
+            ],
+            "depends_on": [],
+            "applies_when": "Flight change"
+          }
+        ]
+      },
+      "global_policies": [
+        {
+          "type": "safety",
+          "description": "Must obtain explicit user confirmation with complete action details before modification.",
+          "constraint": "List all modifications and get a 'yes' confirmation before calling the API.",
+          "violation_examples": [
+            "Updating flights before confirming with the user."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "update_reservation_baggages",
+      "policies": {
+        "reservation_id": [
+          {
+            "type": "safety",
+            "description": "User and reservation IDs must be confirmed before updating.",
+            "constraint": "Cannot proceed without both IDs.",
+            "violation_examples": [
+              "Updating baggage without confirming reservation ID."
+            ],
+            "depends_on": [],
+            "applies_when": "Always"
+          }
+        ],
+        "total_baggages": [
+          {
+            "type": "multi_parameter",
+            "description": "Free checked bag allowance depends on membership and cabin class.",
+            "constraint": "Regular: 0/1/2; Silver: 1/2/3; Gold: 2/3/4 (basic_economy/economy/business)",
+            "violation_examples": [
+              "Allowing 2 free bags for regular member in economy."
+            ],
+            "depends_on": [
+              "cabin",
+              "user_id (membership)"
+            ],
+            "applies_when": "Checked bags added"
+          },
+          {
+            "type": "conditional",
+            "description": "Only allow adding bags, not removing.",
+            "constraint": "Cannot decrease total_baggages via this API.",
+            "violation_examples": [
+              "Reducing total_baggages from 2 to 1."
+            ],
+            "depends_on": [],
+            "applies_when": "Always"
+          }
+        ],
+        "nonfree_baggages": [
+          {
+            "type": "multi_parameter",
+            "description": "Nonfree bags are bags above free allowance, each costs $50.",
+            "constraint": "nonfree_baggages = total_baggages - free allowance; $50 each.",
+            "violation_examples": [
+              "Not charging for extra bags."
+            ],
+            "depends_on": [
+              "total_baggages",
+              "cabin",
+              "user_id (membership)"
+            ],
+            "applies_when": "More bags than free allowance"
+          }
+        ],
+        "payment_id": [
+          {
+            "type": "safety",
+            "description": "Payment method must be in user profile.",
+            "constraint": "Do not use payment methods not in user profile.",
+            "violation_examples": [
+              "Entering a new credit card for baggage payment."
+            ],
+            "depends_on": [
+              "user_id"
+            ],
+            "applies_when": "Always"
+          }
+        ]
+      },
+      "global_policies": [
+        {
+          "type": "safety",
+          "description": "Must obtain explicit user confirmation with complete action details before updating.",
+          "constraint": "List details and get 'yes' confirmation before updating baggages.",
+          "violation_examples": [
+            "Adding bags before confirming with the user."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "update_reservation_passengers",
+      "policies": {
+        "reservation_id": [
+          {
+            "type": "safety",
+            "description": "User and reservation IDs must be confirmed before updating passengers.",
+            "constraint": "Cannot proceed without both IDs.",
+            "violation_examples": [
+              "Updating passengers without confirming reservation ID."
+            ],
+            "depends_on": [],
+            "applies_when": "Always"
+          }
+        ],
+        "passengers": [
+          {
+            "type": "boundary",
+            "description": "Number of passengers cannot be changed.",
+            "constraint": "Only passenger details may be updated, count must match original.",
+            "violation_examples": [
+              "Attempting to add or remove a passenger."
+            ],
+            "depends_on": [],
+            "applies_when": "Always"
+          },
+          {
+            "type": "format",
+            "description": "Each passenger must have first name, last name, and date of birth.",
+            "constraint": "All passenger details must include these fields.",
+            "violation_examples": [
+              "Omitting date of birth for a passenger."
+            ],
+            "depends_on": [],
+            "applies_when": "Always"
+          }
+        ]
+      },
+      "global_policies": [
+        {
+          "type": "safety",
+          "description": "Must obtain explicit user confirmation with complete action details before updating.",
+          "constraint": "List details and get 'yes' confirmation before updating passengers.",
+          "violation_examples": [
+            "Updating passenger info before confirming with the user."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "cancel_reservation",
+      "policies": {
+        "reservation_id": [
+          {
+            "type": "safety",
+            "description": "User and reservation IDs must be confirmed before cancellation.",
+            "constraint": "Cannot proceed without both IDs.",
+            "violation_examples": [
+              "Canceling reservation without confirming reservation ID."
+            ],
+            "depends_on": [],
+            "applies_when": "Always"
+          },
+          {
+            "type": "state_dependency",
+            "description": "Cannot cancel if any portion of the flight has already been flown.",
+            "constraint": "Cancellation not allowed if any segment is flown.",
+            "violation_examples": [
+              "Trying to cancel a reservation after outbound segment is flown."
+            ],
+            "depends_on": [],
+            "applies_when": "Any segment already flown"
+          }
+        ]
+      },
+      "global_policies": [
+        {
+          "type": "conditional",
+          "description": "Cancellation only allowed if one of the following is true: within 24 hrs of booking, airline cancelled flight, business class, or user has insurance AND covered reason.",
+          "constraint": "At least one condition must be met; otherwise, transfer to human.",
+          "violation_examples": [
+            "Canceling an economy reservation booked 2 days ago with no insurance and not airline cancelled."
+          ]
+        },
+        {
+          "type": "safety",
+          "description": "Must obtain explicit user confirmation with complete action details before cancellation.",
+          "constraint": "List details and get 'yes' confirmation before calling API.",
+          "violation_examples": [
+            "Canceling before confirming with user."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "send_certificate",
+      "policies": {
+        "user_id": [
+          {
+            "type": "permission",
+            "description": "User must be eligible for compensation: silver/gold member, or has travel insurance, or flies business.",
+            "constraint": "Do not send certificate to regular member flying (basic) economy without insurance.",
+            "violation_examples": [
+              "Sending certificate for delay to regular member in economy without insurance."
+            ],
+            "depends_on": [
+              "user_id (membership)",
+              "reservation_id (cabin/insurance)"
+            ],
+            "applies_when": "Compensation scenario"
+          }
+        ],
+        "amount": [
+          {
+            "type": "conditional",
+            "description": "Compensation amount depends on scenario and number of passengers.",
+            "constraint": "Cancelled flight: $100 x passengers; delayed flight: $50 x passengers.",
+            "violation_examples": [
+              "Sending $200 for a delayed flight for 5 passengers."
+            ],
+            "depends_on": [
+              "reservation_id (passenger count)",
+              "complaint_type"
+            ],
+            "applies_when": "After confirming facts and eligibility"
+          }
+        ]
+      },
+      "global_policies": [
+        {
+          "type": "conditional",
+          "description": "Do not send compensation unless user explicitly asks for it.",
+          "constraint": "No proactive compensation offers.",
+          "violation_examples": [
+            "Sending certificate without user's request."
+          ]
+        },
+        {
+          "type": "permission",
+          "description": "Only compensate for cancelled or delayed flights as listed.",
+          "constraint": "No compensation for other reasons.",
+          "violation_examples": [
+            "Sending certificate for lost luggage."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "transfer_to_human_agents",
+      "policies": {
+        "summary": [
+          {
+            "type": "conditional",
+            "description": "Only transfer if user explicitly asks or agent cannot solve the issue within allowed scope.",
+            "constraint": "No transfer for solvable requests.",
+            "violation_examples": [
+              "Transferring user for a simple booking request."
+            ],
+            "depends_on": [],
+            "applies_when": "User requests transfer or out-of-scope issue"
+          }
+        ]
+      },
+      "global_policies": [
+        {
+          "type": "conditional",
+          "description": "Must send 'YOU ARE BEING TRANSFERRED TO A HUMAN AGENT. PLEASE HOLD ON.' after transfer call.",
+          "constraint": "Send this message after tool call.",
+          "violation_examples": [
+            "Transferring without notifying user."
+          ]
+        }
+      ]
+    },
+    {
+      "name": "get_flight_status",
+      "policies": {
+        "flight_number": [
+          {
+            "type": "format",
+            "description": "Flight number must be valid airline flight number format.",
+            "constraint": "E.g., 'UA123'.",
+            "violation_examples": [
+              "Using '123' as flight number."
+            ],
+            "depends_on": [],
+            "applies_when": "Always"
+          }
+        ],
+        "date": [
+          {
+            "type": "format",
+            "description": "Date must be in 'YYYY-MM-DD' format.",
+            "constraint": "E.g., '2024-06-01'.",
+            "violation_examples": [
+              "Using '6/1/2024' as date."
+            ],
+            "depends_on": [],
+            "applies_when": "Always"
+          }
+        ]
+      },
+      "global_policies": []
+    },
+    {
+      "name": "get_reservation_details",
+      "policies": {
+        "reservation_id": [
+          {
+            "type": "format",
+            "description": "Reservation ID must be in correct format (e.g., alphanumeric).",
+            "constraint": "E.g., '8JX2WO'.",
+            "violation_examples": [
+              "Using '12345' as reservation ID."
+            ],
+            "depends_on": [],
+            "applies_when": "Always"
+          }
+        ]
+      },
+      "global_policies": []
+    },
+    {
+      "name": "get_user_details",
+      "policies": {
+        "user_id": [
+          {
+            "type": "format",
+            "description": "User ID must match airline format (e.g., 'sara_doe_496').",
+            "constraint": "E.g., 'john_smith_123'.",
+            "violation_examples": [
+              "Using 'jsmith' as user ID."
+            ],
+            "depends_on": [],
+            "applies_when": "Always"
+          }
+        ]
+      },
+      "global_policies": []
+    },
+    {
+      "name": "list_all_airports",
+      "policies": {},
+      "global_policies": []
+    },
+    {
+      "name": "search_direct_flight",
+      "policies": {
+        "origin": [
+          {
+            "type": "format",
+            "description": "Origin must be IATA code.",
+            "constraint": "Three-letter code (e.g., 'JFK').",
+            "violation_examples": [
+              "Using 'New York' instead of 'JFK'."
+            ],
+            "depends_on": [],
+            "applies_when": "Always"
+          }
+        ],
+        "destination": [
+          {
+            "type": "format",
+            "description": "Destination must be IATA code.",
+            "constraint": "Three-letter code (e.g., 'LAX').",
+            "violation_examples": [
+              "Using 'Los Angeles' instead of 'LAX'."
+            ],
+            "depends_on": [],
+            "applies_when": "Always"
+          }
+        ],
+        "date": [
+          {
+            "type": "format",
+            "description": "Date must be 'YYYY-MM-DD'.",
+            "constraint": "E.g., '2024-05-01'.",
+            "violation_examples": [
+              "Using '5/1/2024' as date."
+            ],
+            "depends_on": [],
+            "applies_when": "Always"
+          }
+        ]
+      },
+      "global_policies": []
+    },
+    {
+      "name": "search_onestop_flight",
+      "policies": {
+        "origin": [
+          {
+            "type": "format",
+            "description": "Origin must be IATA code.",
+            "constraint": "Three-letter code (e.g., 'JFK').",
+            "violation_examples": [
+              "Using 'New York' instead of 'JFK'."
+            ],
+            "depends_on": [],
+            "applies_when": "Always"
+          }
+        ],
+        "destination": [
+          {
+            "type": "format",
+            "description": "Destination must be IATA code.",
+            "constraint": "Three-letter code (e.g., 'LAX').",
+            "violation_examples": [
+              "Using 'Los Angeles' instead of 'LAX'."
+            ],
+            "depends_on": [],
+            "applies_when": "Always"
+          }
+        ],
+        "date": [
+          {
+            "type": "format",
+            "description": "Date must be 'YYYY-MM-DD'.",
+            "constraint": "E.g., '2024-05-01'.",
+            "violation_examples": [
+              "Using '5/1/2024' as date."
+            ],
+            "depends_on": [],
+            "applies_when": "Always"
+          }
+        ]
+      },
+      "global_policies": []
+    },
+    {
+      "name": "calculate",
+      "policies": {},
+      "global_policies": []
+    }
+  ],
+  "cross_function_policies": [
+    {
+      "description": "Must obtain explicit user confirmation with action details before any database update (book, modify, baggage, cabin, passenger info).",
+      "affected_functions": [
+        "book_reservation",
+        "update_reservation_flights",
+        "update_reservation_baggages",
+        "update_reservation_passengers",
+        "cancel_reservation"
+      ],
+      "constraint": "List action details and require user to say 'yes' before making tool call."
+    },
+    {
+      "description": "Only one tool call at a time; cannot respond to user and make tool call simultaneously.",
+      "affected_functions": [
+        "book_reservation",
+        "update_reservation_flights",
+        "update_reservation_baggages",
+        "update_reservation_passengers",
+        "cancel_reservation",
+        "send_certificate",
+        "transfer_to_human_agents"
+      ],
+      "constraint": "No parallel tool calls or combined tool+user responses."
+    },
+    {
+      "description": "Transfer to human agent only if user explicitly requests or agent cannot handle within policy/tool scope.",
+      "affected_functions": [
+        "transfer_to_human_agents"
+      ],
+      "constraint": "For all escalation, transfer only after verifying policy boundaries."
+    },
+    {
+      "description": "Denied requests must be those against policy.",
+      "affected_functions": [
+        "book_reservation",
+        "update_reservation_flights",
+        "update_reservation_baggages",
+        "update_reservation_passengers",
+        "cancel_reservation",
+        "send_certificate"
+      ],
+      "constraint": "If request violates any policy, deny the request."
+    },
+    {
+      "description": "Refunds must go to original payment methods within 5-7 business days.",
+      "affected_functions": [
+        "cancel_reservation"
+      ],
+      "constraint": "Do not refund to alternate payment methods."
+    },
+    {
+      "description": "Do not provide information, knowledge, or procedures not provided by user or available tools; no subjective recommendations or comments.",
+      "affected_functions": [
+        "ALL"
+      ],
+      "constraint": "No advice or information beyond what is in user's input or tool outputs."
+    }
+  ]
+}

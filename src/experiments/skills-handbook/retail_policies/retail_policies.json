@@ -1,0 +1,752 @@
+{
+  "api_name": "retail",
+  "functions": [
+    {
+      "name": "find_user_id_by_email",
+      "policies": {
+        "email": [
+          {
+            "type": "format",
+            "description": "Email must be provided in a valid email address format.",
+            "constraint": "Must be a standard email format, e.g., user@example.com.",
+            "violation_examples": [
+              "userexample.com",
+              "user@com",
+              ""
+            ],
+            "depends_on": [],
+            "applies_when": "Always"
+          }
+        ]
+      },
+      "global_policies": [
+        {
+          "type": "safety",
+          "description": "User must be authenticated at the start of every conversation using email OR name+zip.",
+          "constraint": "User ID must be found via email or, if not possible, via name+zip (not only user-supplied ID).",
+          "violation_examples": [
+            "Using user-supplied user ID without authentication lookup"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "find_user_id_by_name_zip",
+      "policies": {
+        "first_name": [
+          {
+            "type": "format",
+            "description": "First name must be a non-empty string.",
+            "constraint": "First name required, no numbers or special characters.",
+            "violation_examples": [
+              "",
+              "1234",
+              "!@#"
+            ],
+            "depends_on": [],
+            "applies_when": "When using name+zip for authentication"
+          }
+        ],
+        "last_name": [
+          {
+            "type": "format",
+            "description": "Last name must be a non-empty string.",
+            "constraint": "Last name required, no numbers or special characters.",
+            "violation_examples": [
+              "",
+              "1234",
+              "!@#"
+            ],
+            "depends_on": [],
+            "applies_when": "When using name+zip for authentication"
+          }
+        ],
+        "zip": [
+          {
+            "type": "format",
+            "description": "Zip must be a valid postal code.",
+            "constraint": "Zip code must be digits, typically 5 digits (US).",
+            "violation_examples": [
+              "",
+              "abcde",
+              "123"
+            ],
+            "depends_on": [],
+            "applies_when": "When using name+zip for authentication"
+          }
+        ]
+      },
+      "global_policies": [
+        {
+          "type": "safety",
+          "description": "User must be authenticated at the start of every conversation using email OR name+zip.",
+          "constraint": "User ID must be found via email or, if not possible, via name+zip (not only user-supplied ID).",
+          "violation_examples": [
+            "Using user-supplied user ID without authentication lookup"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "get_user_details",
+      "policies": {
+        "user_id": [
+          {
+            "type": "safety",
+            "description": "Can only provide or act on information for the authenticated user.",
+            "constraint": "user_id must match the authenticated user for this conversation.",
+            "violation_examples": [
+              "Fetching details for a user other than the authenticated user"
+            ],
+            "depends_on": [],
+            "applies_when": "Always"
+          }
+        ]
+      },
+      "global_policies": []
+    },
+    {
+      "name": "modify_user_address",
+      "policies": {
+        "user_id": [
+          {
+            "type": "safety",
+            "description": "Can only modify address for the authenticated user.",
+            "constraint": "user_id must match authenticated user.",
+            "violation_examples": [
+              "Modifying address for a different user"
+            ],
+            "depends_on": [],
+            "applies_when": "Always"
+          }
+        ],
+        "address1": [
+          {
+            "type": "format",
+            "description": "Must be a valid street address.",
+            "constraint": "Cannot be empty.",
+            "violation_examples": [
+              ""
+            ],
+            "depends_on": [],
+            "applies_when": "Always"
+          }
+        ],
+        "zip": [
+          {
+            "type": "format",
+            "description": "Zip must be a valid postal code.",
+            "constraint": "Zip code must be digits, typically 5 digits (US).",
+            "violation_examples": [
+              "",
+              "abcde",
+              "123"
+            ],
+            "depends_on": [],
+            "applies_when": "Always"
+          }
+        ]
+      },
+      "global_policies": [
+        {
+          "type": "safety",
+          "description": "Explicit user confirmation required before changing address.",
+          "constraint": "Agent must review change details and get an explicit 'yes' before proceeding.",
+          "violation_examples": [
+            "Changing address without user confirmation"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "get_order_details",
+      "policies": {
+        "order_id": [
+          {
+            "type": "format",
+            "description": "Order ID must start with '#' and be a valid string.",
+            "constraint": "Format: '#W0000000' (example).",
+            "violation_examples": [
+              "W0000000",
+              "0000000",
+              ""
+            ],
+            "depends_on": [],
+            "applies_when": "Always"
+          }
+        ]
+      },
+      "global_policies": [
+        {
+          "type": "safety",
+          "description": "Can only fetch orders for the authenticated user.",
+          "constraint": "Order must belong to the authenticated user.",
+          "violation_examples": [
+            "Fetching order for a different user"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "cancel_pending_order",
+      "policies": {
+        "order_id": [
+          {
+            "type": "state_dependency",
+            "description": "Order must be in 'pending' status to cancel.",
+            "constraint": "Order status must be 'pending'.",
+            "violation_examples": [
+              "Cancelling an order with status 'processed', 'delivered', or 'cancelled'"
+            ],
+            "depends_on": [
+              "status"
+            ],
+            "applies_when": "Always"
+          }
+        ],
+        "reason": [
+          {
+            "type": "enum",
+            "description": "Cancellation reason must be one of two allowed values.",
+            "constraint": "'no longer needed' or 'ordered by mistake' only.",
+            "violation_examples": [
+              "Reason: 'found cheaper', 'delayed shipping', 'other'"
+            ],
+            "depends_on": [],
+            "applies_when": "Always"
+          }
+        ]
+      },
+      "global_policies": [
+        {
+          "type": "safety",
+          "description": "Explicit user confirmation required before cancelling order.",
+          "constraint": "Agent must review cancellation details and get explicit 'yes' before proceeding.",
+          "violation_examples": [
+            "Cancelling an order without user confirmation"
+          ]
+        },
+        {
+          "type": "state_dependency",
+          "description": "Refund method depends on original payment method.",
+          "constraint": "If gift card: refund immediately; if other: refund in 5-7 business days.",
+          "violation_examples": [
+            "Telling user refund will be immediate for credit card"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "modify_pending_order_address",
+      "policies": {
+        "order_id": [
+          {
+            "type": "state_dependency",
+            "description": "Order must be in 'pending' status to modify address.",
+            "constraint": "Order status must be 'pending'.",
+            "violation_examples": [
+              "Trying to modify address for a delivered order"
+            ],
+            "depends_on": [
+              "status"
+            ],
+            "applies_when": "Always"
+          }
+        ],
+        "address1": [
+          {
+            "type": "format",
+            "description": "Must be a valid street address.",
+            "constraint": "Cannot be empty.",
+            "violation_examples": [
+              ""
+            ],
+            "depends_on": [],
+            "applies_when": "Always"
+          }
+        ],
+        "zip": [
+          {
+            "type": "format",
+            "description": "Zip must be a valid postal code.",
+            "constraint": "Zip code must be digits, typically 5 digits (US).",
+            "violation_examples": [
+              "",
+              "abcde",
+              "123"
+            ],
+            "depends_on": [],
+            "applies_when": "Always"
+          }
+        ]
+      },
+      "global_policies": [
+        {
+          "type": "safety",
+          "description": "Explicit user confirmation required before modifying address.",
+          "constraint": "Agent must review modification details and get explicit 'yes' before proceeding.",
+          "violation_examples": [
+            "Modifying address without user confirmation"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "modify_pending_order_payment",
+      "policies": {
+        "order_id": [
+          {
+            "type": "state_dependency",
+            "description": "Order must be in 'pending' status to modify payment method.",
+            "constraint": "Order status must be 'pending'.",
+            "violation_examples": [
+              "Trying to modify payment for a delivered order"
+            ],
+            "depends_on": [
+              "status"
+            ],
+            "applies_when": "Always"
+          }
+        ],
+        "payment_method_id": [
+          {
+            "type": "enum",
+            "description": "Payment method must be a valid method owned by user and different from original method.",
+            "constraint": "Must be a user payment method (gift card, paypal, credit card) and not original payment method.",
+            "violation_examples": [
+              "Setting payment method to one not owned by the user",
+              "Trying to set to same payment as original"
+            ],
+            "depends_on": [
+              "original_payment_method_id"
+            ],
+            "applies_when": "Always"
+          },
+          {
+            "type": "multi_parameter",
+            "description": "If payment method is gift card, it must have enough balance to cover the order total.",
+            "constraint": "Gift card's balance >= order total.",
+            "violation_examples": [
+              "Gift card with $10 balance chosen for $50 order"
+            ],
+            "depends_on": [
+              "order_total"
+            ],
+            "applies_when": "When payment method is gift card"
+          }
+        ]
+      },
+      "global_policies": [
+        {
+          "type": "safety",
+          "description": "Explicit user confirmation required before modifying payment method.",
+          "constraint": "Agent must review modification details and get explicit 'yes' before proceeding.",
+          "violation_examples": [
+            "Modifying payment method without user confirmation"
+          ]
+        },
+        {
+          "type": "state_dependency",
+          "description": "Refund to original payment method after payment change.",
+          "constraint": "Refund is immediate if original payment was gift card, otherwise 5-7 business days.",
+          "violation_examples": [
+            "Promising instant refund for credit card payment"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "modify_pending_order_items",
+      "policies": {
+        "order_id": [
+          {
+            "type": "state_dependency",
+            "description": "Order must be in 'pending' status to modify items.",
+            "constraint": "Order status must be 'pending'.",
+            "violation_examples": [
+              "Trying to modify items for processed or delivered order"
+            ],
+            "depends_on": [
+              "status"
+            ],
+            "applies_when": "Always"
+          }
+        ],
+        "item_ids": [
+          {
+            "type": "resource_limit",
+            "description": "Can only modify items to a new variant of the same product type.",
+            "constraint": "Each item must be exchanged for a different variant of the SAME product (no product type change).",
+            "violation_examples": [
+              "Changing a t-shirt to a shoe"
+            ],
+            "depends_on": [
+              "new_item_ids"
+            ],
+            "applies_when": "Always"
+          }
+        ],
+        "new_item_ids": [
+          {
+            "type": "resource_limit",
+            "description": "New item must be a variant (option) of the same product type.",
+            "constraint": "No change of product type allowed.",
+            "violation_examples": [
+              "Changing a mug to a t-shirt"
+            ],
+            "depends_on": [
+              "item_ids"
+            ],
+            "applies_when": "Always"
+          }
+        ],
+        "payment_method_id": [
+          {
+            "type": "enum",
+            "description": "Payment method must be owned by user and valid.",
+            "constraint": "Must be a valid payment method (gift card, paypal, credit card).",
+            "violation_examples": [
+              "Using a payment method not linked to user"
+            ],
+            "depends_on": [],
+            "applies_when": "Always"
+          },
+          {
+            "type": "multi_parameter",
+            "description": "If payment method is gift card, it must have enough balance to cover any price difference.",
+            "constraint": "Gift card's balance >= price difference if paying extra.",
+            "violation_examples": [
+              "Gift card with insufficient balance for price difference"
+            ],
+            "depends_on": [
+              "price_difference"
+            ],
+            "applies_when": "When payment method is gift card and price difference > 0"
+          }
+        ]
+      },
+      "global_policies": [
+        {
+          "type": "resource_limit",
+          "description": "Can only modify order items ONCE per order.",
+          "constraint": "Do not call this function more than once for the same order.",
+          "violation_examples": [
+            "Calling modify_pending_order_items twice for the same order"
+          ]
+        },
+        {
+          "type": "safety",
+          "description": "Explicit user confirmation required before modifying items.",
+          "constraint": "Agent must review item modification details and get explicit 'yes' before proceeding.",
+          "violation_examples": [
+            "Modifying order items without user confirmation"
+          ]
+        },
+        {
+          "type": "safety",
+          "description": "Remind user to confirm all items to be modified before proceeding.",
+          "constraint": "User must confirm list of all items to be modified.",
+          "violation_examples": [
+            "User adds more items after function is called"
+          ]
+        },
+        {
+          "type": "state_dependency",
+          "description": "After modification, order status changes to 'pending (items modified)' and cannot be cancelled or further modified.",
+          "constraint": "No further modification/cancellation after this call.",
+          "violation_examples": [
+            "Trying to cancel after modifying items"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "return_delivered_order_items",
+      "policies": {
+        "order_id": [
+          {
+            "type": "state_dependency",
+            "description": "Order must be in 'delivered' status to return items.",
+            "constraint": "Order status must be 'delivered'.",
+            "violation_examples": [
+              "Trying to return items from a pending or cancelled order"
+            ],
+            "depends_on": [
+              "status"
+            ],
+            "applies_when": "Always"
+          }
+        ],
+        "item_ids": [
+          {
+            "type": "resource_limit",
+            "description": "Must specify which delivered items to return.",
+            "constraint": "Item IDs must belong to the delivered order.",
+            "violation_examples": [
+              "Returning items not in the order"
+            ],
+            "depends_on": [
+              "order_id"
+            ],
+            "applies_when": "Always"
+          }
+        ],
+        "payment_method_id": [
+          {
+            "type": "enum",
+            "description": "Refund must go to original payment method or an existing gift card.",
+            "constraint": "Payment method must match one of these two options.",
+            "violation_examples": [
+              "Refunding to a new credit card"
+            ],
+            "depends_on": [
+              "order_id",
+              "user_id"
+            ],
+            "applies_when": "Always"
+          }
+        ]
+      },
+      "global_policies": [
+        {
+          "type": "safety",
+          "description": "Explicit user confirmation required before returning items.",
+          "constraint": "Agent must review return details and get explicit 'yes' before proceeding.",
+          "violation_examples": [
+            "Returning items without user confirmation"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "exchange_delivered_order_items",
+      "policies": {
+        "order_id": [
+          {
+            "type": "state_dependency",
+            "description": "Order must be in 'delivered' status to exchange items.",
+            "constraint": "Order status must be 'delivered'.",
+            "violation_examples": [
+              "Trying to exchange items for a pending or cancelled order"
+            ],
+            "depends_on": [
+              "status"
+            ],
+            "applies_when": "Always"
+          }
+        ],
+        "item_ids": [
+          {
+            "type": "resource_limit",
+            "description": "Can only exchange items for available variants of the SAME product type.",
+            "constraint": "No change of product type allowed.",
+            "violation_examples": [
+              "Exchanging a mug for a t-shirt"
+            ],
+            "depends_on": [
+              "new_item_ids"
+            ],
+            "applies_when": "Always"
+          }
+        ],
+        "new_item_ids": [
+          {
+            "type": "resource_limit",
+            "description": "New item must be a variant (option) of the same product type.",
+            "constraint": "No change of product type allowed.",
+            "violation_examples": [
+              "Exchanging a t-shirt for sneakers"
+            ],
+            "depends_on": [
+              "item_ids"
+            ],
+            "applies_when": "Always"
+          }
+        ],
+        "payment_method_id": [
+          {
+            "type": "enum",
+            "description": "Payment method must be owned by user and valid.",
+            "constraint": "Must be a valid payment method (gift card, paypal, credit card).",
+            "violation_examples": [
+              "Using a payment method not linked to user"
+            ],
+            "depends_on": [],
+            "applies_when": "Always"
+          },
+          {
+            "type": "multi_parameter",
+            "description": "If payment method is gift card, it must have enough balance to cover any price difference.",
+            "constraint": "Gift card's balance >= price difference if paying extra.",
+            "violation_examples": [
+              "Gift card with insufficient balance for price difference"
+            ],
+            "depends_on": [
+              "price_difference"
+            ],
+            "applies_when": "When payment method is gift card and price difference > 0"
+          }
+        ]
+      },
+      "global_policies": [
+        {
+          "type": "safety",
+          "description": "Explicit user confirmation required before exchanging items.",
+          "constraint": "Agent must review exchange details and get explicit 'yes' before proceeding.",
+          "violation_examples": [
+            "Exchanging items without user confirmation"
+          ]
+        },
+        {
+          "type": "safety",
+          "description": "Remind user to confirm all items to be exchanged before proceeding.",
+          "constraint": "User must confirm list of all items to be exchanged.",
+          "violation_examples": [
+            "User adds more items after function is called"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "get_product_details",
+      "policies": {
+        "product_id": [
+          {
+            "type": "format",
+            "description": "Product ID must be a valid ID (different from item ID).",
+            "constraint": "Format: string, e.g., '6086499569'.",
+            "violation_examples": [
+              "Using item ID instead of product ID"
+            ],
+            "depends_on": [],
+            "applies_when": "Always"
+          }
+        ]
+      },
+      "global_policies": []
+    },
+    {
+      "name": "list_all_product_types",
+      "policies": {},
+      "global_policies": [
+        {
+          "type": "resource_limit",
+          "description": "There are only 50 product types in the store.",
+          "constraint": "List should never exceed 50 product types.",
+          "violation_examples": [
+            "Returning 55 product types"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "transfer_to_human_agents",
+      "policies": {
+        "summary": [
+          {
+            "type": "format",
+            "description": "The summary must describe the user's issue.",
+            "constraint": "Summary must be present and relevant to the user's request.",
+            "violation_examples": [
+              "",
+              "No summary provided"
+            ],
+            "depends_on": [],
+            "applies_when": "Always"
+          }
+        ]
+      },
+      "global_policies": [
+        {
+          "type": "permission",
+          "description": "Only transfer if user explicitly asks for a human or agent cannot solve within policy/tools.",
+          "constraint": "Do not transfer unless conditions met.",
+          "violation_examples": [
+            "Transferring for requests that agent can handle"
+          ]
+        },
+        {
+          "type": "format",
+          "description": "After transfer, always send standard message to user.",
+          "constraint": "Message: 'YOU ARE BEING TRANSFERRED TO A HUMAN AGENT. PLEASE HOLD ON.'",
+          "violation_examples": [
+            "Sending a different or no message after transfer"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "calculate",
+      "policies": {},
+      "global_policies": []
+    }
+  ],
+  "cross_function_policies": [
+    {
+      "description": "Agent must authenticate user every session (via email or name+zip) even if user supplies user_id.",
+      "affected_functions": [
+        "find_user_id_by_email",
+        "find_user_id_by_name_zip",
+        "get_user_details",
+        "get_order_details",
+        "modify_user_address",
+        "cancel_pending_order",
+        "modify_pending_order_address",
+        "modify_pending_order_payment",
+        "modify_pending_order_items",
+        "return_delivered_order_items",
+        "exchange_delivered_order_items"
+      ],
+      "constraint": "Never use user_id supplied by user alone; always authenticate using email or name+zip."
+    },
+    {
+      "description": "Agent can only assist one user per conversation; must deny or refuse all actions for other users.",
+      "affected_functions": [
+        "get_user_details",
+        "get_order_details",
+        "modify_user_address",
+        "cancel_pending_order",
+        "modify_pending_order_address",
+        "modify_pending_order_payment",
+        "modify_pending_order_items",
+        "return_delivered_order_items",
+        "exchange_delivered_order_items"
+      ],
+      "constraint": "All actions must be for authenticated user only."
+    },
+    {
+      "description": "For any action that updates the database (cancellation, modification, return, exchange), agent must review action details and get explicit user confirmation ('yes') before proceeding.",
+      "affected_functions": [
+        "cancel_pending_order",
+        "modify_pending_order_address",
+        "modify_pending_order_payment",
+        "modify_pending_order_items",
+        "return_delivered_order_items",
+        "exchange_delivered_order_items",
+        "modify_user_address"
+      ],
+      "constraint": "Never perform these actions without explicit confirmation."
+    },
+    {
+      "description": "Agent cannot create or invent information, policies, or procedures outside those provided by the user or tools.",
+      "affected_functions": [
+        "All"
+      ],
+      "constraint": "No subjective recommendations, guesses, or invented knowledge."
+    },
+    {
+      "description": "Agent should only make one tool (API) call at a time and never send a user message in the same step; if responding to the user, do not make a tool call in the same step.",
+      "affected_functions": [
+        "All"
+      ],
+      "constraint": "No simultaneous tool call and user message."
+    },
+    {
+      "description": "Deny any user request that violates any of the above policies.",
+      "affected_functions": [
+        "All"
+      ],
+      "constraint": "If a request cannot be handled within policy, deny it."
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+# Task: Extract Structured Policies from Airline Policy Document
+
+You are an expert at analyzing policy documents and extracting structured constraints for API function calls.
+
+## Input
+
+### Policy Document
+```
+{policy_document}
+```
+
+### Available API Functions
+```json
+{api_spec}
+```
+
+## Your Task
+
+Extract all policies from the policy document and map them to specific API functions and parameters. For each function, identify:
+
+1. **Boundary Policies**: Numerical limits or constraints (e.g., "max 5 passengers")
+2. **Enum Policies**: Restricted set of valid values (already in spec, but note any special rules)
+3. **Format Policies**: Required formats for strings (e.g., "YYYY-MM-DD" for dates)
+4. **Resource Limit Policies**: Limits on resource usage (e.g., "max 1 certificate, 3 gift cards")
+5. **State Dependency Policies**: Rules that depend on current state (e.g., "cannot modify if flight already flown")
+6. **Safety Policies**: Security or safety constraints (e.g., "payment methods must be in user profile")
+7. **Permission Policies**: Authorization rules (e.g., "only silver/gold members get compensation")
+8. **Multi-Parameter Policies**: Rules involving multiple parameters (e.g., baggage allowance depends on cabin + membership)
+9. **Conditional Policies**: Rules that apply only under certain conditions
+
+## Output Format
+
+Return a JSON object with the following structure:
+
+```json
+{{
+  "api_name": "API_NAME_HERE",
+  "functions": [
+    {{
+      "name": "function_name",
+      "policies": {{
+        "parameter_name": [
+          {{
+            "type": "boundary|enum|format|resource_limit|state_dependency|safety|permission|multi_parameter|conditional",
+            "description": "Human-readable description of the policy",
+            "constraint": "Specific constraint details (e.g., 'max: 5', 'format: YYYY-MM-DD', etc.)",
+            "violation_examples": [
+              "Example of what would violate this policy"
+            ],
+            "depends_on": ["other_parameter1", "other_parameter2"],
+            "applies_when": "Condition under which this policy applies (for conditional policies)"
+          }}
+        ]
+      }},
+      "global_policies": [
+        {{
+          "type": "policy_type",
+          "description": "Policies that affect the entire function call, not just one parameter",
+          "constraint": "Details",
+          "violation_examples": ["Examples"]
+        }}
+      ]
+    }}
+  ],
+  "cross_function_policies": [
+    {{
+      "description": "Policies that span multiple functions or affect agent behavior globally",
+      "affected_functions": ["function1", "function2"],
+      "constraint": "Details"
+    }}
+  ]
+}}
+```
+
+## Important Guidelines
+
+1. **Be Comprehensive**: Extract ALL policies mentioned in the document, even if they seem minor
+2. **Be Specific**: Map each policy to the exact function(s) and parameter(s) it affects
+3. **Include Context**: For complex policies (baggage rules, cancellation conditions), include the full context
+4. **Note Dependencies**: If a policy depends on other parameters (e.g., baggage depends on membership level + cabin), note those dependencies
+5. **Provide Examples**: Include concrete violation examples that would make good test scenarios
+6. **Handle Complexity**: Some policies are complex (e.g., "cancellation allowed if within 24hrs OR business class OR has insurance"). Capture all conditions
+7. **Agent Behavior**: Include policies about how the agent should behave (e.g., "obtain explicit confirmation before updates")
+
+## API Name
+
+The API name is: **{api_name}**
+
+## Expected Output
+
+Return ONLY the JSON object. Do not include any explanatory text before or after the JSON.

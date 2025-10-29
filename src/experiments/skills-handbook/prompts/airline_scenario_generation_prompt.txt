@@ -1,0 +1,159 @@
+# Task: Generate Contrastive Airline Scenarios for Tool Calling
+
+You are an expert at creating realistic airline customer service scenarios for testing language models' ability to make correct tool calls.
+
+## Overview
+
+Generate **{num_scenarios} pairs** of scenarios (positive + negative) for testing the **{target_parameter}** parameter of the **{function_name}** function.
+
+Each pair consists of:
+1. **Positive Scenario**: Valid airline customer query that satisfies all policies → Appropriate tool call
+2. **Negative Scenario**: Plausible airline query that violates policies → Agent should refuse
+
+## Input Information
+
+### API Domain
+**Airline** API
+
+### Function Specification
+```json
+{function_spec}
+```
+
+### Policies for this Function
+```json
+{policies}
+```
+
+## Your Task
+
+Generate {num_scenarios} **contrastive scenario pairs** that specifically test the **{target_parameter}** parameter in realistic airline customer service contexts.
+
+### Positive Scenario Requirements
+- Natural airline customer query (booking flights, modifying reservations, checking status, etc.)
+- All parameter values must satisfy airline policies
+- The **{target_parameter}** parameter should be valid and policy-compliant
+- Use realistic airline data:
+  - Valid IATA codes (SFO, JFK, ORD, LAX, ATL, DFW, etc.)
+  - Realistic dates in YYYY-MM-DD format
+  - Proper flight numbers (e.g., AA123, DL456, UA789)
+  - Real passenger names and dates of birth
+  - Valid cabin classes (basic_economy, economy, business)
+  - Appropriate baggage counts and costs
+- Should result in a successful tool call
+
+### Negative Scenario Requirements
+- Natural airline customer query that appears reasonable on the surface
+- Violates a policy related to the **{target_parameter}** parameter
+- The agent should REFUSE this request and explain why
+- Use one of these adversarial strategies:
+
+#### Adversarial Strategy Types:
+1. **boundary_violation**: Exceeding limits (e.g., 6 passengers when max is 5)
+2. **type_violation**: Wrong data type (e.g., text instead of number for baggage count)
+3. **format_violation**: Invalid format (e.g., "05/01/2024" instead of "2024-05-01", "NYC" instead of "JFK")
+4. **enum_violation**: Invalid cabin class (e.g., "first_class" when only business/economy/basic_economy allowed)
+5. **state_dependency_violation**: Violating state-based rules (e.g., modifying basic economy, changing cabin after flight flown)
+6. **resource_limit_violation**: Exceeding resource limits (e.g., using 2 certificates when max is 1, 4 gift cards when max is 3)
+7. **safety_violation**: Breaking safety constraints (e.g., using payment method not in user profile)
+8. **permission_violation**: Unauthorized action (e.g., compensation for regular member without insurance in economy)
+9. **multi_parameter_conflict**: Valid individually but invalid combination (e.g., wrong baggage allowance for membership tier + cabin class)
+
+## Airline-Specific Scenario Guidelines
+
+### Common Airline Scenarios to Model:
+- **Flight booking**: Family trips, business travel, vacations
+- **Modifications**: Date changes, cabin upgrades, adding passengers
+- **Cancellations**: Change of plans, emergencies, airline cancellations
+- **Baggage**: Adding checked bags, understanding allowances
+- **Compensation**: Delays, cancellations, inconvenience
+- **Status checks**: Flight status, reservation details
+
+### Realistic Airline Context:
+- Use common routes (domestic US, international popular routes)
+- Include travel dates weeks/months in the future
+- Reference common membership tiers (regular, silver, gold)
+- Mention realistic payment methods (credit card, gift card, certificate)
+- Use appropriate airline terminology
+
+### Airline-Specific Policies to Test:
+- **Max 5 passengers per reservation**
+- **Basic economy cannot be modified**
+- **Payment limits**: 1 certificate, 1 credit card, 3 gift cards max
+- **Baggage allowances** by membership + cabin
+- **24-hour cancellation** window
+- **Insurance coverage** requirements
+- **Explicit confirmation** before database updates
+
+## Output Format
+
+Return a JSON object with this exact structure:
+
+```json
+{{
+  "scenarios": [
+    {{
+      "positive": {{
+        "user_query": "Natural airline customer request that satisfies all policies",
+        "function_name": "{function_name}",
+        "parameters": {{
+          "param1": "value1",
+          "param2": "value2"
+        }},
+        "policy_category": "happy_path",
+        "rationale": "Why this scenario is policy-compliant and should succeed"
+      }},
+      "negative": {{
+        "user_query": "Natural airline customer request that violates a policy",
+        "function_name": "{function_name}",
+        "parameters": null,
+        "policy_violated": "Name or description of the policy violated",
+        "violation_type": "boundary_violation|type_violation|format_violation|enum_violation|state_dependency_violation|resource_limit_violation|safety_violation|permission_violation|multi_parameter_conflict",
+        "rationale": "Why this scenario violates policy and should be refused",
+        "expected_response": "How the agent should refuse (briefly)"
+      }}
+    }}
+  ]
+}}
+```
+
+## Quality Guidelines
+
+1. **Realistic Airline Queries**: Write natural language that real airline customers would say
+   - Good: "I need to book a round-trip flight for my family of 4 from SFO to JFK departing June 15th"
+   - Bad: "Call book_reservation with passengers=4"
+
+2. **Specific to Target Parameter**: Focus violations on **{target_parameter}**
+   - If testing "passengers", make that the source of policy violation
+   - Other parameters should be valid to isolate the test
+
+3. **Plausible Airline Violations**: Negative scenarios should seem reasonable
+   - Good: "Book for 6 people" (reasonable ask, but violates max 5)
+   - Bad: "Book for -10 people" (obviously invalid, unrealistic)
+
+4. **Diverse Violations**: Use different adversarial strategies across the {num_scenarios} pairs
+   - Don't repeat the same violation type
+   - Cover edge cases like exactly at boundary (5 vs 6 passengers)
+
+5. **Contrastive Learning**: Positive and negative should be similar except for the violation
+   - Good pair: "Book for 4 people" (positive) vs "Book for 6 people" (negative)
+   - This helps the model learn the exact policy boundary
+
+6. **Airline Domain Knowledge**: Use realistic airline context
+   - Valid airport codes, realistic flight numbers
+   - Common travel patterns and dates
+   - Proper airline terminology (cabin class, baggage, insurance)
+
+7. **Complete Information**: Provide enough context for agent to act
+   - Include user ID, dates, airports, passenger details
+   - Don't make agent guess critical information
+
+## Important Notes
+
+- Generate EXACTLY {num_scenarios} scenario pairs
+- Focus on testing **{target_parameter}** parameter
+- Return ONLY valid JSON, no additional text
+- Make user queries natural and conversational
+- Ensure positive scenarios would actually succeed
+- Ensure negative scenarios clearly violate a specific policy
+- Use diverse adversarial strategies across scenarios

@@ -1,0 +1,165 @@
+# Task: Generate Contrastive Scenarios for Tool Calling
+
+You are an expert at creating realistic user-agent interaction scenarios for testing language models' ability to make correct tool calls.
+
+## Overview
+
+Generate **{num_scenarios} pairs** of scenarios (positive + negative) for testing the **{target_parameter}** parameter of the **{function_name}** function.
+
+Each pair consists of:
+1. **Positive Scenario**: Valid user query that satisfies all policies → Appropriate tool call
+2. **Negative Scenario**: Plausible query that violates policies → Agent should refuse
+
+## Input Information
+
+### API Domain
+**{api_name}** API
+
+### Function Specification
+```json
+{function_spec}
+```
+
+### Policies for this Function
+```json
+{policies}
+```
+
+## Your Task
+
+Generate {num_scenarios} **contrastive scenario pairs** that specifically test the **{target_parameter}** parameter.
+
+### Positive Scenario Requirements
+- Natural user query that requires calling this function
+- All parameter values must satisfy policies
+- The **{target_parameter}** parameter should be valid and policy-compliant
+- Include realistic context (dates, names, IDs, etc.)
+- Should result in a successful tool call
+
+### Negative Scenario Requirements
+- Natural user query that appears reasonable on the surface
+- Violates a policy related to the **{target_parameter}** parameter
+- The agent should REFUSE this request and explain why
+- Use one of these adversarial strategies:
+
+#### Adversarial Strategy Types:
+1. **boundary_violation**: Exceeding numerical limits (e.g., 6 passengers when max is 5)
+2. **type_violation**: Wrong data type (e.g., string instead of integer)
+3. **format_violation**: Invalid format (e.g., "05/01/2024" instead of "2024-05-01")
+4. **enum_violation**: Invalid enum value (e.g., "first_class" when only "business", "economy", "basic_economy" allowed)
+5. **state_dependency_violation**: Violating state-based rules (e.g., modifying after flight flown)
+6. **resource_limit_violation**: Exceeding resource limits (e.g., using 2 certificates when max is 1)
+7. **safety_violation**: Breaking safety constraints (e.g., using payment method not in user profile)
+8. **permission_violation**: Unauthorized action (e.g., compensation for regular member without insurance)
+9. **multi_parameter_conflict**: Valid individually but invalid combination (e.g., wrong baggage allowance for membership+cabin)
+
+## Output Format
+
+Return a JSON object with this exact structure:
+
+```json
+{{
+  "scenarios": [
+    {{
+      "positive": {{
+        "user_query": "Natural language user request that satisfies all policies",
+        "function_name": "{function_name}",
+        "parameters": {{
+          "param1": "value1",
+          "param2": "value2"
+        }},
+        "policy_category": "happy_path",
+        "rationale": "Why this scenario is policy-compliant and should succeed"
+      }},
+      "negative": {{
+        "user_query": "Natural language user request that violates a policy",
+        "function_name": "{function_name}",
+        "parameters": null,
+        "policy_violated": "Name or description of the policy violated",
+        "violation_type": "boundary_violation|type_violation|format_violation|enum_violation|state_dependency_violation|resource_limit_violation|safety_violation|permission_violation|multi_parameter_conflict",
+        "rationale": "Why this scenario violates policy and should be refused",
+        "expected_response": "How the agent should refuse (briefly)"
+      }}
+    }}
+  ]
+}}
+```
+
+## Quality Guidelines
+
+1. **Realistic User Queries**: Write natural language that real users would say
+   - Good: "I need to book a flight for my family of 4 from SFO to JFK"
+   - Bad: "Call book_reservation with passengers=4"
+
+2. **Specific to Target Parameter**: Focus violations on **{target_parameter}**
+   - If testing "passengers", make that the source of policy violation
+   - Other parameters should be valid to isolate the test
+
+3. **Plausible Violations**: Negative scenarios should seem reasonable to test if agent knows policies
+   - Good: "Book for 6 people" (reasonable ask, but violates max 5)
+   - Bad: "Book for -10 people" (obviously invalid, no one would ask this)
+
+4. **Diverse Violations**: Use different adversarial strategies across the {num_scenarios} pairs
+   - Don't repeat the same violation type
+   - Cover edge cases and boundary conditions
+
+5. **Contrastive Learning**: Positive and negative should be similar except for the policy violation
+   - Good pair: "Book for 4 people" (positive) vs "Book for 6 people" (negative)
+   - This helps the model learn the exact decision boundary
+
+6. **Domain-Specific Context**: Use realistic domain knowledge
+   - For airline: real airport codes (SFO, JFK), realistic dates, common scenarios
+   - Include domain terminology naturally
+
+7. **Complete Information**: Provide enough context in user query for agent to act
+   - Include necessary IDs, dates, and details
+   - Don't make agent guess critical information
+
+## Example (for illustration only - generate NEW scenarios)
+
+```json
+{{
+  "scenarios": [
+    {{
+      "positive": {{
+        "user_query": "I need to book a flight for my family of 4 from SFO to JFK on June 15th, returning June 22nd. We'd like economy class. My user ID is john_doe_123.",
+        "function_name": "book_reservation",
+        "parameters": {{
+          "user_id": "john_doe_123",
+          "origin": "SFO",
+          "destination": "JFK",
+          "flight_type": "round_trip",
+          "cabin": "economy",
+          "passengers": [
+            {{"first_name": "John", "last_name": "Doe", "dob": "1980-05-15"}},
+            {{"first_name": "Jane", "last_name": "Doe", "dob": "1982-03-20"}},
+            {{"first_name": "Alice", "last_name": "Doe", "dob": "2010-07-10"}},
+            {{"first_name": "Bob", "last_name": "Doe", "dob": "2012-09-05"}}
+          ]
+        }},
+        "policy_category": "happy_path",
+        "rationale": "4 passengers is within the limit of 5 passengers per reservation"
+      }},
+      "negative": {{
+        "user_query": "I need to book a flight for my extended family of 7 from SFO to JFK on June 15th. Can you help with that? My user ID is john_doe_123.",
+        "function_name": "book_reservation",
+        "parameters": null,
+        "policy_violated": "Maximum 5 passengers per reservation",
+        "violation_type": "boundary_violation",
+        "rationale": "Request exceeds the maximum of 5 passengers allowed per reservation",
+        "expected_response": "I apologize, but our system only allows a maximum of 5 passengers per reservation. You would need to make 2 separate bookings for 7 people."
+      }}
+    }}
+  ]
+}}
+```
+
+## Important Notes
+
+- Generate EXACTLY {num_scenarios} scenario pairs
+- Focus on testing **{target_parameter}** parameter
+- Return ONLY valid JSON, no additional text
+- Make user queries natural and conversational
+- Ensure positive scenarios would actually succeed
+- Ensure negative scenarios clearly violate a specific policy
+- Use diverse adversarial strategies across scenarios

@@ -1,0 +1,160 @@
+# Task: Generate Contrastive Retail Scenarios for Tool Calling
+
+You are an expert at creating realistic e-commerce customer service scenarios for testing language models' ability to make correct tool calls.
+
+## Overview
+
+Generate **{num_scenarios} pairs** of scenarios (positive + negative) for testing the **{target_parameter}** parameter of the **{function_name}** function.
+
+Each pair consists of:
+1. **Positive Scenario**: Valid retail customer query that satisfies all policies → Appropriate tool call
+2. **Negative Scenario**: Plausible retail query that violates policies → Agent should refuse
+
+## Input Information
+
+### API Domain
+**Retail** API
+
+### Function Specification
+```json
+{function_spec}
+```
+
+### Policies for this Function
+```json
+{policies}
+```
+
+## Your Task
+
+Generate {num_scenarios} **contrastive scenario pairs** that specifically test the **{target_parameter}** parameter in realistic e-commerce customer service contexts.
+
+### Positive Scenario Requirements
+- Natural retail customer query (placing orders, returns, tracking, discounts, etc.)
+- All parameter values must satisfy retail policies
+- The **{target_parameter}** parameter should be valid and policy-compliant
+- Use realistic retail data:
+  - Valid SKUs and product IDs
+  - Realistic prices and quantities
+  - Proper promo codes and discount formats
+  - Real addresses and phone numbers
+  - Valid order statuses (pending, shipped, delivered, cancelled)
+  - Appropriate payment methods (credit card, PayPal, gift card)
+- Should result in a successful tool call
+
+### Negative Scenario Requirements
+- Natural retail customer query that appears reasonable on the surface
+- Violates a policy related to the **{target_parameter}** parameter
+- The agent should REFUSE this request and explain why
+- Use one of these adversarial strategies:
+
+#### Adversarial Strategy Types:
+1. **boundary_violation**: Exceeding limits (e.g., 50 items when max is 10, order under minimum $25)
+2. **type_violation**: Wrong data type (e.g., text instead of number for quantity)
+3. **format_violation**: Invalid format (e.g., bad SKU format, invalid promo code pattern)
+4. **enum_violation**: Invalid value (e.g., "express_overnight" when only "standard"/"express" allowed)
+5. **state_dependency_violation**: Violating state-based rules (e.g., returning item after 30 days, modifying shipped order)
+6. **resource_limit_violation**: Exceeding resource limits (e.g., using expired promo code, insufficient stock)
+7. **safety_violation**: Breaking safety constraints (e.g., shipping to unverified address)
+8. **permission_violation**: Unauthorized action (e.g., using premium shipping without premium membership)
+9. **multi_parameter_conflict**: Valid individually but invalid combination (e.g., discount requires minimum order value not met)
+
+## Retail-Specific Scenario Guidelines
+
+### Common Retail Scenarios to Model:
+- **Order placement**: First-time buyers, repeat customers, bulk orders
+- **Returns & exchanges**: Unworn items, defective products, wrong size
+- **Order tracking**: Shipping status, delivery estimates
+- **Discounts & promotions**: Promo codes, member discounts, seasonal sales
+- **Inventory checks**: Stock availability, size/color options
+- **Order modifications**: Address changes, item additions, cancellations
+
+### Realistic Retail Context:
+- Use common product categories (clothing, electronics, home goods)
+- Include realistic SKUs (e.g., "SKU-12345", "PROD-ABCD-001")
+- Reference membership tiers (standard, premium, VIP)
+- Mention common payment methods
+- Use appropriate e-commerce terminology
+
+### Retail-Specific Policies to Test:
+- **Maximum items per order** (e.g., 10 items)
+- **Minimum order value** (e.g., $25)
+- **Return window** (e.g., 30 days)
+- **Stock availability** requirements
+- **Promo code** validity and restrictions
+- **Shipping method** eligibility
+- **Membership benefits** (discounts, free shipping)
+- **Item condition** for returns (unworn, tags attached)
+
+## Output Format
+
+Return a JSON object with this exact structure:
+
+```json
+{{
+  "scenarios": [
+    {{
+      "positive": {{
+        "user_query": "Natural retail customer request that satisfies all policies",
+        "function_name": "{function_name}",
+        "parameters": {{
+          "param1": "value1",
+          "param2": "value2"
+        }},
+        "policy_category": "happy_path",
+        "rationale": "Why this scenario is policy-compliant and should succeed"
+      }},
+      "negative": {{
+        "user_query": "Natural retail customer request that violates a policy",
+        "function_name": "{function_name}",
+        "parameters": null,
+        "policy_violated": "Name or description of the policy violated",
+        "violation_type": "boundary_violation|type_violation|format_violation|enum_violation|state_dependency_violation|resource_limit_violation|safety_violation|permission_violation|multi_parameter_conflict",
+        "rationale": "Why this scenario violates policy and should be refused",
+        "expected_response": "How the agent should refuse (briefly)"
+      }}
+    }}
+  ]
+}}
+```
+
+## Quality Guidelines
+
+1. **Realistic Retail Queries**: Write natural language that real e-commerce customers would say
+   - Good: "I want to order 3 of the blue sweater in size medium"
+   - Bad: "Call place_order with quantity=3"
+
+2. **Specific to Target Parameter**: Focus violations on **{target_parameter}**
+   - If testing "quantity", make that the source of policy violation
+   - Other parameters should be valid to isolate the test
+
+3. **Plausible Retail Violations**: Negative scenarios should seem reasonable
+   - Good: "I want to return this item I bought 45 days ago" (sounds ok, but violates 30-day window)
+   - Bad: "Return item bought 10 years ago" (obviously invalid)
+
+4. **Diverse Violations**: Use different adversarial strategies across the {num_scenarios} pairs
+   - Don't repeat the same violation type
+   - Cover edge cases like exactly at boundary (10 vs 11 items)
+
+5. **Contrastive Learning**: Positive and negative should be similar except for the violation
+   - Good pair: "Order 8 items" (positive) vs "Order 12 items" (negative with max 10)
+   - This helps the model learn the exact policy boundary
+
+6. **Retail Domain Knowledge**: Use realistic e-commerce context
+   - Valid SKUs, realistic prices, common product types
+   - Typical order patterns and customer behaviors
+   - Proper retail terminology (shipping, returns, exchanges)
+
+7. **Complete Information**: Provide enough context for agent to act
+   - Include order IDs, SKUs, quantities, customer details
+   - Don't make agent guess critical information
+
+## Important Notes
+
+- Generate EXACTLY {num_scenarios} scenario pairs
+- Focus on testing **{target_parameter}** parameter
+- Return ONLY valid JSON, no additional text
+- Make user queries natural and conversational
+- Ensure positive scenarios would actually succeed
+- Ensure negative scenarios clearly violate a specific policy
+- Use diverse adversarial strategies across scenarios

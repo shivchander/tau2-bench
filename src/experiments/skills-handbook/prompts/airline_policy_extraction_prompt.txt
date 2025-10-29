@@ -1,0 +1,124 @@
+# Task: Extract Structured Policies from Airline Policy Document
+
+You are an expert at analyzing airline policy documents and extracting structured constraints for API function calls.
+
+## Input
+
+### Policy Document
+```
+{policy_document}
+```
+
+### Available API Functions
+```json
+{api_spec}
+```
+
+## Your Task
+
+Extract all policies from the airline policy document and map them to specific API functions and parameters. For each function, identify:
+
+1. **Boundary Policies**: Numerical limits (e.g., "max 5 passengers per reservation")
+2. **Enum Policies**: Restricted values (e.g., cabin types: basic_economy, economy, business)
+3. **Format Policies**: Required formats (e.g., "YYYY-MM-DD" for dates, "HH:MM:SS" for times, 3-letter IATA codes)
+4. **Resource Limit Policies**: Limits on resources (e.g., "max 1 certificate, 1 credit card, 3 gift cards")
+5. **State Dependency Policies**: Rules based on current state (e.g., "cannot modify if flight already flown")
+6. **Safety Policies**: Security constraints (e.g., "payment methods must be in user profile")
+7. **Permission Policies**: Authorization rules (e.g., "only silver/gold members get compensation")
+8. **Multi-Parameter Policies**: Rules involving multiple parameters (e.g., baggage allowance depends on cabin + membership)
+9. **Conditional Policies**: Rules that apply under specific conditions (e.g., "cancellation allowed if within 24hrs OR business class OR has insurance")
+
+## Airline-Specific Policies to Look For
+
+### Flight Booking Policies
+- Passenger limits and requirements
+- Cabin class restrictions
+- Payment method constraints
+- Baggage allowance rules (by membership tier and cabin class)
+- Insurance requirements and coverage
+- Trip type limitations (one-way, round-trip)
+
+### Modification Policies
+- Basic economy modification restrictions
+- Cabin change rules
+- Flight segment update constraints
+- Passenger detail modification limits
+- Baggage addition rules (can add, cannot remove)
+- Insurance modification restrictions
+
+### Cancellation Policies
+- 24-hour cancellation window
+- Business class cancellation privileges
+- Insurance-based cancellation conditions
+- Flight status-based cancellation (airline cancelled)
+- Flown segment restrictions
+
+### Compensation & Refund Policies
+- Membership tier requirements (regular vs silver vs gold)
+- Compensation amounts for cancellations and delays
+- Eligibility criteria (membership, insurance, cabin class)
+- Refund processing timelines
+
+### Agent Behavior Policies
+- User confirmation requirements
+- One tool call at a time constraint
+- No simultaneous tool call and user response
+- Transfer to human agent conditions
+
+## Output Format
+
+Return a JSON object with the following structure:
+
+```json
+{{
+  "api_name": "airline",
+  "functions": [
+    {{
+      "name": "function_name",
+      "policies": {{
+        "parameter_name": [
+          {{
+            "type": "boundary|enum|format|resource_limit|state_dependency|safety|permission|multi_parameter|conditional",
+            "description": "Human-readable description of the policy",
+            "constraint": "Specific constraint details",
+            "violation_examples": [
+              "Example of what would violate this policy"
+            ],
+            "depends_on": ["other_parameter1", "other_parameter2"],
+            "applies_when": "Condition under which this policy applies"
+          }}
+        ]
+      }},
+      "global_policies": [
+        {{
+          "type": "policy_type",
+          "description": "Policies that affect the entire function call",
+          "constraint": "Details",
+          "violation_examples": ["Examples"]
+        }}
+      ]
+    }}
+  ],
+  "cross_function_policies": [
+    {{
+      "description": "Policies that span multiple functions",
+      "affected_functions": ["function1", "function2"],
+      "constraint": "Details"
+    }}
+  ]
+}}
+```
+
+## Important Guidelines
+
+1. **Be Comprehensive**: Extract ALL airline policies, including booking, modification, cancellation, and compensation rules
+2. **Be Specific**: Map each policy to exact functions and parameters
+3. **Include Context**: For complex policies (baggage tiers, cancellation conditions), include full context
+4. **Note Dependencies**: If policy depends on membership level, cabin class, etc., note those dependencies
+5. **Provide Examples**: Include concrete violation examples for airline scenarios
+6. **Handle Complexity**: Capture complex OR conditions (e.g., "cancel if 24hrs OR business OR insurance")
+7. **Agent Behavior**: Include policies about confirmation, tool call restrictions, escalation
+
+## Expected Output
+
+Return ONLY the JSON object. Do not include any explanatory text before or after the JSON.

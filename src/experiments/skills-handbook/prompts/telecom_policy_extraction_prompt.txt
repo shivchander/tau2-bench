@@ -1,0 +1,146 @@
+# Task: Extract Structured Policies from Telecom Policy Document
+
+You are an expert at analyzing telecom policy documents and extracting structured constraints for API function calls.
+
+## Input
+
+### Policy Document
+```
+{policy_document}
+```
+
+### Available API Functions
+```json
+{api_spec}
+```
+
+## Your Task
+
+Extract all policies from the telecom policy document and map them to specific API functions and parameters. For each function, identify:
+
+1. **Boundary Policies**: Numerical limits (e.g., "max 5 lines per account", "data caps per plan")
+2. **Enum Policies**: Restricted values (e.g., plan types, device categories, service statuses)
+3. **Format Policies**: Required formats (e.g., phone number formats, IMEI patterns, account IDs)
+4. **Resource Limit Policies**: Data limits, line limits, device limits per account
+5. **State Dependency Policies**: Rules based on account/service state (e.g., "cannot upgrade if suspended")
+6. **Safety Policies**: Security constraints (e.g., "port-out requires verification code")
+7. **Permission Policies**: Authorization rules (e.g., "only account owner can add lines")
+8. **Multi-Parameter Policies**: Rules involving multiple parameters (e.g., international roaming depends on plan + destination)
+9. **Conditional Policies**: Rules under specific conditions (e.g., "waive fee if within 14 days AND defective device")
+
+## Telecom-Specific Policies to Look For
+
+### Account & Line Management Policies
+- Maximum lines per account
+- Account holder verification requirements
+- Authorized user permissions
+- Line suspension/restoration rules
+- Account type restrictions (individual, business, family)
+
+### Plan & Service Policies
+- Plan change restrictions (upgrade, downgrade)
+- Contract term requirements
+- Data allowance and throttling rules
+- International roaming eligibility
+- Add-on service compatibility
+- Grandfathered plan protections
+
+### Device & Equipment Policies
+- Device financing eligibility
+- Trade-in conditions
+- Insurance claim requirements
+- BYOD (Bring Your Own Device) compatibility
+- IMEI/ESN verification
+- Device unlock policies
+
+### Billing & Payment Policies
+- Payment method requirements
+- Auto-pay discount eligibility
+- Late payment fees and grace periods
+- Billing cycle change restrictions
+- Refund eligibility windows
+- Proration rules
+
+### Porting & Transfer Policies
+- Port-in verification requirements
+- Port-out authorization codes
+- Number transfer restrictions
+- Service continuity guarantees
+
+### Technical Support & Service Policies
+- Troubleshooting authentication requirements
+- Service ticket creation rules
+- Escalation procedures
+- SLA (Service Level Agreement) terms
+
+### Cancellation & Termination Policies
+- Early termination fees
+- Final bill settlement requirements
+- Equipment return obligations
+- Number retention options
+- Cancellation notice periods
+
+### Feature & Add-on Policies
+- Feature compatibility with plans
+- Add-on activation requirements
+- International calling restrictions
+- Hotspot usage limits
+- Premium service eligibility
+
+## Output Format
+
+Return a JSON object with the following structure:
+
+```json
+{{
+  "api_name": "telecom",
+  "functions": [
+    {{
+      "name": "function_name",
+      "policies": {{
+        "parameter_name": [
+          {{
+            "type": "boundary|enum|format|resource_limit|state_dependency|safety|permission|multi_parameter|conditional",
+            "description": "Human-readable description of the policy",
+            "constraint": "Specific constraint details",
+            "violation_examples": [
+              "Example of what would violate this policy"
+            ],
+            "depends_on": ["other_parameter1", "other_parameter2"],
+            "applies_when": "Condition under which this policy applies"
+          }}
+        ]
+      }},
+      "global_policies": [
+        {{
+          "type": "policy_type",
+          "description": "Policies that affect the entire function call",
+          "constraint": "Details",
+          "violation_examples": ["Examples"]
+        }}
+      ]
+    }}
+  ],
+  "cross_function_policies": [
+    {{
+      "description": "Policies that span multiple functions",
+      "affected_functions": ["function1", "function2"],
+      "constraint": "Details"
+    }}
+  ]
+}}
+```
+
+## Important Guidelines
+
+1. **Be Comprehensive**: Extract ALL telecom policies, including accounts, plans, devices, billing, and porting
+2. **Be Specific**: Map each policy to exact functions and parameters
+3. **Include Context**: For complex policies (ETF calculations, data throttling), include full context
+4. **Note Dependencies**: If policy depends on account status, plan type, etc., note those dependencies
+5. **Provide Examples**: Include concrete violation examples for telecom scenarios
+6. **Handle Complexity**: Capture complex conditions (e.g., "port-out requires account current AND verification")
+7. **Agent Behavior**: Include policies about authentication, escalation, and customer verification
+
+## Expected Output
+
+Return ONLY the JSON object. Do not include any explanatory text before or after the JSON.

@@ -1,0 +1,1771 @@
+[
+  {
+    "user_query": "I'm buying 3 pairs of the wireless headphones (SKU-43210), each costs $59.99. Can you tell me the total price before tax?",
+    "function_name": "calculate",
+    "parameters": {
+      "expression": "3 * 59.99"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The customer is requesting multiplication of a valid quantity and price for an in-stock item. The expression follows the correct format and is a standard calculation in retail.",
+    "api_name": "retail",
+    "target_parameter": "expression"
+  },
+  {
+    "user_query": "I have a promo code for 15% off my $120 order. Can you tell me the new price after applying the discount?",
+    "function_name": "calculate",
+    "parameters": {
+      "expression": "120 - (120 * 0.15)"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The calculation uses valid numbers and operators to apply a percentage discount, which is a common retail use case and is formatted correctly.",
+    "api_name": "retail",
+    "target_parameter": "expression"
+  },
+  {
+    "user_query": "I want to return two shirts: one cost $25.50 and the other $32.99. How much will I get back if both are approved?",
+    "function_name": "calculate",
+    "parameters": {
+      "expression": "25.50 + 32.99"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The customer is requesting a simple addition of two valid item prices for a return. The expression uses valid numbers and syntax.",
+    "api_name": "retail",
+    "target_parameter": "expression"
+  },
+  {
+    "user_query": "Hi, I just placed an order for the Bose QC35 headphones (SKU-BOSE-35) about 10 minutes ago, order number #W1029384. I realized I actually don't need them anymore. Can you please cancel this order? The reason is 'no longer needed.'",
+    "function_name": "cancel_pending_order",
+    "parameters": {
+      "order_id": "#W1029384",
+      "reason": "no longer needed"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The order is in 'pending' status since it was just placed, and the cancellation reason is valid. All parameters meet the policy requirements for cancel_pending_order.",
+    "api_name": "retail",
+    "target_parameter": "order_id"
+  },
+  {
+    "user_query": "Can you help me cancel order #W2084756 for the Le Creuset Dutch Oven (SKU-LC-DUTCH-OVN)? I accidentally ordered it while browsing. The payment was made with my Visa card. The reason is 'ordered by mistake.'",
+    "function_name": "cancel_pending_order",
+    "parameters": {
+      "order_id": "#W2084756",
+      "reason": "ordered by mistake"
+    },
+    "policy_category": "happy_path",
+    "rationale": "Order #W2084756 is in 'pending' status and the cancellation reason is allowed. The order_id format is correct and the request meets all policy requirements.",
+    "api_name": "retail",
+    "target_parameter": "order_id"
+  },
+  {
+    "user_query": "I just placed an order for two Patagonia Nano Puff jackets (SKU-PAT-NANO) and I used my gift card as payment. The order number is #W3192047. I realized I ordered the wrong color. Could you please cancel this order? The reason is 'ordered by mistake.'",
+    "function_name": "cancel_pending_order",
+    "parameters": {
+      "order_id": "#W3192047",
+      "reason": "ordered by mistake"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The order is still pending and the order_id format is correct. The reason is valid and payment method is specified, ensuring proper refund handling. All policies are satisfied.",
+    "api_name": "retail",
+    "target_parameter": "order_id"
+  },
+  {
+    "user_query": "Hi, I just placed order #W1234567 for a pair of Nike Air Max sneakers (SKU-NIKE-AMAX-42), but I realized I don't need them anymore. Could you please cancel this order? The payment was made with my Visa card.",
+    "function_name": "cancel_pending_order",
+    "parameters": {
+      "order_id": "#W1234567",
+      "reason": "no longer needed"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The customer requests to cancel a pending order and provides an allowed reason ('no longer needed'). The order status is pending and all information is valid, so the request fully complies with the reason policy.",
+    "api_name": "retail",
+    "target_parameter": "reason"
+  },
+  {
+    "user_query": "I accidentally ordered the wrong size headphones on order #W7654321 (SKU-BOS-QC35-BLK) earlier today. Could you cancel it for me? I paid with my PayPal account.",
+    "function_name": "cancel_pending_order",
+    "parameters": {
+      "order_id": "#W7654321",
+      "reason": "ordered by mistake"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The customer requests cancellation for a pending order, using a permitted reason ('ordered by mistake'). The scenario is compliant with all function policies.",
+    "api_name": "retail",
+    "target_parameter": "reason"
+  },
+  {
+    "user_query": "Hi, I just placed order #W2468101 for a Cuisinart toaster (SKU-CUI-TSTR-2S) but realized I already have one at home. Could you cancel this order? I paid with a gift card.",
+    "function_name": "cancel_pending_order",
+    "parameters": {
+      "order_id": "#W2468101",
+      "reason": "no longer needed"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user requests to cancel a pending order and uses 'no longer needed' as the reason, which is one of the two allowed values. All other details are realistic and comply with policy.",
+    "api_name": "retail",
+    "target_parameter": "reason"
+  },
+  {
+    "user_query": "Hi, I recently received my order #W1029485 and realized the medium blue sweater (item 402183491) is too small. I'd like to exchange it for the large blue sweater (item 402183492). Please use my Visa ending in 1122 for any price difference. Can you help me with this?",
+    "function_name": "exchange_delivered_order_items",
+    "parameters": {
+      "order_id": "#W1029485",
+      "item_ids": [
+        "402183491"
+      ],
+      "new_item_ids": [
+        "402183492"
+      ],
+      "payment_method_id": "credit_card_1122"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The order_id starts with '#', and the order is in 'delivered' status. All parameters are valid and compliant with the exchange policy.",
+    "api_name": "retail",
+    "target_parameter": "order_id"
+  },
+  {
+    "user_query": "Hello, I got my package yesterday\u2014order #W2034550. The headphones (item 509238475) aren't working properly. I'd like to exchange them for the same model in black (item 509238476). Please charge any difference to my PayPal account.",
+    "function_name": "exchange_delivered_order_items",
+    "parameters": {
+      "order_id": "#W2034550",
+      "item_ids": [
+        "509238475"
+      ],
+      "new_item_ids": [
+        "509238476"
+      ],
+      "payment_method_id": "paypal_009834"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The order_id is correctly formatted and refers to a delivered order. All other parameters are valid and eligible for exchange.",
+    "api_name": "retail",
+    "target_parameter": "order_id"
+  },
+  {
+    "user_query": "I received order #W3098761 last week. The set of kitchen towels (item 678231004) came in the wrong color. I'd like to exchange them for the green variant (item 678231006). Please use my store gift card ending 8899 for the price difference.",
+    "function_name": "exchange_delivered_order_items",
+    "parameters": {
+      "order_id": "#W3098761",
+      "item_ids": [
+        "678231004"
+      ],
+      "new_item_ids": [
+        "678231006"
+      ],
+      "payment_method_id": "gift_card_8899"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The order is delivered, order_id is in correct format, and all other parameters are valid. This is eligible for exchange.",
+    "api_name": "retail",
+    "target_parameter": "order_id"
+  },
+  {
+    "user_query": "Hi, I just received my order #W1234567, and I'd like to exchange both pairs of the 'Classic Fit Jeans' (item IDs: 1004523132 and 1004523133) for the same jeans in a different size. Can you help me with this?",
+    "function_name": "exchange_delivered_order_items",
+    "parameters": {
+      "order_id": "#W1234567",
+      "item_ids": [
+        "1004523132",
+        "1004523133"
+      ],
+      "new_item_ids": [
+        "1004523140",
+        "1004523141"
+      ],
+      "payment_method_id": "credit_card_9876543"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The customer requests to exchange two delivered items for different sizes of the SAME product (jeans variants). The item_ids correspond to items in the delivered order, all parameters are correctly formatted, and all policies are followed.",
+    "api_name": "retail",
+    "target_parameter": "item_ids"
+  },
+  {
+    "user_query": "I got my order #W7654321 today. I want to exchange 3 of the 'Cotton Crew Tees' (item IDs: 1008880001, 1008880002, 1008880003) for the same t-shirt in the color black instead of white. Can I do that?",
+    "function_name": "exchange_delivered_order_items",
+    "parameters": {
+      "order_id": "#W7654321",
+      "item_ids": [
+        "1008880001",
+        "1008880002",
+        "1008880003"
+      ],
+      "new_item_ids": [
+        "1008880051",
+        "1008880052",
+        "1008880053"
+      ],
+      "payment_method_id": "gift_card_0005432"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The customer wants to exchange three delivered t-shirts for the same t-shirt in another color. The item_ids are valid, the count matches new_item_ids, and all product types match. Gift card is a valid payment method.",
+    "api_name": "retail",
+    "target_parameter": "item_ids"
+  },
+  {
+    "user_query": "Hello, I want to exchange my recently delivered 'TechPro Bluetooth Headphones' (item ID: 2002001122) for the same model but in silver instead of black. My order number is #W9988776.",
+    "function_name": "exchange_delivered_order_items",
+    "parameters": {
+      "order_id": "#W9988776",
+      "item_ids": [
+        "2002001122"
+      ],
+      "new_item_ids": [
+        "2002001155"
+      ],
+      "payment_method_id": "paypal_44556677"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The customer is exchanging a delivered electronics item for a different color variant of the same product. The order is delivered, item_ids and new_item_ids match product type and count, and all parameters are valid.",
+    "api_name": "retail",
+    "target_parameter": "item_ids"
+  },
+  {
+    "user_query": "Hi, I just received my order #W4593021. The two navy blue 'Classic Fit Polo Shirt' (item IDs: 20030129, 20030129) in size M don't fit\u2014can I exchange both for the same polo in size L (item IDs: 20030130, 20030130)? I\u2019d like to use my credit card ending in 1234 for any price difference.",
+    "function_name": "exchange_delivered_order_items",
+    "parameters": {
+      "order_id": "#W4593021",
+      "item_ids": [
+        "20030129",
+        "20030129"
+      ],
+      "new_item_ids": [
+        "20030130",
+        "20030130"
+      ],
+      "payment_method_id": "credit_card_1234"
+    },
+    "policy_category": "happy_path",
+    "rationale": "Both old and new item IDs refer to size variants of the same product (polo shirt), the order is delivered, all IDs and payment method are valid, and the user is exchanging the correct quantity.",
+    "api_name": "retail",
+    "target_parameter": "new_item_ids"
+  },
+  {
+    "user_query": "My order #W9821347 just arrived. The black 'Everyday Leggings' (item IDs: 41100078, 41100078, 41100078) in size S are too tight. Can I swap all three for the same leggings in size M (item IDs: 41100079, 41100079, 41100079)? Please use my PayPal account for any payment adjustments.",
+    "function_name": "exchange_delivered_order_items",
+    "parameters": {
+      "order_id": "#W9821347",
+      "item_ids": [
+        "41100078",
+        "41100078",
+        "41100078"
+      ],
+      "new_item_ids": [
+        "41100079",
+        "41100079",
+        "41100079"
+      ],
+      "payment_method_id": "paypal_998877"
+    },
+    "policy_category": "happy_path",
+    "rationale": "All items being exchanged and requested are just size variants of the same leggings product. The new_item_ids array matches the length and type of item_ids, and the payment method is valid.",
+    "api_name": "retail",
+    "target_parameter": "new_item_ids"
+  },
+  {
+    "user_query": "Hello, I received my delivered order #W7778889. The white 'Cozy Throw Blanket' (item ID: 52001321) isn\u2019t the color I expected. Can I swap it for the same blanket in gray (item ID: 52001322)? Please use my gift card ending in 6543 for any price difference.",
+    "function_name": "exchange_delivered_order_items",
+    "parameters": {
+      "order_id": "#W7778889",
+      "item_ids": [
+        "52001321"
+      ],
+      "new_item_ids": [
+        "52001322"
+      ],
+      "payment_method_id": "gift_card_6543"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The customer wants to exchange for a color variant of the same product, new_item_ids is a valid SKU for the same blanket, and all other parameters meet requirements.",
+    "api_name": "retail",
+    "target_parameter": "new_item_ids"
+  },
+  {
+    "user_query": "Hi, I just received my order #W4829102, but the men's classic denim jacket in size M (SKU-DENIMJKT-M, item 201830912) is too tight. I'd like to exchange it for a size L (SKU-DENIMJKT-L, item 201830913). Please use my Visa ending in 1234 (credit_card_0001023) for any price difference.",
+    "function_name": "exchange_delivered_order_items",
+    "parameters": {
+      "order_id": "#W4829102",
+      "item_ids": [
+        "201830912"
+      ],
+      "new_item_ids": [
+        "201830913"
+      ],
+      "payment_method_id": "credit_card_0001023"
+    },
+    "policy_category": "happy_path",
+    "rationale": "Order is delivered, items are variants of the same product, and the payment method is a valid credit card linked to the user. All policies regarding payment_method_id are satisfied.",
+    "api_name": "retail",
+    "target_parameter": "payment_method_id"
+  },
+  {
+    "user_query": "I'd like to exchange the wireless earbuds (item 308271111, SKU-EBUDS-BLK) in my delivered order #W5648735 for the white variant (item 308271115, SKU-EBUDS-WHT). Please use my gift card (gift_card_0034102) for any additional charges.",
+    "function_name": "exchange_delivered_order_items",
+    "parameters": {
+      "order_id": "#W5648735",
+      "item_ids": [
+        "308271111"
+      ],
+      "new_item_ids": [
+        "308271115"
+      ],
+      "payment_method_id": "gift_card_0034102"
+    },
+    "policy_category": "happy_path",
+    "rationale": "Order is delivered, both items are variants, and the user's gift card is valid and has sufficient balance to cover the price difference. All policy requirements for payment_method_id are met.",
+    "api_name": "retail",
+    "target_parameter": "payment_method_id"
+  },
+  {
+    "user_query": "Hello, I want to exchange the blue cotton bedsheet set (item 117200301, SKU-BEDSHEET-BLU) in my delivered order #W6003091 for the green variant (item 117200305, SKU-BEDSHEET-GRN). Please use my PayPal (paypal_0002201) for any payment adjustments.",
+    "function_name": "exchange_delivered_order_items",
+    "parameters": {
+      "order_id": "#W6003091",
+      "item_ids": [
+        "117200301"
+      ],
+      "new_item_ids": [
+        "117200305"
+      ],
+      "payment_method_id": "paypal_0002201"
+    },
+    "policy_category": "happy_path",
+    "rationale": "All parameters are valid: the order is delivered, the items are valid variants, and the PayPal account is a valid, user-owned payment method.",
+    "api_name": "retail",
+    "target_parameter": "payment_method_id"
+  },
+  {
+    "user_query": "Hi, I\u2019d like to check the status of my recent order for the wireless earbuds. My email is emily.smith@gmail.com.",
+    "function_name": "find_user_id_by_email",
+    "parameters": {
+      "email": "emily.smith@gmail.com"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user provides a valid, properly formatted email address to authenticate their account. All required policies are satisfied for this lookup.",
+    "api_name": "retail",
+    "target_parameter": "email"
+  },
+  {
+    "user_query": "I need to return a pair of jeans I ordered last week. My email is carlos.diaz_22@yahoo.com.",
+    "function_name": "find_user_id_by_email",
+    "parameters": {
+      "email": "carlos.diaz_22@yahoo.com"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The customer provides a well-formed, standard email address, which enables proper authentication and allows the lookup function to proceed.",
+    "api_name": "retail",
+    "target_parameter": "email"
+  },
+  {
+    "user_query": "I can\u2019t remember my user ID, but I want to check if my promo code applied to my last order. My email is priya.kumar@outlook.com.",
+    "function_name": "find_user_id_by_email",
+    "parameters": {
+      "email": "priya.kumar@outlook.com"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The query provides a valid, properly formatted email for identification, following authentication policy and format requirements.",
+    "api_name": "retail",
+    "target_parameter": "email"
+  },
+  {
+    "user_query": "Hi, I can't remember my email, but I want to check the status of my recent order. My name is Emily Carter and my zip code is 94107.",
+    "function_name": "find_user_id_by_name_zip",
+    "parameters": {
+      "first_name": "Emily",
+      "last_name": "Carter",
+      "zip": "94107"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The customer provides a valid, properly formatted first name ('Emily'), last name, and a 5-digit zip code, all complying with function policies.",
+    "api_name": "retail",
+    "target_parameter": "first_name"
+  },
+  {
+    "user_query": "I'd like to request a return for a blender I bought. I can't access my email, but my name is Marcus Lee and my zip is 30318.",
+    "function_name": "find_user_id_by_name_zip",
+    "parameters": {
+      "first_name": "Marcus",
+      "last_name": "Lee",
+      "zip": "30318"
+    },
+    "policy_category": "happy_path",
+    "rationale": "All parameters are valid: 'Marcus' is a standard first name with no invalid characters, complying with all requirements.",
+    "api_name": "retail",
+    "target_parameter": "first_name"
+  },
+  {
+    "user_query": "I want to use my loyalty discount on a new pair of sneakers. I forgot my email, but my name is Sarah and my last name is O'Neil. My zip is 60614.",
+    "function_name": "find_user_id_by_name_zip",
+    "parameters": {
+      "first_name": "Sarah",
+      "last_name": "O'Neil",
+      "zip": "60614"
+    },
+    "policy_category": "happy_path",
+    "rationale": "'Sarah' is a valid first name, and the last name and zip code are also properly formatted, meeting all requirements.",
+    "api_name": "retail",
+    "target_parameter": "first_name"
+  },
+  {
+    "user_query": "Hi, I can't remember the email I used. Can you help me track my recent order for a Dyson V8 vacuum (SKU-23456)? My name is Samantha Lee and my zip code is 90210.",
+    "function_name": "find_user_id_by_name_zip",
+    "parameters": {
+      "first_name": "Samantha",
+      "last_name": "Lee",
+      "zip": "90210"
+    },
+    "policy_category": "happy_path",
+    "rationale": "All parameters are present and in correct format. The last name 'Lee' is a valid non-empty string with no numbers or special characters, so this satisfies policy requirements.",
+    "api_name": "retail",
+    "target_parameter": "last_name"
+  },
+  {
+    "user_query": "I need to return a pair of Adidas UltraBoost sneakers (SKU-UB2023) I bought last week. My name is Carlos Mendoza, and my zip is 33101. I don't remember the email I used.",
+    "function_name": "find_user_id_by_name_zip",
+    "parameters": {
+      "first_name": "Carlos",
+      "last_name": "Mendoza",
+      "zip": "33101"
+    },
+    "policy_category": "happy_path",
+    "rationale": "All required fields are provided. The last name 'Mendoza' is a proper, valid last name as per policy, with no numbers or special characters.",
+    "api_name": "retail",
+    "target_parameter": "last_name"
+  },
+  {
+    "user_query": "Hi, I want to check if my order for the Cuisinart food processor (SKU-CFP-11) has shipped. My name is Grace O'Malley, zip code 60614. I can't recall my email.",
+    "function_name": "find_user_id_by_name_zip",
+    "parameters": {
+      "first_name": "Grace",
+      "last_name": "O'Malley",
+      "zip": "60614"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The last name 'O'Malley' is a valid real-world last name with an apostrophe, which is commonly accepted in names and does not violate the policy against special characters like numbers or symbols.",
+    "api_name": "retail",
+    "target_parameter": "last_name"
+  },
+  {
+    "user_query": "Hi, I can't remember my email, but I'd like to check the status of my order for the wireless headphones (SKU-HEAD-2023). My name is Michael Chen and my zip code is 90210.",
+    "function_name": "find_user_id_by_name_zip",
+    "parameters": {
+      "first_name": "Michael",
+      "last_name": "Chen",
+      "zip": "90210"
+    },
+    "policy_category": "happy_path",
+    "rationale": "All parameters are present and correctly formatted: first and last names are non-empty, contain no special characters or numbers, and zip is a valid 5-digit US postal code.",
+    "api_name": "retail",
+    "target_parameter": "zip"
+  },
+  {
+    "user_query": "I need to exchange the blue cotton shirt (SKU-SHIRT-456) I bought last week. I don't remember my email, but my name is Alyssa Rivera and my zip code is 10001.",
+    "function_name": "find_user_id_by_name_zip",
+    "parameters": {
+      "first_name": "Alyssa",
+      "last_name": "Rivera",
+      "zip": "10001"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The customer provides all required information in the correct format: names are valid, and the zip code is a 5-digit string of digits.",
+    "api_name": "retail",
+    "target_parameter": "zip"
+  },
+  {
+    "user_query": "I'd like to apply my member discount to my order for the ceramic vase (SKU-HOME-9911), but I can't recall my email address. My name is Priya Singh and my zip code is 30309.",
+    "function_name": "find_user_id_by_name_zip",
+    "parameters": {
+      "first_name": "Priya",
+      "last_name": "Singh",
+      "zip": "30309"
+    },
+    "policy_category": "happy_path",
+    "rationale": "All values are valid: proper names, and the zip code is a 5-digit string with only digits, conforming to postal code requirements.",
+    "api_name": "retail",
+    "target_parameter": "zip"
+  },
+  {
+    "user_query": "Hi, can you tell me if my order #W3201982 with the noise-cancelling headphones has shipped yet? I ordered it two days ago.",
+    "function_name": "get_order_details",
+    "parameters": {
+      "order_id": "#W3201982"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user provides a valid order ID that starts with '#' and follows the required format. The request is for their own order, so it meets both format and safety policies.",
+    "api_name": "retail",
+    "target_parameter": "order_id"
+  },
+  {
+    "user_query": "I'd like to check if my recent order #W9988775 for the kitchen blender has been delivered. Can you give me an update?",
+    "function_name": "get_order_details",
+    "parameters": {
+      "order_id": "#W9988775"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user requests details for their own order using the correct ID format. This fully complies with both format and safety policies.",
+    "api_name": "retail",
+    "target_parameter": "order_id"
+  },
+  {
+    "user_query": "Can you give me an update on order #W0004567 for the three-pack of LED light bulbs I placed last Friday?",
+    "function_name": "get_order_details",
+    "parameters": {
+      "order_id": "#W0004567"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The order ID is in the correct format, starting with '#', and the user is requesting their own order details, so all policies are satisfied.",
+    "api_name": "retail",
+    "target_parameter": "order_id"
+  },
+  {
+    "user_query": "Can you give me the details for the product with ID 6086499569? I'm checking if it's still in stock before I place my order.",
+    "function_name": "get_product_details",
+    "parameters": {
+      "product_id": "6086499569"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The customer provides a valid product ID in the correct format, matching the required string type (e.g., '6086499569'), and does not confuse it with an item ID or SKU. The request is straightforward and policy-compliant.",
+    "api_name": "retail",
+    "target_parameter": "product_id"
+  },
+  {
+    "user_query": "I'm interested in your new wireless headphones. The product ID is PROD-1234567. Can you tell me more about them?",
+    "function_name": "get_product_details",
+    "parameters": {
+      "product_id": "PROD-1234567"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The provided product ID ('PROD-1234567') is in an accepted string format for product IDs in this retail system, and the request is clear and policy-compliant.",
+    "api_name": "retail",
+    "target_parameter": "product_id"
+  },
+  {
+    "user_query": "Can you pull up the product details for product ID ABCD-2024-XL? I want to make sure I\u2019m ordering the right size.",
+    "function_name": "get_product_details",
+    "parameters": {
+      "product_id": "ABCD-2024-XL"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The given product ID ('ABCD-2024-XL') is in a valid string format and aligns with typical product ID conventions, making this a policy-compliant request.",
+    "api_name": "retail",
+    "target_parameter": "product_id"
+  },
+  {
+    "user_query": "Hi, can you show me my order history? My account is under the username emily_smith_102.",
+    "function_name": "get_user_details",
+    "parameters": {
+      "user_id": "emily_smith_102"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user is requesting their own order history and supplying their own user_id, which matches the authenticated user. This is fully policy-compliant.",
+    "api_name": "retail",
+    "target_parameter": "user_id"
+  },
+  {
+    "user_query": "Can I get an update on my recent orders? My username is michael_lee_555.",
+    "function_name": "get_user_details",
+    "parameters": {
+      "user_id": "michael_lee_555"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user is asking about their own orders with a valid user_id that matches the authenticated user, in compliance with policy.",
+    "api_name": "retail",
+    "target_parameter": "user_id"
+  },
+  {
+    "user_query": "Could you show me my account details? My username is aaron_jones_812.",
+    "function_name": "get_user_details",
+    "parameters": {
+      "user_id": "aaron_jones_812"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user is requesting their own account details, with a user_id matching the authenticated user, fulfilling all policy requirements.",
+    "api_name": "retail",
+    "target_parameter": "user_id"
+  },
+  {
+    "user_query": "Hi, I recently placed an order and it's still processing. Could you please update the shipping address to 789 Oak Street, Floor 2, Seattle, WA, USA, 98101 for my order #W1234567?",
+    "function_name": "modify_pending_order_address",
+    "parameters": {
+      "order_id": "#W1234567",
+      "address1": "789 Oak Street",
+      "address2": "Floor 2",
+      "city": "Seattle",
+      "state": "WA",
+      "country": "USA",
+      "zip": "98101"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user requests to modify the address for an order that is still pending ('processing'), provides a correctly formatted order ID with '#', and all address fields are valid. This fully satisfies all policy requirements.",
+    "api_name": "retail",
+    "target_parameter": "order_id"
+  },
+  {
+    "user_query": "I just placed an order for a new blender and realized I entered the wrong address. Can you change the shipping address for order #W9876543 to 456 Maple Ave, Apt 12, Boston, MA, USA, 02118?",
+    "function_name": "modify_pending_order_address",
+    "parameters": {
+      "order_id": "#W9876543",
+      "address1": "456 Maple Ave",
+      "address2": "Apt 12",
+      "city": "Boston",
+      "state": "MA",
+      "country": "USA",
+      "zip": "02118"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The customer requests a shipping address change for a recent (pending) order, provides a valid order ID starting with '#', and all address fields are properly completed. This meets all function and policy requirements.",
+    "api_name": "retail",
+    "target_parameter": "order_id"
+  },
+  {
+    "user_query": "Can you update the shipping address for my pending order #W5558888 to 1001 Elm St, Suite 300, Austin, TX, USA, 78701? I need it sent to my office instead of home.",
+    "function_name": "modify_pending_order_address",
+    "parameters": {
+      "order_id": "#W5558888",
+      "address1": "1001 Elm St",
+      "address2": "Suite 300",
+      "city": "Austin",
+      "state": "TX",
+      "country": "USA",
+      "zip": "78701"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The request is to change the address on a pending order, using a valid order ID with '#', and all other parameters are valid. No policies are violated.",
+    "api_name": "retail",
+    "target_parameter": "order_id"
+  },
+  {
+    "user_query": "Hi, I realized I need to update the shipping address for my pending order #W1002345. Please change it to 742 Evergreen Terrace.",
+    "function_name": "modify_pending_order_address",
+    "parameters": {
+      "order_id": "#W1002345",
+      "address1": "742 Evergreen Terrace",
+      "address2": "",
+      "city": "Springfield",
+      "state": "IL",
+      "country": "USA",
+      "zip": "62704"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The address1 field contains a valid, non-empty street address. All parameters meet format and state requirements, and the order is pending.",
+    "api_name": "retail",
+    "target_parameter": "address1"
+  },
+  {
+    "user_query": "I recently placed an order (#W2039483) for a pair of headphones. Can you update my shipping address to 1600 Pennsylvania Avenue NW?",
+    "function_name": "modify_pending_order_address",
+    "parameters": {
+      "order_id": "#W2039483",
+      "address1": "1600 Pennsylvania Avenue NW",
+      "address2": "Apt 2B",
+      "city": "Washington",
+      "state": "DC",
+      "country": "USA",
+      "zip": "20500"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The address1 value is a realistic, full street address and meets all format and policy requirements. The order is pending and can be modified.",
+    "api_name": "retail",
+    "target_parameter": "address1"
+  },
+  {
+    "user_query": "I'd like to change the shipping address for my pending order #W3094857. Please send it to 555 Market St.",
+    "function_name": "modify_pending_order_address",
+    "parameters": {
+      "order_id": "#W3094857",
+      "address1": "555 Market St.",
+      "address2": "Suite 800",
+      "city": "San Francisco",
+      "state": "CA",
+      "country": "USA",
+      "zip": "94105"
+    },
+    "policy_category": "happy_path",
+    "rationale": "address1 is a valid, properly formatted street address. All other parameters are also valid, and the order is in a pending state.",
+    "api_name": "retail",
+    "target_parameter": "address1"
+  },
+  {
+    "user_query": "Hi, I need to update the shipping address for my pending order #W1234567. Please add 'Apt 305' as the second line of the address. The full address should be '742 Evergreen Terrace', 'Apt 305', Springfield, IL, USA, 62704.",
+    "function_name": "modify_pending_order_address",
+    "parameters": {
+      "order_id": "#W1234567",
+      "address1": "742 Evergreen Terrace",
+      "address2": "Apt 305",
+      "city": "Springfield",
+      "state": "IL",
+      "country": "USA",
+      "zip": "62704"
+    },
+    "policy_category": "happy_path",
+    "rationale": "All parameters are valid and formatted correctly. 'Apt 305' is a standard, acceptable value for address2. The order is pending, and the request is clear, so the modification should succeed.",
+    "api_name": "retail",
+    "target_parameter": "address2"
+  },
+  {
+    "user_query": "I'd like to change the address for my pending order #W7654321. Please add 'Suite B' as the second line. The address should now be '1600 Pennsylvania Ave NW', 'Suite B', Washington, DC, USA, 20500.",
+    "function_name": "modify_pending_order_address",
+    "parameters": {
+      "order_id": "#W7654321",
+      "address1": "1600 Pennsylvania Ave NW",
+      "address2": "Suite B",
+      "city": "Washington",
+      "state": "DC",
+      "country": "USA",
+      "zip": "20500"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The scenario uses a valid order in pending status and a legitimate address2 value ('Suite B'). All address fields are correctly formatted and appropriate for shipping.",
+    "api_name": "retail",
+    "target_parameter": "address2"
+  },
+  {
+    "user_query": "Can you remove the second address line for my pending order #W9988776? The new address should just be '221B Baker Street', '', London, LDN, UK, NW16XE.",
+    "function_name": "modify_pending_order_address",
+    "parameters": {
+      "order_id": "#W9988776",
+      "address1": "221B Baker Street",
+      "address2": "",
+      "city": "London",
+      "state": "LDN",
+      "country": "UK",
+      "zip": "NW16XE"
+    },
+    "policy_category": "happy_path",
+    "rationale": "Leaving address2 blank is valid when no apartment, suite, or additional designation is needed. All other address fields are properly filled and the order is eligible for modification.",
+    "api_name": "retail",
+    "target_parameter": "address2"
+  },
+  {
+    "user_query": "Hi, I need to update the shipping address for my pending order #W1234567. Please change it to 200 Park Avenue, Suite 1200, New York, NY, USA, 10017.",
+    "function_name": "modify_pending_order_address",
+    "parameters": {
+      "order_id": "#W1234567",
+      "address1": "200 Park Avenue",
+      "address2": "Suite 1200",
+      "city": "New York",
+      "state": "NY",
+      "country": "USA",
+      "zip": "10017"
+    },
+    "policy_category": "happy_path",
+    "rationale": "All address fields are valid, including 'city' which contains only alphabetic characters and matches a real city. The order is pending, and the user provides explicit updated details.",
+    "api_name": "retail",
+    "target_parameter": "city"
+  },
+  {
+    "user_query": "Can you please change the delivery address for my order #W7896543 to 500 Market St, Apt 5B, San Francisco, CA, USA, 94105?",
+    "function_name": "modify_pending_order_address",
+    "parameters": {
+      "order_id": "#W7896543",
+      "address1": "500 Market St",
+      "address2": "Apt 5B",
+      "city": "San Francisco",
+      "state": "CA",
+      "country": "USA",
+      "zip": "94105"
+    },
+    "policy_category": "happy_path",
+    "rationale": "All provided values are correctly formatted and reference real-world locations; 'San Francisco' is a valid city. The order is pending and modifiable.",
+    "api_name": "retail",
+    "target_parameter": "city"
+  },
+  {
+    "user_query": "Could you change the shipping address for my pending order #W4567890 to 1600 Amphitheatre Parkway, , Mountain View, CA, USA, 94043?",
+    "function_name": "modify_pending_order_address",
+    "parameters": {
+      "order_id": "#W4567890",
+      "address1": "1600 Amphitheatre Parkway",
+      "address2": "",
+      "city": "Mountain View",
+      "state": "CA",
+      "country": "USA",
+      "zip": "94043"
+    },
+    "policy_category": "happy_path",
+    "rationale": "All information is valid and the city is a real, deliverable location. No policy violations; all fields are properly formatted.",
+    "api_name": "retail",
+    "target_parameter": "city"
+  },
+  {
+    "user_query": "Hi, I just placed an order (#W1234567) for the Echo Dot, but I realized I need to update my shipping address. Can you change it to 742 Evergreen Terrace, Apt 2, Springfield, IL, USA, 62704?",
+    "function_name": "modify_pending_order_address",
+    "parameters": {
+      "order_id": "#W1234567",
+      "address1": "742 Evergreen Terrace",
+      "address2": "Apt 2",
+      "city": "Springfield",
+      "state": "IL",
+      "country": "USA",
+      "zip": "62704"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The order is newly placed and is in 'pending' status, allowing the shipping address to be modified. All address fields are valid and properly formatted.",
+    "api_name": "retail",
+    "target_parameter": "state"
+  },
+  {
+    "user_query": "Can you update the address for my pending order #W9876543 to 1600 Pennsylvania Ave NW, Washington, DC, USA, 20500? I made a mistake during checkout.",
+    "function_name": "modify_pending_order_address",
+    "parameters": {
+      "order_id": "#W9876543",
+      "address1": "1600 Pennsylvania Ave NW",
+      "address2": "",
+      "city": "Washington",
+      "state": "DC",
+      "country": "USA",
+      "zip": "20500"
+    },
+    "policy_category": "happy_path",
+    "rationale": "Order is in 'pending' status, making the address eligible for update. All address fields, including the state ('DC'), are valid.",
+    "api_name": "retail",
+    "target_parameter": "state"
+  },
+  {
+    "user_query": "Could you please update the shipping address for my order #W5552221? It\u2019s still processing. The new address is 1 Infinite Loop, Cupertino, CA, USA, 95014.",
+    "function_name": "modify_pending_order_address",
+    "parameters": {
+      "order_id": "#W5552221",
+      "address1": "1 Infinite Loop",
+      "address2": "",
+      "city": "Cupertino",
+      "state": "CA",
+      "country": "USA",
+      "zip": "95014"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The order is in 'pending' (processing) status, so the address can be updated. All inputs are valid and policy-compliant.",
+    "api_name": "retail",
+    "target_parameter": "state"
+  },
+  {
+    "user_query": "Hi, I just placed order #W1234567 for a pair of wireless earbuds, and I need to update the shipping address to my new place in Canada. Can you help me change it to 789 Maple Ave, Toronto, ON, Canada, M5H 2N2?",
+    "function_name": "modify_pending_order_address",
+    "parameters": {
+      "order_id": "#W1234567",
+      "address1": "789 Maple Ave",
+      "address2": "",
+      "city": "Toronto",
+      "state": "ON",
+      "country": "Canada",
+      "zip": "M5H 2N2"
+    },
+    "policy_category": "happy_path",
+    "rationale": "All address fields are valid and formatted correctly, including a recognized country ('Canada'). The order is pending and eligible for address modification.",
+    "api_name": "retail",
+    "target_parameter": "country"
+  },
+  {
+    "user_query": "Can you update the shipping address for my order #W7654321 to 55 Baker Street, Apt 12B, London, Greater London, United Kingdom, NW1 6XE? It's still pending.",
+    "function_name": "modify_pending_order_address",
+    "parameters": {
+      "order_id": "#W7654321",
+      "address1": "55 Baker Street",
+      "address2": "Apt 12B",
+      "city": "London",
+      "state": "Greater London",
+      "country": "United Kingdom",
+      "zip": "NW1 6XE"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The order is in pending status, the address details are valid and complete, and 'United Kingdom' is a recognized, properly formatted country value.",
+    "api_name": "retail",
+    "target_parameter": "country"
+  },
+  {
+    "user_query": "I'd like to change the shipping address for my order #W9998887 to 123 Main St, Apt 5, New York, NY, USA, 10001 before it ships.",
+    "function_name": "modify_pending_order_address",
+    "parameters": {
+      "order_id": "#W9998887",
+      "address1": "123 Main St",
+      "address2": "Apt 5",
+      "city": "New York",
+      "state": "NY",
+      "country": "USA",
+      "zip": "10001"
+    },
+    "policy_category": "happy_path",
+    "rationale": "All parameters, including the country ('USA'), are valid and properly formatted. The order is pending, so address modification is allowed.",
+    "api_name": "retail",
+    "target_parameter": "country"
+  },
+  {
+    "user_query": "Hi, I just placed order #W1029384 for a pair of Bluetooth headphones (SKU-HEAD-200) and realized my shipping zip code is wrong. Can you update it to 94107? The rest of the address is 765 Market St, Apt 5C, San Francisco, CA, USA.",
+    "function_name": "modify_pending_order_address",
+    "parameters": {
+      "order_id": "#W1029384",
+      "address1": "765 Market St",
+      "address2": "Apt 5C",
+      "city": "San Francisco",
+      "state": "CA",
+      "country": "USA",
+      "zip": "94107"
+    },
+    "policy_category": "happy_path",
+    "rationale": "All address fields, including zip, are valid and comply with required format. The order is in pending status and the zip code is a standard 5-digit US zip code.",
+    "api_name": "retail",
+    "target_parameter": "zip"
+  },
+  {
+    "user_query": "I need to change the delivery address for my pending order #W5566778 for the air fryer (SKU-KITCH-678). Please update it to 324 Pine St, Suite 200, Seattle, WA, USA, zip 98101.",
+    "function_name": "modify_pending_order_address",
+    "parameters": {
+      "order_id": "#W5566778",
+      "address1": "324 Pine St",
+      "address2": "Suite 200",
+      "city": "Seattle",
+      "state": "WA",
+      "country": "USA",
+      "zip": "98101"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The order is pending and all address fields, including the zip code '98101', are valid, 5-digit, and numeric for a US address.",
+    "api_name": "retail",
+    "target_parameter": "zip"
+  },
+  {
+    "user_query": "Could you please correct my shipping address for order #W4455667? I ordered a ceramic vase (SKU-HOME-VA123) and the address should be 890 Willow Lane, , Austin, TX, USA, 78704.",
+    "function_name": "modify_pending_order_address",
+    "parameters": {
+      "order_id": "#W4455667",
+      "address1": "890 Willow Lane",
+      "address2": "",
+      "city": "Austin",
+      "state": "TX",
+      "country": "USA",
+      "zip": "78704"
+    },
+    "policy_category": "happy_path",
+    "rationale": "All values including the zip code '78704' are valid and comply with the format requirements. The order is pending, and the zip code is a proper 5-digit US code.",
+    "api_name": "retail",
+    "target_parameter": "zip"
+  },
+  {
+    "user_query": "Hi, I just placed order #W9321845 for two pairs of the Classic Fit Chinos (SKU-CHINO-32-BLU, item IDs 1882012231 and 1882012232) in size 32 blue, but I realized I want them in size 34 instead. Can you help me swap them before the order ships? I\u2019ll use my Visa ending in 1902 for any price difference.",
+    "function_name": "modify_pending_order_items",
+    "parameters": {
+      "order_id": "#W9321845",
+      "item_ids": [
+        "1882012231",
+        "1882012232"
+      ],
+      "new_item_ids": [
+        "1882012331",
+        "1882012332"
+      ],
+      "payment_method_id": "credit_card_1902"
+    },
+    "policy_category": "happy_path",
+    "rationale": "Order #W9321845 is in 'pending' status, the order_id format is correct, and the modification request is within allowed policies. The customer provided explicit confirmation and a valid payment method. All parameters are compliant.",
+    "api_name": "retail",
+    "target_parameter": "order_id"
+  },
+  {
+    "user_query": "I just placed order #W0010042 for a pair of AirLite Running Shoes (SKU-SHOE-RUN-10, item ID 2001129900) in size 10, but I meant to order size 11. Can you switch the size on my order before it ships? Please charge the difference to my PayPal.",
+    "function_name": "modify_pending_order_items",
+    "parameters": {
+      "order_id": "#W0010042",
+      "item_ids": [
+        "2001129900"
+      ],
+      "new_item_ids": [
+        "2001129911"
+      ],
+      "payment_method_id": "paypal_445577"
+    },
+    "policy_category": "happy_path",
+    "rationale": "Order #W0010042 is pending, the order_id uses the correct format, and the request is to modify a variant of the same product type. A valid payment method is provided, so all policies are satisfied.",
+    "api_name": "retail",
+    "target_parameter": "order_id"
+  },
+  {
+    "user_query": "I want to change the color of the Bath Towel Set (SKU-HOME-TOWEL-GRY, item ID 3108121322) in my order #W8887755 from grey to blue before it ships. Please use my gift card ending in 8540 for any price changes.",
+    "function_name": "modify_pending_order_items",
+    "parameters": {
+      "order_id": "#W8887755",
+      "item_ids": [
+        "3108121322"
+      ],
+      "new_item_ids": [
+        "3108121422"
+      ],
+      "payment_method_id": "gift_card_8540"
+    },
+    "policy_category": "happy_path",
+    "rationale": "Order #W8887755 is pending, the order_id matches the required format, and the customer is swapping to a different color of the same product type. Payment method is valid and all policies are followed.",
+    "api_name": "retail",
+    "target_parameter": "order_id"
+  },
+  {
+    "user_query": "Hi, I just placed order #W8374921 for two pairs of the Classic Fit Jeans (item IDs: 1008723450 and 1008723451), but I realized I need a different waist size for both. Can you help me swap these two for the same jeans but in size 34W (item IDs: 1008723470 and 1008723471)? I\u2019ll use my credit card ending in 4412 for any price difference.",
+    "function_name": "modify_pending_order_items",
+    "parameters": {
+      "order_id": "#W8374921",
+      "item_ids": [
+        "1008723450",
+        "1008723451"
+      ],
+      "new_item_ids": [
+        "1008723470",
+        "1008723471"
+      ],
+      "payment_method_id": "credit_card_4412"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The customer requests to exchange two jeans for different sizes of the exact same product, with both old and new item IDs representing jeans. The order is pending and within allowed limits; payment method is valid. This fully complies with all policies.",
+    "api_name": "retail",
+    "target_parameter": "item_ids"
+  },
+  {
+    "user_query": "Can you please swap both of my ordered T-shirt items (item IDs: 1092384601, 1092384602) in order #W5532109 for the same T-shirt but in a different color (item IDs: 1092384701, 1092384702)? Please charge any difference to my PayPal.",
+    "function_name": "modify_pending_order_items",
+    "parameters": {
+      "order_id": "#W5532109",
+      "item_ids": [
+        "1092384601",
+        "1092384602"
+      ],
+      "new_item_ids": [
+        "1092384701",
+        "1092384702"
+      ],
+      "payment_method_id": "paypal_anna@email.com"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The customer is exchanging two T-shirts for the same T-shirt in a different color, all item IDs are valid and correspond to T-shirts. Payment method is valid and order is pending. This is compliant.",
+    "api_name": "retail",
+    "target_parameter": "item_ids"
+  },
+  {
+    "user_query": "I just placed order #W4455667 for a blue ceramic mug (item ID: 1011121314), but I changed my mind and want the same mug in green (item ID: 1011121333) instead. Can you make this change and use my gift card ending in 3956 for any price difference?",
+    "function_name": "modify_pending_order_items",
+    "parameters": {
+      "order_id": "#W4455667",
+      "item_ids": [
+        "1011121314"
+      ],
+      "new_item_ids": [
+        "1011121333"
+      ],
+      "payment_method_id": "gift_card_3956"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user is exchanging a mug for a different color variant of the same mug; both item IDs are valid and of the same product. Payment method and order status are valid.",
+    "api_name": "retail",
+    "target_parameter": "item_ids"
+  },
+  {
+    "user_query": "Hi, I just placed order #W1234567 for two pairs of the ClassicFit Jeans (item IDs 20082340 and 20082341, both size 32). I'd like to switch one of them to the same jeans but in size 34 instead (item ID 20082342). Please use my credit card ending in 1122 for any price difference. Can you help?",
+    "function_name": "modify_pending_order_items",
+    "parameters": {
+      "order_id": "#W1234567",
+      "item_ids": [
+        "20082340"
+      ],
+      "new_item_ids": [
+        "20082342"
+      ],
+      "payment_method_id": "credit_card_1122"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user requests to exchange one pair of jeans for a different size of the exact same product, which is allowed. The order is pending and the payment method is valid. The new item is a variant (size) of the same jeans.",
+    "api_name": "retail",
+    "target_parameter": "new_item_ids"
+  },
+  {
+    "user_query": "Hello, for my pending order #W9876543, I ordered the Cozy Home Mug in blue (item ID 40001234). I'd like to change it to the same mug in green (item ID 40001235). Please use my PayPal account to handle any price difference.",
+    "function_name": "modify_pending_order_items",
+    "parameters": {
+      "order_id": "#W9876543",
+      "item_ids": [
+        "40001234"
+      ],
+      "new_item_ids": [
+        "40001235"
+      ],
+      "payment_method_id": "paypal_jane_doe"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user is exchanging a mug for the same mug in a different color, which is a valid variant change. The payment method is valid and the order is pending.",
+    "api_name": "retail",
+    "target_parameter": "new_item_ids"
+  },
+  {
+    "user_query": "I just placed order #W2468101 for two pairs of the SportPro Running Shoes in size 9 and 10 (item IDs 60054321 and 60054322). Can I change the size 10 pair (item ID 60054322) to size 11 (item ID 60054323) instead? Please use my gift card ending in 3344 to handle the price difference.",
+    "function_name": "modify_pending_order_items",
+    "parameters": {
+      "order_id": "#W2468101",
+      "item_ids": [
+        "60054322"
+      ],
+      "new_item_ids": [
+        "60054323"
+      ],
+      "payment_method_id": "gift_card_3344"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The customer is exchanging running shoes for the same model in a different size, which is a valid variant change. The payment method is valid and the order is pending.",
+    "api_name": "retail",
+    "target_parameter": "new_item_ids"
+  },
+  {
+    "user_query": "Hi, I just placed order #W2938401 for two pairs of the 'Nike Air Max 270' in size 9. I'd like to swap one of them (item ID 2201983745) for the same model in size 10 (item ID 2201983748). The order is still pending. Please use my Visa card ending in 4242 (credit_card_1029384) for any price difference. Can you make this change?",
+    "function_name": "modify_pending_order_items",
+    "parameters": {
+      "order_id": "#W2938401",
+      "item_ids": [
+        "2201983745"
+      ],
+      "new_item_ids": [
+        "2201983748"
+      ],
+      "payment_method_id": "credit_card_1029384"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The order is in pending status, both item IDs correspond to variants of the same product, and the payment method is a valid credit card owned by the user. All policies are satisfied and the customer confirms the change.",
+    "api_name": "retail",
+    "target_parameter": "payment_method_id"
+  },
+  {
+    "user_query": "I ordered the 'Levi's 511 Slim Jeans' (item ID 3302981801) in a 32x30 in order #W4958120, but I'd like to exchange them for the 32x32 size (item ID 3302981802) before it ships. I have a store gift card (gift_card_7788990) that covers the $5 price difference. Can you process this change?",
+    "function_name": "modify_pending_order_items",
+    "parameters": {
+      "order_id": "#W4958120",
+      "item_ids": [
+        "3302981801"
+      ],
+      "new_item_ids": [
+        "3302981802"
+      ],
+      "payment_method_id": "gift_card_7788990"
+    },
+    "policy_category": "happy_path",
+    "rationale": "Order is pending, item swap is for the same product in a different size, and the provided gift card has sufficient balance to cover the price difference. Customer confirms the details.",
+    "api_name": "retail",
+    "target_parameter": "payment_method_id"
+  },
+  {
+    "user_query": "Hi, for my pending order #W6012457, I want to swap the 'KitchenAid Artisan Mixer' in Empire Red (item ID 5501122331) for the same model in Onyx Black (item ID 5501122332). Please use my PayPal account (paypal_9988776) for any refund or payment difference. Is that possible?",
+    "function_name": "modify_pending_order_items",
+    "parameters": {
+      "order_id": "#W6012457",
+      "item_ids": [
+        "5501122331"
+      ],
+      "new_item_ids": [
+        "5501122332"
+      ],
+      "payment_method_id": "paypal_9988776"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The order is pending, the item swap is for the same product in a different color, and the PayPal account is valid and linked to the user. All requirements are satisfied.",
+    "api_name": "retail",
+    "target_parameter": "payment_method_id"
+  },
+  {
+    "user_query": "Hi, I just placed an order for a pair of Bose QuietComfort 45 headphones (SKU-BOSE-QC45) and realized I used the wrong credit card. The order ID is #W1234567 and the status still says pending. Can I switch the payment to my PayPal account (paypal_99887766) before it ships?",
+    "function_name": "modify_pending_order_payment",
+    "parameters": {
+      "order_id": "#W1234567",
+      "payment_method_id": "paypal_99887766"
+    },
+    "policy_category": "happy_path",
+    "rationale": "Order is in 'pending' status, a valid order ID with the correct '#' prefix is provided, and the payment method change request is compliant. This fully satisfies all function policies, so the tool call should succeed.",
+    "api_name": "retail",
+    "target_parameter": "order_id"
+  },
+  {
+    "user_query": "I'd like to update the payment method for my recent home decor order before it ships. The order number is #W2691804 and I want to use my gift card (gift_card_0022889) instead of my Visa card. The order is still pending.",
+    "function_name": "modify_pending_order_payment",
+    "parameters": {
+      "order_id": "#W2691804",
+      "payment_method_id": "gift_card_0022889"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The order ID is correctly formatted and refers to a 'pending' order. The customer requests a valid payment method change within policy, so the tool call is appropriate.",
+    "api_name": "retail",
+    "target_parameter": "order_id"
+  },
+  {
+    "user_query": "Can I change the payment method for my clothing order? The order ID is #W3344556 and it's still pending. I'd like to use my Amex card (credit_card_11223344) instead of my Visa.",
+    "function_name": "modify_pending_order_payment",
+    "parameters": {
+      "order_id": "#W3344556",
+      "payment_method_id": "credit_card_11223344"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The customer provides a valid, properly formatted, pending order ID and a valid new payment method, so the function call is fully compliant.",
+    "api_name": "retail",
+    "target_parameter": "order_id"
+  },
+  {
+    "user_query": "Hi, I just placed order #W8231964 for the Sony WH-1000XM5 headphones, but I'd like to switch the payment from my Visa ending in 1123 to my PayPal account instead. Can you help me update the payment method before it ships?",
+    "function_name": "modify_pending_order_payment",
+    "parameters": {
+      "order_id": "#W8231964",
+      "payment_method_id": "paypal_0023456"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user is requesting to change the payment method for a pending order to a different, valid payment method (PayPal) that belongs to them. The original method (Visa) is not being reused. All policies on order status and payment method ownership are satisfied.",
+    "api_name": "retail",
+    "target_parameter": "payment_method_id"
+  },
+  {
+    "user_query": "I'd like to update the payment for my pending order #W9985723 (Dyson V12 vacuum) from my credit card to a gift card ending in 7852. The gift card has a $500 balance, which should cover the $399.99 order. Can you help me do this?",
+    "function_name": "modify_pending_order_payment",
+    "parameters": {
+      "order_id": "#W9985723",
+      "payment_method_id": "gift_card_7852"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user is switching payment methods for a pending order to a valid gift card they own, with sufficient balance to cover the order total. The new payment method is different from the original. All policies are satisfied.",
+    "api_name": "retail",
+    "target_parameter": "payment_method_id"
+  },
+  {
+    "user_query": "I want to change the payment method for my pending order #W5511023 (Levi's 501 jeans, 2 pairs) from my Mastercard to my American Express ending in 4422. Can you help me update the payment method?",
+    "function_name": "modify_pending_order_payment",
+    "parameters": {
+      "order_id": "#W5511023",
+      "payment_method_id": "amex_4422"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user is requesting to switch to a valid, user-owned credit card (American Express) that is different from the original payment method. The order is pending and all policies are satisfied.",
+    "api_name": "retail",
+    "target_parameter": "payment_method_id"
+  },
+  {
+    "user_query": "Hi, I'd like to update my shipping address for future orders. Please change my default address to 789 Oak Avenue, Apt 4B, New York, NY 10003, USA.",
+    "function_name": "modify_user_address",
+    "parameters": {
+      "user_id": "jason_miller_102",
+      "address1": "789 Oak Avenue",
+      "address2": "Apt 4B",
+      "city": "New York",
+      "state": "NY",
+      "country": "USA",
+      "zip": "10003"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user is requesting to update their own default address using their authenticated user ID. All address fields follow the required format and policies.",
+    "api_name": "retail",
+    "target_parameter": "user_id"
+  },
+  {
+    "user_query": "I'd like to change my billing address to 500 Pine St, Suite 21, Seattle, WA 98101, USA for all my future purchases.",
+    "function_name": "modify_user_address",
+    "parameters": {
+      "user_id": "maria_lee_570",
+      "address1": "500 Pine St",
+      "address2": "Suite 21",
+      "city": "Seattle",
+      "state": "WA",
+      "country": "USA",
+      "zip": "98101"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The customer is requesting a legitimate address update for her own account, using proper formats and a valid authenticated user ID.",
+    "api_name": "retail",
+    "target_parameter": "user_id"
+  },
+  {
+    "user_query": "I'm moving next week. Please update my home address to 142 Maple Drive, , Boston, MA 02135, USA on my account.",
+    "function_name": "modify_user_address",
+    "parameters": {
+      "user_id": "chloe_park_888",
+      "address1": "142 Maple Drive",
+      "address2": "",
+      "city": "Boston",
+      "state": "MA",
+      "country": "USA",
+      "zip": "02135"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The customer asks to update her own address. The user_id matches the authenticated user, and all other fields are valid.",
+    "api_name": "retail",
+    "target_parameter": "user_id"
+  },
+  {
+    "user_query": "Hi, I just moved. Can you update my shipping address to 847 Maple Avenue, Apartment 4B, in Brooklyn, NY 11215, USA? My user ID is emily_chen_102.",
+    "function_name": "modify_user_address",
+    "parameters": {
+      "user_id": "emily_chen_102",
+      "address1": "847 Maple Avenue",
+      "address2": "Apartment 4B",
+      "city": "Brooklyn",
+      "state": "NY",
+      "country": "USA",
+      "zip": "11215"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user is authenticated and provides a valid, non-empty street address for address1, complying with all address format and safety policies.",
+    "api_name": "retail",
+    "target_parameter": "address1"
+  },
+  {
+    "user_query": "I'd like to change my delivery address for future orders to 2375 Lake Shore Dr, Suite 210, Chicago, IL 60616, USA. My user ID is michael_smith_87.",
+    "function_name": "modify_user_address",
+    "parameters": {
+      "user_id": "michael_smith_87",
+      "address1": "2375 Lake Shore Dr",
+      "address2": "Suite 210",
+      "city": "Chicago",
+      "state": "IL",
+      "country": "USA",
+      "zip": "60616"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The request includes a properly formatted, non-empty address1 value and all other parameters are valid, so it meets all function policies.",
+    "api_name": "retail",
+    "target_parameter": "address1"
+  },
+  {
+    "user_query": "Please update my shipping address to 5000 Oak Street, San Francisco, CA 94117, USA. My user ID is maria_garcia_558.",
+    "function_name": "modify_user_address",
+    "parameters": {
+      "user_id": "maria_garcia_558",
+      "address1": "5000 Oak Street",
+      "address2": "",
+      "city": "San Francisco",
+      "state": "CA",
+      "country": "USA",
+      "zip": "94117"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user supplies a valid, non-empty street address for address1 and all other required fields, making the request compliant with function policies.",
+    "api_name": "retail",
+    "target_parameter": "address1"
+  },
+  {
+    "user_query": "Hi, I'd like to update my primary shipping address. Please change it to 123 Main St, Apt 4B, San Francisco, CA 94110, USA.",
+    "function_name": "modify_user_address",
+    "parameters": {
+      "user_id": "jane_doe_102",
+      "address1": "123 Main St",
+      "address2": "Apt 4B",
+      "city": "San Francisco",
+      "state": "CA",
+      "country": "USA",
+      "zip": "94110"
+    },
+    "policy_category": "happy_path",
+    "rationale": "All parameters are valid and realistic; address2 is a standard apartment number, which is allowed. The request is for the authenticated user and contains all required fields.",
+    "api_name": "retail",
+    "target_parameter": "address2"
+  },
+  {
+    "user_query": "Can you update my shipping address to 456 Oak Avenue, Suite 300, Portland, OR 97205, USA for my future orders?",
+    "function_name": "modify_user_address",
+    "parameters": {
+      "user_id": "jane_doe_102",
+      "address1": "456 Oak Avenue",
+      "address2": "Suite 300",
+      "city": "Portland",
+      "state": "OR",
+      "country": "USA",
+      "zip": "97205"
+    },
+    "policy_category": "happy_path",
+    "rationale": "All provided information is valid and typical for e-commerce. address2 uses a common suite designation, which matches standard format expectations.",
+    "api_name": "retail",
+    "target_parameter": "address2"
+  },
+  {
+    "user_query": "Could you please update my address to 789 Pine St, (no apartment or suite), Seattle, WA 98101, USA?",
+    "function_name": "modify_user_address",
+    "parameters": {
+      "user_id": "jane_doe_102",
+      "address1": "789 Pine St",
+      "address2": "",
+      "city": "Seattle",
+      "state": "WA",
+      "country": "USA",
+      "zip": "98101"
+    },
+    "policy_category": "happy_path",
+    "rationale": "Leaving address2 empty is explicitly permitted by the policy and is common for single-family addresses. All other fields are valid.",
+    "api_name": "retail",
+    "target_parameter": "address2"
+  },
+  {
+    "user_query": "Hi, I just moved and need to update my shipping address for future orders. Please change my default address to 742 Evergreen Terrace, Springfield, IL, USA, 62704. Thank you!",
+    "function_name": "modify_user_address",
+    "parameters": {
+      "user_id": "sara_doe_496",
+      "address1": "742 Evergreen Terrace",
+      "address2": "",
+      "city": "Springfield",
+      "state": "IL",
+      "country": "USA",
+      "zip": "62704"
+    },
+    "policy_category": "happy_path",
+    "rationale": "All address fields, including 'city', are valid and formatted correctly. The user is updating their own address and provides explicit details for confirmation, satisfying all policies.",
+    "api_name": "retail",
+    "target_parameter": "city"
+  },
+  {
+    "user_query": "Can you change my delivery address to 1600 Amphitheatre Parkway, Mountain View, CA, USA, 94043? I want to make sure my next order for the Google Nest Hub (SKU-98765) goes to the right place.",
+    "function_name": "modify_user_address",
+    "parameters": {
+      "user_id": "sara_doe_496",
+      "address1": "1600 Amphitheatre Parkway",
+      "address2": "",
+      "city": "Mountain View",
+      "state": "CA",
+      "country": "USA",
+      "zip": "94043"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The city 'Mountain View' is a valid, correctly formatted city name. All other address parameters are realistic and policy-compliant. The user is updating their own address.",
+    "api_name": "retail",
+    "target_parameter": "city"
+  },
+  {
+    "user_query": "I need to change my shipping address for future orders. Please set it to 221B Baker Street, Apt 2, London, England, United Kingdom, NW1 6XE.",
+    "function_name": "modify_user_address",
+    "parameters": {
+      "user_id": "sara_doe_496",
+      "address1": "221B Baker Street",
+      "address2": "Apt 2",
+      "city": "London",
+      "state": "England",
+      "country": "United Kingdom",
+      "zip": "NW1 6XE"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The city value 'London' is valid and correctly formatted for the United Kingdom. All details are realistic for an international address, and the user is authenticated.",
+    "api_name": "retail",
+    "target_parameter": "city"
+  },
+  {
+    "user_query": "Hi, I'd like to update my shipping address for my next order. Please change it to 123 Maple Avenue, Apt 4, Chicago, IL, USA, 60614.",
+    "function_name": "modify_user_address",
+    "parameters": {
+      "user_id": "emily_smith_205",
+      "address1": "123 Maple Avenue",
+      "address2": "Apt 4",
+      "city": "Chicago",
+      "state": "IL",
+      "country": "USA",
+      "zip": "60614"
+    },
+    "policy_category": "happy_path",
+    "rationale": "All parameters, including the state (IL), are valid and properly formatted. The state is a recognized US postal abbreviation.",
+    "api_name": "retail",
+    "target_parameter": "state"
+  },
+  {
+    "user_query": "I'd like to change my primary address to 789 Ocean Blvd, Suite 5B, Miami, FL, USA, 33139 for future orders.",
+    "function_name": "modify_user_address",
+    "parameters": {
+      "user_id": "jason_liu_774",
+      "address1": "789 Ocean Blvd",
+      "address2": "Suite 5B",
+      "city": "Miami",
+      "state": "FL",
+      "country": "USA",
+      "zip": "33139"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The address is complete and the state (FL) is a valid US abbreviation, complying with all formatting requirements.",
+    "api_name": "retail",
+    "target_parameter": "state"
+  },
+  {
+    "user_query": "I'd like to update my shipping address to 456 Pine Street, Apt 12, Seattle, WA, USA, 98101 for my upcoming orders.",
+    "function_name": "modify_user_address",
+    "parameters": {
+      "user_id": "nina_watson_882",
+      "address1": "456 Pine Street",
+      "address2": "Apt 12",
+      "city": "Seattle",
+      "state": "WA",
+      "country": "USA",
+      "zip": "98101"
+    },
+    "policy_category": "happy_path",
+    "rationale": "All address fields are valid, and the state (WA) correctly uses the standard two-letter abbreviation.",
+    "api_name": "retail",
+    "target_parameter": "state"
+  },
+  {
+    "user_query": "Hi, I moved recently and need to update my shipping address. Please change it to 742 Evergreen Terrace, Springfield, IL, USA, 62704. Can you help me with that?",
+    "function_name": "modify_user_address",
+    "parameters": {
+      "user_id": "lisa_simpson_742",
+      "address1": "742 Evergreen Terrace",
+      "address2": "",
+      "city": "Springfield",
+      "state": "IL",
+      "country": "USA",
+      "zip": "62704"
+    },
+    "policy_category": "happy_path",
+    "rationale": "All fields are valid and the country field is a standard, policy-compliant value ('USA'). The request is for the authenticated user and includes all required details.",
+    "api_name": "retail",
+    "target_parameter": "country"
+  },
+  {
+    "user_query": "Could you please update my default address to 100 King St W, Suite 3400, Toronto, ON, Canada, M5X 1A9? I want all my future orders shipped there.",
+    "function_name": "modify_user_address",
+    "parameters": {
+      "user_id": "samantha_king_100",
+      "address1": "100 King St W",
+      "address2": "Suite 3400",
+      "city": "Toronto",
+      "state": "ON",
+      "country": "Canada",
+      "zip": "M5X 1A9"
+    },
+    "policy_category": "happy_path",
+    "rationale": "All parameters, including the country ('Canada'), are valid and in an accepted format. The address is realistic, and the user is updating their own address.",
+    "api_name": "retail",
+    "target_parameter": "country"
+  },
+  {
+    "user_query": "I want to change my delivery address to 400 Oxford Street, London, England, United Kingdom, W1A 1AB for my upcoming order.",
+    "function_name": "modify_user_address",
+    "parameters": {
+      "user_id": "charles_uk_400",
+      "address1": "400 Oxford Street",
+      "address2": "",
+      "city": "London",
+      "state": "England",
+      "country": "United Kingdom",
+      "zip": "W1A 1AB"
+    },
+    "policy_category": "happy_path",
+    "rationale": "This scenario uses a valid and accepted country ('United Kingdom'), with proper address formatting. All required fields are present and compliant.",
+    "api_name": "retail",
+    "target_parameter": "country"
+  },
+  {
+    "user_query": "Hi, I just moved to 742 Evergreen Terrace, Springfield, IL 62704, USA. Can you update my shipping address so my next order goes there?",
+    "function_name": "modify_user_address",
+    "parameters": {
+      "user_id": "homer_simpson_123",
+      "address1": "742 Evergreen Terrace",
+      "address2": "",
+      "city": "Springfield",
+      "state": "IL",
+      "country": "USA",
+      "zip": "62704"
+    },
+    "policy_category": "happy_path",
+    "rationale": "All required address fields are provided in correct formats. The zip is a valid 5-digit US postal code. The user is updating their own address, so all policies are satisfied.",
+    "api_name": "retail",
+    "target_parameter": "zip"
+  },
+  {
+    "user_query": "I'd like to update my address to 1600 Pennsylvania Avenue NW, Washington, DC 20500, USA for my upcoming electronics order.",
+    "function_name": "modify_user_address",
+    "parameters": {
+      "user_id": "alex_jones_456",
+      "address1": "1600 Pennsylvania Avenue NW",
+      "address2": "",
+      "city": "Washington",
+      "state": "DC",
+      "country": "USA",
+      "zip": "20500"
+    },
+    "policy_category": "happy_path",
+    "rationale": "All parameters are present and formatted correctly. The zip code '20500' is a valid, 5-digit US postal code, complying with the policy.",
+    "api_name": "retail",
+    "target_parameter": "zip"
+  },
+  {
+    "user_query": "Can you update my shipping address to 221B Baker Street, Apt 2, London, Greater London, UK, zip code W1U 6SG for my next clothing order?",
+    "function_name": "modify_user_address",
+    "parameters": {
+      "user_id": "sherlock_holmes_007",
+      "address1": "221B Baker Street",
+      "address2": "Apt 2",
+      "city": "London",
+      "state": "Greater London",
+      "country": "UK",
+      "zip": "W1U 6SG"
+    },
+    "policy_category": "happy_path",
+    "rationale": "For UK addresses, alphanumeric postal codes are valid (e.g., W1U 6SG). All other parameters are correct, so this complies with realistic international address formats.",
+    "api_name": "retail",
+    "target_parameter": "zip"
+  },
+  {
+    "user_query": "Hi, I'd like to return the noise-cancelling headphones (item ID 2001938472) I ordered under #W1234567. They were delivered last week and I paid with my Visa ending in 4321. Can you help me with the return?",
+    "function_name": "return_delivered_order_items",
+    "parameters": {
+      "order_id": "#W1234567",
+      "item_ids": [
+        "2001938472"
+      ],
+      "payment_method_id": "credit_card_4321"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The order (#W1234567) is in 'delivered' status, the item ID is valid for that order, and the refund is to the original payment method. All parameters are policy-compliant.",
+    "api_name": "retail",
+    "target_parameter": "order_id"
+  },
+  {
+    "user_query": "I received my blender (item ID 3004758392) yesterday from order #W6543210, but it's not working. I'd like to return it and get a refund to my PayPal account used for purchase.",
+    "function_name": "return_delivered_order_items",
+    "parameters": {
+      "order_id": "#W6543210",
+      "item_ids": [
+        "3004758392"
+      ],
+      "payment_method_id": "paypal_8844"
+    },
+    "policy_category": "happy_path",
+    "rationale": "Order ID (#W6543210) is properly formatted and delivered, the item is part of the order, and the payment method matches the original. All requirements are met.",
+    "api_name": "retail",
+    "target_parameter": "order_id"
+  },
+  {
+    "user_query": "Hi, I want to return the blue linen shirt (item ID 4002847361) from my order #W2468135. It was delivered two days ago and I used my store gift card ending in 0019 for the purchase.",
+    "function_name": "return_delivered_order_items",
+    "parameters": {
+      "order_id": "#W2468135",
+      "item_ids": [
+        "4002847361"
+      ],
+      "payment_method_id": "gift_card_0019"
+    },
+    "policy_category": "happy_path",
+    "rationale": "Order ID is correctly formatted and delivered, the item belongs to the order, and the refund will go to the original store gift card. All policies are satisfied.",
+    "api_name": "retail",
+    "target_parameter": "order_id"
+  },
+  {
+    "user_query": "Hi, I just received my order #W8934562, and I'd like to return the black wireless earbuds (item ID 2001345678) because they're not working properly. Please process the return using the credit card I used for the purchase.",
+    "function_name": "return_delivered_order_items",
+    "parameters": {
+      "order_id": "#W8934562",
+      "item_ids": [
+        "2001345678"
+      ],
+      "payment_method_id": "credit_card_2987341"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The order is delivered, the item ID belongs to the order, and the payment method is valid. This follows all return policies and should succeed.",
+    "api_name": "retail",
+    "target_parameter": "item_ids"
+  },
+  {
+    "user_query": "I received my order #W5543210 today. I'd like to return both the navy cotton t-shirt (item ID 3001122334) and the gray crew socks (item ID 3001122335). Please refund to my original payment method.",
+    "function_name": "return_delivered_order_items",
+    "parameters": {
+      "order_id": "#W5543210",
+      "item_ids": [
+        "3001122334",
+        "3001122335"
+      ],
+      "payment_method_id": "credit_card_1122001"
+    },
+    "policy_category": "happy_path",
+    "rationale": "Both item IDs are part of the delivered order. All parameters are valid and in compliance with return policies.",
+    "api_name": "retail",
+    "target_parameter": "item_ids"
+  },
+  {
+    "user_query": "Hello, I'd like to return all 10 packs of AA batteries (item ID 4009988776) from my delivered order #W6677889. Please refund to my gift card ending in 4321.",
+    "function_name": "return_delivered_order_items",
+    "parameters": {
+      "order_id": "#W6677889",
+      "item_ids": [
+        "4009988776",
+        "4009988776",
+        "4009988776",
+        "4009988776",
+        "4009988776",
+        "4009988776",
+        "4009988776",
+        "4009988776",
+        "4009988776",
+        "4009988776"
+      ],
+      "payment_method_id": "gift_card_4321"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user is returning all 10 delivered units of a single item, which matches the order and is within quantity limits. The payment method is valid.",
+    "api_name": "retail",
+    "target_parameter": "item_ids"
+  },
+  {
+    "user_query": "Hi, I just received my order #W2847319, but the blender (item 1123985731) isn't working. I'd like to return it and get my refund back to the same credit card I used for the purchase.",
+    "function_name": "return_delivered_order_items",
+    "parameters": {
+      "order_id": "#W2847319",
+      "item_ids": [
+        "1123985731"
+      ],
+      "payment_method_id": "credit_card_8564321"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user requests a return on a delivered order, specifies a valid item from the order, and chooses the original payment method (credit card) for the refund, which complies with all retail policies.",
+    "api_name": "retail",
+    "target_parameter": "payment_method_id"
+  },
+  {
+    "user_query": "I'd like to return both pairs of shoes (items 2103984001 and 2103984002) from my recent order #W3098123. Please put the refund on my store gift card ending in 4455.",
+    "function_name": "return_delivered_order_items",
+    "parameters": {
+      "order_id": "#W3098123",
+      "item_ids": [
+        "2103984001",
+        "2103984002"
+      ],
+      "payment_method_id": "gift_card_4455"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The order has been delivered, the items are valid, and the user requests the refund to a gift card they already own, which is allowed by policy.",
+    "api_name": "retail",
+    "target_parameter": "payment_method_id"
+  },
+  {
+    "user_query": "The headphones (item 5432987230) from order #W4123092 didn't fit well, so I'd like to return them and get my money back on my PayPal account used for this purchase.",
+    "function_name": "return_delivered_order_items",
+    "parameters": {
+      "order_id": "#W4123092",
+      "item_ids": [
+        "5432987230"
+      ],
+      "payment_method_id": "paypal_10293847"
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user is returning a valid item from a delivered order and requests the refund to the original payment method (PayPal), which is compliant.",
+    "api_name": "retail",
+    "target_parameter": "payment_method_id"
+  },
+  {
+    "user_query": "Hi, I received my order (Order #241089) yesterday, but the headphones (SKU-HEAD-2023) aren't working at all. I tried all the troubleshooting steps but nothing helped. Can you connect me with a human agent to help with this defective product?",
+    "function_name": "transfer_to_human_agents",
+    "parameters": {
+      "summary": "Customer received Order #241089 yesterday. Headphones (SKU-HEAD-2023) are defective and troubleshooting did not resolve the issue. Customer requests transfer to a human agent for further assistance."
+    },
+    "policy_category": "happy_path",
+    "rationale": "The user explicitly requests a human agent after exhausting troubleshooting. The summary clearly and concisely describes the user's issue, as required by policy.",
+    "api_name": "retail",
+    "target_parameter": "summary"
+  },
+  {
+    "user_query": "I tried to return a pair of sneakers (SKU-SNK-9087, Order #129034) but the system won't let me. It's been 20 days since delivery. Can you please escalate this to a human agent to help me process the return?",
+    "function_name": "transfer_to_human_agents",
+    "parameters": {
+      "summary": "Customer is unable to process a return for sneakers (SKU-SNK-9087, Order #129034) through the system despite being within the 30-day return window. Customer requests escalation to a human agent."
+    },
+    "policy_category": "happy_path",
+    "rationale": "User request meets all criteria: within return window, provided order and SKU, and explicitly asks for a human. Summary is complete and relevant.",
+    "api_name": "retail",
+    "target_parameter": "summary"
+  },
+  {
+    "user_query": "I tried applying promo code SPRING20 for my $50 bedding order, but it says invalid. Can you please transfer me to a human agent for help?",
+    "function_name": "transfer_to_human_agents",
+    "parameters": {
+      "summary": "Customer attempted to use promo code SPRING20 on a $50 bedding order but received an invalid code error. Customer requests assistance from a human agent."
+    },
+    "policy_category": "happy_path",
+    "rationale": "User has a valid order value and promo code format, and requests a human agent. Summary is specific to the user's issue, satisfying policy.",
+    "api_name": "retail",
+    "target_parameter": "summary"
+  }
+]
