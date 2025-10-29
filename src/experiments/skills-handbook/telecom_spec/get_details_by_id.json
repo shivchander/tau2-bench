@@ -1,0 +1,34 @@
+{
+  "name": "get_details_by_id",
+  "doc": "def get_details_by_id(id: str) -> Dict[str, Any]:\n    \"\"\"\nRetrieves the details for a given ID.\nThe ID must be a valid ID for a Customer, Line, Device, Bill, or Plan.\n\nArgs:\n    id: The ID of the object to retrieve.\n\nReturns:\n    The object corresponding to the ID.\n\nRaises:\n    ValueError: If the ID is not found or if the ID format is invalid.\n\"\"\"",
+  "params": {
+    "properties": {
+      "id": {
+        "description": "The ID of the object to retrieve.",
+        "title": "Id",
+        "type": "string"
+      }
+    },
+    "required": [
+      "id"
+    ],
+    "title": "parameters",
+    "type": "object"
+  },
+  "returns": {
+    "properties": {
+      "returns": {
+        "additionalProperties": true,
+        "description": "The object corresponding to the ID.",
+        "title": "Returns",
+        "type": "object"
+      }
+    },
+    "required": [
+      "returns"
+    ],
+    "title": "returns",
+    "type": "object"
+  },
+  "tool_type": "read"
+}

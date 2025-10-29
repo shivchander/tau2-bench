@@ -1,0 +1,276 @@
+{
+  "name": "modify_user_address",
+  "doc": "def modify_user_address(user_id: str, address1: str, address2: str, city: str, state: str, country: str, zip: str) -> tau2.domains.retail.data_model.User:\n    \"\"\"Modify the default address of a user. The agent needs to explain the modification detail and ask for explicit user confirmation (yes/no) to proceed.\n\nArgs:\n    user_id: The user id, such as 'sara_doe_496'.\n    address1: The first line of the address, such as '123 Main St'.\n    address2: The second line of the address, such as 'Apt 1' or ''.\n    city: The city, such as 'San Francisco'.\n    state: The state, such as 'CA'.\n    country: The country, such as 'USA'.\n    zip: The zip code, such as '12345'.\n\nReturns:\n    User: The user details after the modification.\n\nRaises:\n    ValueError: If the user is not found.\n\"\"\"",
+  "params": {
+    "properties": {
+      "user_id": {
+        "description": "The user id, such as 'sara_doe_496'.",
+        "title": "User Id",
+        "type": "string"
+      },
+      "address1": {
+        "description": "The first line of the address, such as '123 Main St'.",
+        "title": "Address1",
+        "type": "string"
+      },
+      "address2": {
+        "description": "The second line of the address, such as 'Apt 1' or ''.",
+        "title": "Address2",
+        "type": "string"
+      },
+      "city": {
+        "description": "The city, such as 'San Francisco'.",
+        "title": "City",
+        "type": "string"
+      },
+      "state": {
+        "description": "The state, such as 'CA'.",
+        "title": "State",
+        "type": "string"
+      },
+      "country": {
+        "description": "The country, such as 'USA'.",
+        "title": "Country",
+        "type": "string"
+      },
+      "zip": {
+        "description": "The zip code, such as '12345'.",
+        "title": "Zip",
+        "type": "string"
+      }
+    },
+    "required": [
+      "user_id",
+      "address1",
+      "address2",
+      "city",
+      "state",
+      "country",
+      "zip"
+    ],
+    "title": "parameters",
+    "type": "object"
+  },
+  "returns": {
+    "$defs": {
+      "CreditCard": {
+        "properties": {
+          "source": {
+            "const": "credit_card",
+            "description": "Indicates this is a credit card payment method",
+            "title": "Source",
+            "type": "string"
+          },
+          "id": {
+            "description": "Unique identifier for the payment method",
+            "title": "Id",
+            "type": "string"
+          },
+          "brand": {
+            "description": "Credit card brand (e.g., visa, mastercard)",
+            "title": "Brand",
+            "type": "string"
+          },
+          "last_four": {
+            "description": "Last four digits of the credit card",
+            "title": "Last Four",
+            "type": "string"
+          }
+        },
+        "required": [
+          "source",
+          "id",
+          "brand",
+          "last_four"
+        ],
+        "title": "CreditCard",
+        "type": "object"
+      },
+      "GiftCard": {
+        "properties": {
+          "source": {
+            "const": "gift_card",
+            "description": "Indicates this is a gift card payment method",
+            "title": "Source",
+            "type": "string"
+          },
+          "id": {
+            "description": "Unique identifier for the gift card",
+            "title": "Id",
+            "type": "string"
+          },
+          "balance": {
+            "description": "Gift card value amount",
+            "title": "Balance",
+            "type": "number"
+          }
+        },
+        "required": [
+          "source",
+          "id",
+          "balance"
+        ],
+        "title": "GiftCard",
+        "type": "object"
+      },
+      "Paypal": {
+        "properties": {
+          "source": {
+            "const": "paypal",
+            "description": "Indicates this is a paypal payment method",
+            "title": "Source",
+            "type": "string"
+          },
+          "id": {
+            "description": "Unique identifier for the payment method",
+            "title": "Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "source",
+          "id"
+        ],
+        "title": "Paypal",
+        "type": "object"
+      },
+      "User": {
+        "description": "Represents a user with their personal information, payment methods and order history",
+        "properties": {
+          "user_id": {
+            "description": "Unique identifier for the user",
+            "title": "User Id",
+            "type": "string"
+          },
+          "name": {
+            "$ref": "#/$defs/UserName",
+            "description": "User's full name"
+          },
+          "address": {
+            "$ref": "#/$defs/UserAddress",
+            "description": "User's primary address"
+          },
+          "email": {
+            "description": "User's email address",
+            "title": "Email",
+            "type": "string"
+          },
+          "payment_methods": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/CreditCard"
+                },
+                {
+                  "$ref": "#/$defs/GiftCard"
+                },
+                {
+                  "$ref": "#/$defs/Paypal"
+                }
+              ]
+            },
+            "description": "Dictionary of payment methods indexed by payment method ID",
+            "title": "Payment Methods",
+            "type": "object"
+          },
+          "orders": {
+            "description": "List of order IDs associated with this user",
+            "items": {
+              "type": "string"
+            },
+            "title": "Orders",
+            "type": "array"
+          }
+        },
+        "required": [
+          "user_id",
+          "name",
+          "address",
+          "email",
+          "payment_methods",
+          "orders"
+        ],
+        "title": "User",
+        "type": "object"
+      },
+      "UserAddress": {
+        "description": "Represents a physical address",
+        "properties": {
+          "address1": {
+            "description": "Primary address line",
+            "title": "Address1",
+            "type": "string"
+          },
+          "address2": {
+            "description": "Secondary address line",
+            "title": "Address2",
+            "type": "string"
+          },
+          "city": {
+            "description": "City name",
+            "title": "City",
+            "type": "string"
+          },
+          "country": {
+            "description": "Country name",
+            "title": "Country",
+            "type": "string"
+          },
+          "state": {
+            "description": "State or province name",
+            "title": "State",
+            "type": "string"
+          },
+          "zip": {
+            "description": "Postal code",
+            "title": "Zip",
+            "type": "string"
+          }
+        },
+        "required": [
+          "address1",
+          "address2",
+          "city",
+          "country",
+          "state",
+          "zip"
+        ],
+        "title": "UserAddress",
+        "type": "object"
+      },
+      "UserName": {
+        "description": "Represents a user's full name",
+        "properties": {
+          "first_name": {
+            "description": "User's first name",
+            "title": "First Name",
+            "type": "string"
+          },
+          "last_name": {
+            "description": "User's last name",
+            "title": "Last Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "first_name",
+          "last_name"
+        ],
+        "title": "UserName",
+        "type": "object"
+      }
+    },
+    "properties": {
+      "returns": {
+        "$ref": "#/$defs/User",
+        "description": "The user details after the modification."
+      }
+    },
+    "required": [
+      "returns"
+    ],
+    "title": "returns",
+    "type": "object"
+  },
+  "tool_type": "write"
+}

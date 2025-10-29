@@ -1,0 +1,39 @@
+{
+  "name": "disable_roaming",
+  "doc": "def disable_roaming(customer_id: str, line_id: str) -> str:\n    \"\"\"\nDisables international roaming on a line.\n\nArgs:\n    customer_id: ID of the customer who owns the line.\n    line_id: ID of the line to disable roaming for.\n\nReturns:\n    Message indicating the roaming has been enabled.\n\nRaises:\n    ValueError: If customer or line not found.\n\"\"\"",
+  "params": {
+    "properties": {
+      "customer_id": {
+        "description": "ID of the customer who owns the line.",
+        "title": "Customer Id",
+        "type": "string"
+      },
+      "line_id": {
+        "description": "ID of the line to disable roaming for.",
+        "title": "Line Id",
+        "type": "string"
+      }
+    },
+    "required": [
+      "customer_id",
+      "line_id"
+    ],
+    "title": "parameters",
+    "type": "object"
+  },
+  "returns": {
+    "properties": {
+      "returns": {
+        "description": "Message indicating the roaming has been enabled.",
+        "title": "Returns",
+        "type": "string"
+      }
+    },
+    "required": [
+      "returns"
+    ],
+    "title": "returns",
+    "type": "object"
+  },
+  "tool_type": "write"
+}

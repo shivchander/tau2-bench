@@ -1,0 +1,302 @@
+{
+  "name": "get_user_details",
+  "doc": "def get_user_details(user_id: str) -> tau2.domains.airline.data_model.User:\n    \"\"\"\nGet the details of a user, including their reservations.\n\nArgs:\n    user_id: The user ID, such as 'sara_doe_496'.\n\nReturns:\n    The user details.\n\nRaises:\n    ValueError: If the user is not found.\n\"\"\"",
+  "params": {
+    "properties": {
+      "user_id": {
+        "description": "The user ID, such as 'sara_doe_496'.",
+        "title": "User Id",
+        "type": "string"
+      }
+    },
+    "required": [
+      "user_id"
+    ],
+    "title": "parameters",
+    "type": "object"
+  },
+  "returns": {
+    "$defs": {
+      "Address": {
+        "properties": {
+          "address1": {
+            "description": "Primary address line",
+            "title": "Address1",
+            "type": "string"
+          },
+          "address2": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Secondary address line (optional)",
+            "title": "Address2"
+          },
+          "city": {
+            "description": "City name",
+            "title": "City",
+            "type": "string"
+          },
+          "country": {
+            "description": "Country name",
+            "title": "Country",
+            "type": "string"
+          },
+          "state": {
+            "description": "State or province name",
+            "title": "State",
+            "type": "string"
+          },
+          "zip": {
+            "description": "Postal code",
+            "title": "Zip",
+            "type": "string"
+          }
+        },
+        "required": [
+          "address1",
+          "city",
+          "country",
+          "state",
+          "zip"
+        ],
+        "title": "Address",
+        "type": "object"
+      },
+      "Certificate": {
+        "properties": {
+          "source": {
+            "const": "certificate",
+            "description": "Indicates this is a certificate payment method",
+            "title": "Source",
+            "type": "string"
+          },
+          "id": {
+            "description": "Unique identifier for the payment method",
+            "title": "Id",
+            "type": "string"
+          },
+          "amount": {
+            "description": "Certificate value amount",
+            "title": "Amount",
+            "type": "number"
+          }
+        },
+        "required": [
+          "source",
+          "id",
+          "amount"
+        ],
+        "title": "Certificate",
+        "type": "object"
+      },
+      "CreditCard": {
+        "properties": {
+          "source": {
+            "const": "credit_card",
+            "description": "Indicates this is a credit card payment method",
+            "title": "Source",
+            "type": "string"
+          },
+          "id": {
+            "description": "Unique identifier for the payment method",
+            "title": "Id",
+            "type": "string"
+          },
+          "brand": {
+            "description": "Credit card brand (e.g., visa, mastercard)",
+            "title": "Brand",
+            "type": "string"
+          },
+          "last_four": {
+            "description": "Last four digits of the credit card",
+            "title": "Last Four",
+            "type": "string"
+          }
+        },
+        "required": [
+          "source",
+          "id",
+          "brand",
+          "last_four"
+        ],
+        "title": "CreditCard",
+        "type": "object"
+      },
+      "GiftCard": {
+        "properties": {
+          "source": {
+            "const": "gift_card",
+            "description": "Indicates this is a gift card payment method",
+            "title": "Source",
+            "type": "string"
+          },
+          "id": {
+            "description": "Unique identifier for the gift card",
+            "title": "Id",
+            "type": "string"
+          },
+          "amount": {
+            "description": "Gift card value amount",
+            "title": "Amount",
+            "type": "number"
+          }
+        },
+        "required": [
+          "source",
+          "id",
+          "amount"
+        ],
+        "title": "GiftCard",
+        "type": "object"
+      },
+      "Name": {
+        "properties": {
+          "first_name": {
+            "description": "The person's first name",
+            "title": "First Name",
+            "type": "string"
+          },
+          "last_name": {
+            "description": "The person's last name",
+            "title": "Last Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "first_name",
+          "last_name"
+        ],
+        "title": "Name",
+        "type": "object"
+      },
+      "Passenger": {
+        "properties": {
+          "first_name": {
+            "description": "Passenger's first name",
+            "title": "First Name",
+            "type": "string"
+          },
+          "last_name": {
+            "description": "Passenger's last name",
+            "title": "Last Name",
+            "type": "string"
+          },
+          "dob": {
+            "description": "Date of birth in YYYY-MM-DD format",
+            "title": "Dob",
+            "type": "string"
+          }
+        },
+        "required": [
+          "first_name",
+          "last_name",
+          "dob"
+        ],
+        "title": "Passenger",
+        "type": "object"
+      },
+      "User": {
+        "properties": {
+          "user_id": {
+            "description": "Unique identifier for the user",
+            "title": "User Id",
+            "type": "string"
+          },
+          "name": {
+            "$ref": "#/$defs/Name",
+            "description": "User's full name"
+          },
+          "address": {
+            "$ref": "#/$defs/Address",
+            "description": "User's address information"
+          },
+          "email": {
+            "description": "User's email address",
+            "title": "Email",
+            "type": "string"
+          },
+          "dob": {
+            "description": "User's date of birth in the format YYYY-MM-DD, e.g 1990-04-05",
+            "title": "Dob",
+            "type": "string"
+          },
+          "payment_methods": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/CreditCard"
+                },
+                {
+                  "$ref": "#/$defs/GiftCard"
+                },
+                {
+                  "$ref": "#/$defs/Certificate"
+                }
+              ]
+            },
+            "description": "User's saved payment methods",
+            "title": "Payment Methods",
+            "type": "object"
+          },
+          "saved_passengers": {
+            "description": "User's saved passenger information",
+            "items": {
+              "$ref": "#/$defs/Passenger"
+            },
+            "title": "Saved Passengers",
+            "type": "array"
+          },
+          "membership": {
+            "description": "User's membership level",
+            "enum": [
+              "gold",
+              "silver",
+              "regular"
+            ],
+            "title": "Membership",
+            "type": "string"
+          },
+          "reservations": {
+            "description": "List of user's reservation IDs",
+            "items": {
+              "type": "string"
+            },
+            "title": "Reservations",
+            "type": "array"
+          }
+        },
+        "required": [
+          "user_id",
+          "name",
+          "address",
+          "email",
+          "dob",
+          "payment_methods",
+          "saved_passengers",
+          "membership",
+          "reservations"
+        ],
+        "title": "User",
+        "type": "object"
+      }
+    },
+    "properties": {
+      "returns": {
+        "$ref": "#/$defs/User",
+        "description": "The user details."
+      }
+    },
+    "required": [
+      "returns"
+    ],
+    "title": "returns",
+    "type": "object"
+  },
+  "tool_type": "read"
+}

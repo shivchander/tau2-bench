@@ -1,0 +1,258 @@
+{
+  "name": "update_reservation_baggages",
+  "doc": "def update_reservation_baggages(reservation_id: str, total_baggages: int, nonfree_baggages: int, payment_id: str) -> tau2.domains.airline.data_model.Reservation:\n    \"\"\"\nUpdate the baggage information of a reservation.\n\nArgs:\n    reservation_id: The reservation ID, such as 'ZFA04Y'\n    total_baggages: The updated total number of baggage items included in the reservation.\n    nonfree_baggages: The updated number of non-free baggage items included in the reservation.\n    payment_id: The payment id stored in user profile, such as 'credit_card_7815826', 'gift_card_7815826', 'certificate_7815826'.\n\nReturns:\n    The updated reservation.\n\nRaises:\n    ValueError: If the reservation is not found.\n    ValueError: If the user is not found.\n    ValueError: If the payment method is not found.\n    ValueError: If the certificate cannot be used to update reservation.\n    ValueError: If the gift card balance is not enough.\n\"\"\"",
+  "params": {
+    "properties": {
+      "reservation_id": {
+        "description": "The reservation ID, such as 'ZFA04Y'",
+        "title": "Reservation Id",
+        "type": "string"
+      },
+      "total_baggages": {
+        "description": "The updated total number of baggage items included in the reservation.",
+        "title": "Total Baggages",
+        "type": "integer"
+      },
+      "nonfree_baggages": {
+        "description": "The updated number of non-free baggage items included in the reservation.",
+        "title": "Nonfree Baggages",
+        "type": "integer"
+      },
+      "payment_id": {
+        "description": "The payment id stored in user profile, such as 'credit_card_7815826', 'gift_card_7815826', 'certificate_7815826'.",
+        "title": "Payment Id",
+        "type": "string"
+      }
+    },
+    "required": [
+      "reservation_id",
+      "total_baggages",
+      "nonfree_baggages",
+      "payment_id"
+    ],
+    "title": "parameters",
+    "type": "object"
+  },
+  "returns": {
+    "$defs": {
+      "Passenger": {
+        "properties": {
+          "first_name": {
+            "description": "Passenger's first name",
+            "title": "First Name",
+            "type": "string"
+          },
+          "last_name": {
+            "description": "Passenger's last name",
+            "title": "Last Name",
+            "type": "string"
+          },
+          "dob": {
+            "description": "Date of birth in YYYY-MM-DD format",
+            "title": "Dob",
+            "type": "string"
+          }
+        },
+        "required": [
+          "first_name",
+          "last_name",
+          "dob"
+        ],
+        "title": "Passenger",
+        "type": "object"
+      },
+      "Payment": {
+        "properties": {
+          "payment_id": {
+            "description": "Unique identifier for the payment",
+            "title": "Payment Id",
+            "type": "string"
+          },
+          "amount": {
+            "description": "Payment amount in dollars",
+            "title": "Amount",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "payment_id",
+          "amount"
+        ],
+        "title": "Payment",
+        "type": "object"
+      },
+      "Reservation": {
+        "properties": {
+          "reservation_id": {
+            "description": "Unique identifier for the reservation",
+            "title": "Reservation Id",
+            "type": "string"
+          },
+          "user_id": {
+            "description": "ID of the user who made the reservation",
+            "title": "User Id",
+            "type": "string"
+          },
+          "origin": {
+            "description": "IATA code for trip origin",
+            "title": "Origin",
+            "type": "string"
+          },
+          "destination": {
+            "description": "IATA code for trip destination",
+            "title": "Destination",
+            "type": "string"
+          },
+          "flight_type": {
+            "description": "Type of trip",
+            "enum": [
+              "round_trip",
+              "one_way"
+            ],
+            "title": "Flight Type",
+            "type": "string"
+          },
+          "cabin": {
+            "description": "Selected cabin class",
+            "enum": [
+              "business",
+              "economy",
+              "basic_economy"
+            ],
+            "title": "Cabin",
+            "type": "string"
+          },
+          "flights": {
+            "description": "List of flights in the reservation",
+            "items": {
+              "$ref": "#/$defs/ReservationFlight"
+            },
+            "title": "Flights",
+            "type": "array"
+          },
+          "passengers": {
+            "description": "List of passengers on the reservation",
+            "items": {
+              "$ref": "#/$defs/Passenger"
+            },
+            "title": "Passengers",
+            "type": "array"
+          },
+          "payment_history": {
+            "description": "History of payments for this reservation",
+            "items": {
+              "$ref": "#/$defs/Payment"
+            },
+            "title": "Payment History",
+            "type": "array"
+          },
+          "created_at": {
+            "description": "Timestamp when reservation was created in the format YYYY-MM-DDTHH:MM:SS",
+            "title": "Created At",
+            "type": "string"
+          },
+          "total_baggages": {
+            "description": "Total number of bags in reservation",
+            "title": "Total Baggages",
+            "type": "integer"
+          },
+          "nonfree_baggages": {
+            "description": "Number of paid bags in reservation",
+            "title": "Nonfree Baggages",
+            "type": "integer"
+          },
+          "insurance": {
+            "description": "Whether travel insurance was purchased",
+            "enum": [
+              "yes",
+              "no"
+            ],
+            "title": "Insurance",
+            "type": "string"
+          },
+          "status": {
+            "anyOf": [
+              {
+                "const": "cancelled",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Status of the reservation",
+            "title": "Status"
+          }
+        },
+        "required": [
+          "reservation_id",
+          "user_id",
+          "origin",
+          "destination",
+          "flight_type",
+          "cabin",
+          "flights",
+          "passengers",
+          "payment_history",
+          "created_at",
+          "total_baggages",
+          "nonfree_baggages",
+          "insurance"
+        ],
+        "title": "Reservation",
+        "type": "object"
+      },
+      "ReservationFlight": {
+        "properties": {
+          "flight_number": {
+            "description": "Unique flight identifier",
+            "title": "Flight Number",
+            "type": "string"
+          },
+          "origin": {
+            "description": "IATA code for origin airport",
+            "title": "Origin",
+            "type": "string"
+          },
+          "destination": {
+            "description": "IATA code for destination airport",
+            "title": "Destination",
+            "type": "string"
+          },
+          "date": {
+            "description": "Flight date in YYYY-MM-DD format",
+            "title": "Date",
+            "type": "string"
+          },
+          "price": {
+            "description": "Flight price in dollars.",
+            "title": "Price",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "flight_number",
+          "origin",
+          "destination",
+          "date",
+          "price"
+        ],
+        "title": "ReservationFlight",
+        "type": "object"
+      }
+    },
+    "properties": {
+      "returns": {
+        "$ref": "#/$defs/Reservation",
+        "description": "The updated reservation."
+      }
+    },
+    "required": [
+      "returns"
+    ],
+    "title": "returns",
+    "type": "object"
+  },
+  "tool_type": "write"
+}

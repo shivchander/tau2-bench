@@ -1,0 +1,40 @@
+{
+  "name": "get_data_usage",
+  "doc": "def get_data_usage(customer_id: str, line_id: str) -> Dict[str, Any]:\n    \"\"\"\nRetrieves current billing cycle data usage for a line, including data\nrefueling amount, data limit, and cycle end date.\n\nArgs:\n    customer_id: ID of the customer who owns the line.\n    line_id: ID of the line to check usage for.\n\nReturns:\n    Dictionary with usage information.\n\nRaises:\n    ValueError: If customer, line, or plan not found.\n\"\"\"",
+  "params": {
+    "properties": {
+      "customer_id": {
+        "description": "ID of the customer who owns the line.",
+        "title": "Customer Id",
+        "type": "string"
+      },
+      "line_id": {
+        "description": "ID of the line to check usage for.",
+        "title": "Line Id",
+        "type": "string"
+      }
+    },
+    "required": [
+      "customer_id",
+      "line_id"
+    ],
+    "title": "parameters",
+    "type": "object"
+  },
+  "returns": {
+    "properties": {
+      "returns": {
+        "additionalProperties": true,
+        "description": "Dictionary with usage information.",
+        "title": "Returns",
+        "type": "object"
+      }
+    },
+    "required": [
+      "returns"
+    ],
+    "title": "returns",
+    "type": "object"
+  },
+  "tool_type": "read"
+}

@@ -1,0 +1,46 @@
+{
+  "name": "refuel_data",
+  "doc": "def refuel_data(customer_id: str, line_id: str, gb_amount: float) -> Dict[str, Any]:\n    \"\"\"\nRefuels data for a specific line, adding to the customer's bill.\nChecks: Line status must be Active, Customer owns the line.\nLogic: Adds data to the line and charges customer based on the plan's refueling rate.\n\nArgs:\n    customer_id: ID of the customer who owns the line.\n    line_id: ID of the line to refuel data for.\n    gb_amount: Amount of data to add in gigabytes.\n\nReturns:\n    Dictionary with success status, message, charge amount, and updated line if applicable.\n\nRaises:\n    ValueError: If customer, line, or plan not found, or if checks fail.\n\"\"\"",
+  "params": {
+    "properties": {
+      "customer_id": {
+        "description": "ID of the customer who owns the line.",
+        "title": "Customer Id",
+        "type": "string"
+      },
+      "line_id": {
+        "description": "ID of the line to refuel data for.",
+        "title": "Line Id",
+        "type": "string"
+      },
+      "gb_amount": {
+        "description": "Amount of data to add in gigabytes.",
+        "title": "Gb Amount",
+        "type": "number"
+      }
+    },
+    "required": [
+      "customer_id",
+      "line_id",
+      "gb_amount"
+    ],
+    "title": "parameters",
+    "type": "object"
+  },
+  "returns": {
+    "properties": {
+      "returns": {
+        "additionalProperties": true,
+        "description": "Dictionary with success status, message, charge amount, and updated line if applicable.",
+        "title": "Returns",
+        "type": "object"
+      }
+    },
+    "required": [
+      "returns"
+    ],
+    "title": "returns",
+    "type": "object"
+  },
+  "tool_type": "write"
+}

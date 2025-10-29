@@ -1,0 +1,33 @@
+{
+  "name": "find_user_id_by_email",
+  "doc": "def find_user_id_by_email(email: str) -> str:\n    \"\"\"Find user id by email. If the user is not found, the function will return an error message.\n\nArgs:\n    email: The email of the user, such as 'something@example.com'.\n\nReturns:\n    str: The user id if found, otherwise an error message.\n\nRaises:\n    ValueError: If the user is not found.\n\"\"\"",
+  "params": {
+    "properties": {
+      "email": {
+        "description": "The email of the user, such as 'something@example.com'.",
+        "title": "Email",
+        "type": "string"
+      }
+    },
+    "required": [
+      "email"
+    ],
+    "title": "parameters",
+    "type": "object"
+  },
+  "returns": {
+    "properties": {
+      "returns": {
+        "description": "The user id if found, otherwise an error message.",
+        "title": "Returns",
+        "type": "string"
+      }
+    },
+    "required": [
+      "returns"
+    ],
+    "title": "returns",
+    "type": "object"
+  },
+  "tool_type": "read"
+}

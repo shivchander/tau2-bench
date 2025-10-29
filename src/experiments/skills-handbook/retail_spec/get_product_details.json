@@ -1,0 +1,100 @@
+{
+  "name": "get_product_details",
+  "doc": "def get_product_details(product_id: str) -> tau2.domains.retail.data_model.Product:\n    \"\"\"Get the inventory details of a product.\n\nArgs:\n    product_id: The product id, such as '6086499569'. Be careful the product id is different from the item id.\n\nReturns:\n    Product: The product details.\n\nRaises:\n    ValueError: If the product is not found.\n\"\"\"",
+  "params": {
+    "properties": {
+      "product_id": {
+        "description": "The product id, such as '6086499569'. Be careful the product id is different from the item id.",
+        "title": "Product Id",
+        "type": "string"
+      }
+    },
+    "required": [
+      "product_id"
+    ],
+    "title": "parameters",
+    "type": "object"
+  },
+  "returns": {
+    "$defs": {
+      "Product": {
+        "description": "Represents a product with its variants",
+        "properties": {
+          "name": {
+            "description": "Name of the product",
+            "title": "Name",
+            "type": "string"
+          },
+          "product_id": {
+            "description": "Unique identifier for the product",
+            "title": "Product Id",
+            "type": "string"
+          },
+          "variants": {
+            "additionalProperties": {
+              "$ref": "#/$defs/Variant"
+            },
+            "description": "Dictionary of variants indexed by variant ID",
+            "title": "Variants",
+            "type": "object"
+          }
+        },
+        "required": [
+          "name",
+          "product_id",
+          "variants"
+        ],
+        "title": "Product",
+        "type": "object"
+      },
+      "Variant": {
+        "description": "Represents a specific variant of a product with its options, availability and price",
+        "properties": {
+          "item_id": {
+            "description": "Unique identifier for the variant",
+            "title": "Item Id",
+            "type": "string"
+          },
+          "options": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Dictionary of option names to values (e.g. {'color': 'blue', 'size': 'large'})",
+            "title": "Options",
+            "type": "object"
+          },
+          "available": {
+            "description": "Whether this variant is currently in stock",
+            "title": "Available",
+            "type": "boolean"
+          },
+          "price": {
+            "description": "Price of this variant",
+            "title": "Price",
+            "type": "number"
+          }
+        },
+        "required": [
+          "item_id",
+          "options",
+          "available",
+          "price"
+        ],
+        "title": "Variant",
+        "type": "object"
+      }
+    },
+    "properties": {
+      "returns": {
+        "$ref": "#/$defs/Product",
+        "description": "The product details."
+      }
+    },
+    "required": [
+      "returns"
+    ],
+    "title": "returns",
+    "type": "object"
+  },
+  "tool_type": "read"
+}

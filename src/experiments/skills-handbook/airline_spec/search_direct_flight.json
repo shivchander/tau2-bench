@@ -1,0 +1,140 @@
+{
+  "name": "search_direct_flight",
+  "doc": "def search_direct_flight(origin: str, destination: str, date: str) -> list[tau2.domains.airline.data_model.DirectFlight]:\n    \"\"\"\nSearch for direct flights between two cities on a specific date.\n\nArgs:\n    origin: The origin city airport in three letters, such as 'JFK'.\n    destination: The destination city airport in three letters, such as 'LAX'.\n    date: The date of the flight in the format 'YYYY-MM-DD', such as '2024-01-01'.\n\nReturns:\n    The direct flights between the two cities on the specific date.\n\"\"\"",
+  "params": {
+    "properties": {
+      "origin": {
+        "description": "The origin city airport in three letters, such as 'JFK'.",
+        "title": "Origin",
+        "type": "string"
+      },
+      "destination": {
+        "description": "The destination city airport in three letters, such as 'LAX'.",
+        "title": "Destination",
+        "type": "string"
+      },
+      "date": {
+        "description": "The date of the flight in the format 'YYYY-MM-DD', such as '2024-01-01'.",
+        "title": "Date",
+        "type": "string"
+      }
+    },
+    "required": [
+      "origin",
+      "destination",
+      "date"
+    ],
+    "title": "parameters",
+    "type": "object"
+  },
+  "returns": {
+    "$defs": {
+      "DirectFlight": {
+        "properties": {
+          "flight_number": {
+            "description": "Unique flight identifier",
+            "title": "Flight Number",
+            "type": "string"
+          },
+          "origin": {
+            "description": "IATA code for origin airport",
+            "title": "Origin",
+            "type": "string"
+          },
+          "destination": {
+            "description": "IATA code for destination airport",
+            "title": "Destination",
+            "type": "string"
+          },
+          "status": {
+            "const": "available",
+            "description": "Indicates flight is available for booking",
+            "title": "Status",
+            "type": "string"
+          },
+          "scheduled_departure_time_est": {
+            "description": "Scheduled departure time in EST in the format HH:MM:SS, e.g 06:00:00",
+            "title": "Scheduled Departure Time Est",
+            "type": "string"
+          },
+          "scheduled_arrival_time_est": {
+            "description": "Scheduled arrival time in EST in the format HH:MM:SS, e.g 07:00:00",
+            "title": "Scheduled Arrival Time Est",
+            "type": "string"
+          },
+          "date": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Flight date in YYYY-MM-DD format",
+            "title": "Date"
+          },
+          "available_seats": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "description": "Available seats by class",
+            "propertyNames": {
+              "enum": [
+                "business",
+                "economy",
+                "basic_economy"
+              ]
+            },
+            "title": "Available Seats",
+            "type": "object"
+          },
+          "prices": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "description": "Current prices by class",
+            "propertyNames": {
+              "enum": [
+                "business",
+                "economy",
+                "basic_economy"
+              ]
+            },
+            "title": "Prices",
+            "type": "object"
+          }
+        },
+        "required": [
+          "flight_number",
+          "origin",
+          "destination",
+          "status",
+          "scheduled_departure_time_est",
+          "scheduled_arrival_time_est",
+          "available_seats",
+          "prices"
+        ],
+        "title": "DirectFlight",
+        "type": "object"
+      }
+    },
+    "properties": {
+      "returns": {
+        "description": "The direct flights between the two cities on the specific date.",
+        "items": {
+          "$ref": "#/$defs/DirectFlight"
+        },
+        "title": "Returns",
+        "type": "array"
+      }
+    },
+    "required": [
+      "returns"
+    ],
+    "title": "returns",
+    "type": "object"
+  },
+  "tool_type": "read"
+}

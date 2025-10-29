@@ -1,0 +1,366 @@
+{
+  "name": "return_delivered_order_items",
+  "doc": "def return_delivered_order_items(order_id: str, item_ids: List[str], payment_method_id: str) -> tau2.domains.retail.data_model.Order:\n    \"\"\"Return some items of a delivered order.\nThe order status will be changed to 'return requested'.\nThe agent needs to explain the return detail and ask for explicit user confirmation (yes/no) to proceed.\nThe user will receive follow-up email for how and where to return the item.\n\nArgs:\n    order_id: The order id, such as '#W0000000'. Be careful there is a '#' symbol at the beginning of the order id.\n    item_ids: The item ids to be returned, each such as '1008292230'. There could be duplicate items in the list.\n    payment_method_id: The payment method id to pay or receive refund for the item price difference, such as 'gift_card_0000000' or 'credit_card_0000000'.\n                     These can be looked up from the user or order details.\n\nReturns:\n    Order: The order details after requesting the return.\n\nRaises:\n    ValueError: If the order is not delivered.\n    ValueError: If the payment method is not the original payment method or a gift card.\n    ValueError: If the items to be returned do not exist.\n\"\"\"",
+  "params": {
+    "properties": {
+      "order_id": {
+        "description": "The order id, such as '#W0000000'. Be careful there is a '#' symbol at the beginning of the order id.",
+        "title": "Order Id",
+        "type": "string"
+      },
+      "item_ids": {
+        "description": "The item ids to be returned, each such as '1008292230'. There could be duplicate items in the list.",
+        "items": {
+          "type": "string"
+        },
+        "title": "Item Ids",
+        "type": "array"
+      },
+      "payment_method_id": {
+        "description": "The payment method id to pay or receive refund for the item price difference, such as 'gift_card_0000000' or 'credit_card_0000000'.\nThese can be looked up from the user or order details.",
+        "title": "Payment Method Id",
+        "type": "string"
+      }
+    },
+    "required": [
+      "order_id",
+      "item_ids",
+      "payment_method_id"
+    ],
+    "title": "parameters",
+    "type": "object"
+  },
+  "returns": {
+    "$defs": {
+      "Order": {
+        "description": "Represents an order with its items, status, fulfillment and payment details",
+        "properties": {
+          "order_id": {
+            "description": "Unique identifier for the order",
+            "title": "Order Id",
+            "type": "string"
+          },
+          "user_id": {
+            "description": "Unique identifier for the user",
+            "title": "User Id",
+            "type": "string"
+          },
+          "address": {
+            "$ref": "#/$defs/UserAddress",
+            "description": "Address of the user"
+          },
+          "items": {
+            "description": "Items in the order",
+            "items": {
+              "$ref": "#/$defs/OrderItem"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "status": {
+            "description": "Status of the order",
+            "enum": [
+              "processed",
+              "pending",
+              "pending (item modified)",
+              "delivered",
+              "cancelled",
+              "exchange requested",
+              "return requested"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "fulfillments": {
+            "description": "Fulfillments of the order",
+            "items": {
+              "$ref": "#/$defs/OrderFullfilment"
+            },
+            "title": "Fulfillments",
+            "type": "array"
+          },
+          "payment_history": {
+            "description": "Payments of the order",
+            "items": {
+              "$ref": "#/$defs/OrderPayment"
+            },
+            "title": "Payment History",
+            "type": "array"
+          },
+          "cancel_reason": {
+            "anyOf": [
+              {
+                "enum": [
+                  "no longer needed",
+                  "ordered by mistake"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Reason for cancelling the order. Should be 'no longer needed' or 'ordered by mistake'",
+            "title": "Cancel Reason"
+          },
+          "exchange_items": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Items to be exchanged",
+            "title": "Exchange Items"
+          },
+          "exchange_new_items": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Items exchanged for",
+            "title": "Exchange New Items"
+          },
+          "exchange_payment_method_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Payment method ID for the exchange",
+            "title": "Exchange Payment Method Id"
+          },
+          "exchange_price_difference": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Price difference for the exchange",
+            "title": "Exchange Price Difference"
+          },
+          "return_items": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Items to be returned",
+            "title": "Return Items"
+          },
+          "return_payment_method_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Payment method ID for the return",
+            "title": "Return Payment Method Id"
+          }
+        },
+        "required": [
+          "order_id",
+          "user_id",
+          "address",
+          "items",
+          "status",
+          "fulfillments",
+          "payment_history"
+        ],
+        "title": "Order",
+        "type": "object"
+      },
+      "OrderFullfilment": {
+        "description": "Represents the fulfillment details for items in an order",
+        "properties": {
+          "tracking_id": {
+            "description": "List of tracking IDs for shipments",
+            "items": {
+              "type": "string"
+            },
+            "title": "Tracking Id",
+            "type": "array"
+          },
+          "item_ids": {
+            "description": "List of item IDs included in this fulfillment",
+            "items": {
+              "type": "string"
+            },
+            "title": "Item Ids",
+            "type": "array"
+          }
+        },
+        "required": [
+          "tracking_id",
+          "item_ids"
+        ],
+        "title": "OrderFullfilment",
+        "type": "object"
+      },
+      "OrderItem": {
+        "description": "Represents an item in an order",
+        "properties": {
+          "name": {
+            "description": "Name of the product",
+            "title": "Name",
+            "type": "string"
+          },
+          "product_id": {
+            "description": "ID of the product",
+            "title": "Product Id",
+            "type": "string"
+          },
+          "item_id": {
+            "description": "ID of the specific variant",
+            "title": "Item Id",
+            "type": "string"
+          },
+          "price": {
+            "description": "Price of the item at time of purchase",
+            "title": "Price",
+            "type": "number"
+          },
+          "options": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Options selected for this item",
+            "title": "Options",
+            "type": "object"
+          }
+        },
+        "required": [
+          "name",
+          "product_id",
+          "item_id",
+          "price",
+          "options"
+        ],
+        "title": "OrderItem",
+        "type": "object"
+      },
+      "OrderPayment": {
+        "description": "Represents a payment or refund transaction for an order",
+        "properties": {
+          "transaction_type": {
+            "description": "Type of transaction (payment or refund)",
+            "enum": [
+              "payment",
+              "refund"
+            ],
+            "title": "Transaction Type",
+            "type": "string"
+          },
+          "amount": {
+            "description": "Amount of the transaction",
+            "title": "Amount",
+            "type": "number"
+          },
+          "payment_method_id": {
+            "description": "ID of the payment method used",
+            "title": "Payment Method Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "transaction_type",
+          "amount",
+          "payment_method_id"
+        ],
+        "title": "OrderPayment",
+        "type": "object"
+      },
+      "UserAddress": {
+        "description": "Represents a physical address",
+        "properties": {
+          "address1": {
+            "description": "Primary address line",
+            "title": "Address1",
+            "type": "string"
+          },
+          "address2": {
+            "description": "Secondary address line",
+            "title": "Address2",
+            "type": "string"
+          },
+          "city": {
+            "description": "City name",
+            "title": "City",
+            "type": "string"
+          },
+          "country": {
+            "description": "Country name",
+            "title": "Country",
+            "type": "string"
+          },
+          "state": {
+            "description": "State or province name",
+            "title": "State",
+            "type": "string"
+          },
+          "zip": {
+            "description": "Postal code",
+            "title": "Zip",
+            "type": "string"
+          }
+        },
+        "required": [
+          "address1",
+          "address2",
+          "city",
+          "country",
+          "state",
+          "zip"
+        ],
+        "title": "UserAddress",
+        "type": "object"
+      }
+    },
+    "properties": {
+      "returns": {
+        "$ref": "#/$defs/Order",
+        "description": "The order details after requesting the return."
+      }
+    },
+    "required": [
+      "returns"
+    ],
+    "title": "returns",
+    "type": "object"
+  },
+  "tool_type": "write"
+}

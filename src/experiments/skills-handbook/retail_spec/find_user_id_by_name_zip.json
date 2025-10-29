@@ -1,0 +1,45 @@
+{
+  "name": "find_user_id_by_name_zip",
+  "doc": "def find_user_id_by_name_zip(first_name: str, last_name: str, zip: str) -> str:\n    \"\"\"Find user id by first name, last name, and zip code. If the user is not found, the function\nwill return an error message. By default, find user id by email, and only call this function\nif the user is not found by email or cannot remember email.\n\nArgs:\n    first_name: The first name of the customer, such as 'John'.\n    last_name: The last name of the customer, such as 'Doe'.\n    zip: The zip code of the customer, such as '12345'.\n\nReturns:\n    str: The user id if found, otherwise an error message.\n\nRaises:\n    ValueError: If the user is not found.\n\"\"\"",
+  "params": {
+    "properties": {
+      "first_name": {
+        "description": "The first name of the customer, such as 'John'.",
+        "title": "First Name",
+        "type": "string"
+      },
+      "last_name": {
+        "description": "The last name of the customer, such as 'Doe'.",
+        "title": "Last Name",
+        "type": "string"
+      },
+      "zip": {
+        "description": "The zip code of the customer, such as '12345'.",
+        "title": "Zip",
+        "type": "string"
+      }
+    },
+    "required": [
+      "first_name",
+      "last_name",
+      "zip"
+    ],
+    "title": "parameters",
+    "type": "object"
+  },
+  "returns": {
+    "properties": {
+      "returns": {
+        "description": "The user id if found, otherwise an error message.",
+        "title": "Returns",
+        "type": "string"
+      }
+    },
+    "required": [
+      "returns"
+    ],
+    "title": "returns",
+    "type": "object"
+  },
+  "tool_type": "read"
+}

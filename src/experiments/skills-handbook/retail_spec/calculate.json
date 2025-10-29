@@ -1,0 +1,33 @@
+{
+  "name": "calculate",
+  "doc": "def calculate(expression: str) -> str:\n    \"\"\"\nCalculate the result of a mathematical expression.\n\nArgs:\n    expression: The mathematical expression to calculate, such as '2 + 2'. The expression can contain numbers, operators (+, -, *, /), parentheses, and spaces.\n\nReturns:\n    The result of the mathematical expression.\n\nRaises:\n    ValueError: If the expression is invalid.\n\"\"\"",
+  "params": {
+    "properties": {
+      "expression": {
+        "description": "The mathematical expression to calculate, such as '2 + 2'. The expression can contain numbers, operators (+, -, *, /), parentheses, and spaces.",
+        "title": "Expression",
+        "type": "string"
+      }
+    },
+    "required": [
+      "expression"
+    ],
+    "title": "parameters",
+    "type": "object"
+  },
+  "returns": {
+    "properties": {
+      "returns": {
+        "description": "The result of the mathematical expression.",
+        "title": "Returns",
+        "type": "string"
+      }
+    },
+    "required": [
+      "returns"
+    ],
+    "title": "returns",
+    "type": "object"
+  },
+  "tool_type": "generic"
+}

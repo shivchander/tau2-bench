@@ -1,0 +1,46 @@
+{
+  "name": "suspend_line",
+  "doc": "def suspend_line(customer_id: str, line_id: str, reason: str) -> Dict[str, Any]:\n    \"\"\"\nSuspends a specific line (max 6 months).\nChecks: Line status must be Active.\nLogic: Sets line status to Suspended, records suspension_start_date.\n\nArgs:\n    customer_id: ID of the customer who owns the line.\n    line_id: ID of the line to suspend.\n    reason: Reason for suspension.\n\nReturns:\n    Dictionary with success status, message, and updated line if applicable.\n\nRaises:\n    ValueError: If customer or line not found, or if line is not active.\n\"\"\"",
+  "params": {
+    "properties": {
+      "customer_id": {
+        "description": "ID of the customer who owns the line.",
+        "title": "Customer Id",
+        "type": "string"
+      },
+      "line_id": {
+        "description": "ID of the line to suspend.",
+        "title": "Line Id",
+        "type": "string"
+      },
+      "reason": {
+        "description": "Reason for suspension.",
+        "title": "Reason",
+        "type": "string"
+      }
+    },
+    "required": [
+      "customer_id",
+      "line_id",
+      "reason"
+    ],
+    "title": "parameters",
+    "type": "object"
+  },
+  "returns": {
+    "properties": {
+      "returns": {
+        "additionalProperties": true,
+        "description": "Dictionary with success status, message, and updated line if applicable.",
+        "title": "Returns",
+        "type": "object"
+      }
+    },
+    "required": [
+      "returns"
+    ],
+    "title": "returns",
+    "type": "object"
+  },
+  "tool_type": "write"
+}

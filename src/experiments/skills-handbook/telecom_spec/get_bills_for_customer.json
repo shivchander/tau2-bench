@@ -1,0 +1,158 @@
+{
+  "name": "get_bills_for_customer",
+  "doc": "def get_bills_for_customer(customer_id: str, limit: int = 12) -> List[tau2.domains.telecom.data_model.Bill]:\n    \"\"\"\nRetrieves a list of the customer's bills, most recent first.\n\nArgs:\n    customer_id: ID of the customer.\n    limit: Maximum number of bills to return.\n\nReturns:\n    List of Bill objects, ordered by issue date (newest first).\n\nRaises:\n    ValueError: If the customer is not found.\n\"\"\"",
+  "params": {
+    "properties": {
+      "customer_id": {
+        "description": "ID of the customer.",
+        "title": "Customer Id",
+        "type": "string"
+      },
+      "limit": {
+        "default": 12,
+        "description": "Maximum number of bills to return.",
+        "title": "Limit",
+        "type": "integer"
+      }
+    },
+    "required": [
+      "customer_id"
+    ],
+    "title": "parameters",
+    "type": "object"
+  },
+  "returns": {
+    "$defs": {
+      "Bill": {
+        "additionalProperties": false,
+        "properties": {
+          "bill_id": {
+            "description": "Unique identifier for the bill",
+            "title": "Bill Id",
+            "type": "string"
+          },
+          "customer_id": {
+            "description": "ID of the customer this bill belongs to",
+            "title": "Customer Id",
+            "type": "string"
+          },
+          "period_start": {
+            "description": "Start date of the billing period (format: YYYY-MM-DD, timezone: EST)",
+            "format": "date",
+            "title": "Period Start",
+            "type": "string"
+          },
+          "period_end": {
+            "description": "End date of the billing period (format: YYYY-MM-DD, timezone: EST)",
+            "format": "date",
+            "title": "Period End",
+            "type": "string"
+          },
+          "issue_date": {
+            "description": "Date the bill was issued/generated (format: YYYY-MM-DD, timezone: EST)",
+            "format": "date",
+            "title": "Issue Date",
+            "type": "string"
+          },
+          "total_due": {
+            "description": "Total amount due in USD",
+            "title": "Total Due",
+            "type": "number"
+          },
+          "due_date": {
+            "description": "Date by which payment is due (format: YYYY-MM-DD, timezone: EST)",
+            "format": "date",
+            "title": "Due Date",
+            "type": "string"
+          },
+          "line_items": {
+            "description": "Individual charges, credits, and payments on this bill",
+            "items": {
+              "$ref": "#/$defs/LineItem"
+            },
+            "title": "Line Items",
+            "type": "array"
+          },
+          "status": {
+            "$ref": "#/$defs/BillStatus",
+            "default": "Draft",
+            "description": "Current status of the bill"
+          }
+        },
+        "required": [
+          "bill_id",
+          "customer_id",
+          "period_start",
+          "period_end",
+          "issue_date",
+          "total_due",
+          "due_date"
+        ],
+        "title": "Bill",
+        "type": "object"
+      },
+      "BillStatus": {
+        "enum": [
+          "Draft",
+          "Issued",
+          "Awaiting Payment",
+          "Paid",
+          "Overdue",
+          "Disputed"
+        ],
+        "title": "BillStatus",
+        "type": "string"
+      },
+      "LineItem": {
+        "additionalProperties": false,
+        "properties": {
+          "description": {
+            "description": "Descriptive text for the line item",
+            "title": "Description",
+            "type": "string"
+          },
+          "amount": {
+            "description": "Monetary amount in USD (positive for charges, negative for credits)",
+            "title": "Amount",
+            "type": "number"
+          },
+          "date": {
+            "description": "Date the line item was applied (format: YYYY-MM-DD, timezone: EST)",
+            "format": "date",
+            "title": "Date",
+            "type": "string"
+          },
+          "item_type": {
+            "description": "Category of the line item (e.g., Plan Charge, Overage, Fee, Credit, Payment)",
+            "title": "Item Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "description",
+          "amount",
+          "date",
+          "item_type"
+        ],
+        "title": "LineItem",
+        "type": "object"
+      }
+    },
+    "properties": {
+      "returns": {
+        "description": "List of Bill objects, ordered by issue date (newest first).",
+        "items": {
+          "$ref": "#/$defs/Bill"
+        },
+        "title": "Returns",
+        "type": "array"
+      }
+    },
+    "required": [
+      "returns"
+    ],
+    "title": "returns",
+    "type": "object"
+  },
+  "tool_type": "read"
+}

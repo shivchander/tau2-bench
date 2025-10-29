@@ -1,0 +1,49 @@
+{
+  "name": "list_all_airports",
+  "doc": "def list_all_airports() -> Annotated[list[tau2.domains.airline.data_model.AirportCode], FieldInfo(annotation=NoneType, required=True, description='Airport information')]:\n    \"\"\"Returns a list of all available airports.\n\nReturns:\n    A dictionary mapping IATA codes to AirportInfo objects.\n\"\"\"",
+  "params": {
+    "properties": {},
+    "title": "parameters",
+    "type": "object"
+  },
+  "returns": {
+    "$defs": {
+      "AirportCode": {
+        "properties": {
+          "iata": {
+            "description": "IATA code",
+            "title": "Iata",
+            "type": "string"
+          },
+          "city": {
+            "description": "City name",
+            "title": "City",
+            "type": "string"
+          }
+        },
+        "required": [
+          "iata",
+          "city"
+        ],
+        "title": "AirportCode",
+        "type": "object"
+      }
+    },
+    "properties": {
+      "returns": {
+        "description": "A dictionary mapping IATA codes to AirportInfo objects.",
+        "items": {
+          "$ref": "#/$defs/AirportCode"
+        },
+        "title": "Returns",
+        "type": "array"
+      }
+    },
+    "required": [
+      "returns"
+    ],
+    "title": "returns",
+    "type": "object"
+  },
+  "tool_type": "read"
+}

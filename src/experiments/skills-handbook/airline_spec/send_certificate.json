@@ -1,0 +1,39 @@
+{
+  "name": "send_certificate",
+  "doc": "def send_certificate(user_id: str, amount: int) -> str:\n    \"\"\"\nSend a certificate to a user. Be careful!\n\nArgs:\n    user_id: The ID of the user to book the reservation, such as 'sara_doe_496'.\n    amount: The amount of the certificate to send.\n\nReturns:\n    A message indicating the certificate was sent.\n\nRaises:\n    ValueError: If the user is not found.\n\"\"\"",
+  "params": {
+    "properties": {
+      "user_id": {
+        "description": "The ID of the user to book the reservation, such as 'sara_doe_496'.",
+        "title": "User Id",
+        "type": "string"
+      },
+      "amount": {
+        "description": "The amount of the certificate to send.",
+        "title": "Amount",
+        "type": "integer"
+      }
+    },
+    "required": [
+      "user_id",
+      "amount"
+    ],
+    "title": "parameters",
+    "type": "object"
+  },
+  "returns": {
+    "properties": {
+      "returns": {
+        "description": "A message indicating the certificate was sent.",
+        "title": "Returns",
+        "type": "string"
+      }
+    },
+    "required": [
+      "returns"
+    ],
+    "title": "returns",
+    "type": "object"
+  },
+  "tool_type": "write"
+}

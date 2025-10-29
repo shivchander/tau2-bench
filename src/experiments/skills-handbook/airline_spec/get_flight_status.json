@@ -1,0 +1,39 @@
+{
+  "name": "get_flight_status",
+  "doc": "def get_flight_status(flight_number: str, date: str) -> str:\n    \"\"\"\nGet the status of a flight.\n\nArgs:\n    flight_number: The flight number.\n    date: The date of the flight.\n\nReturns:\n    The status of the flight.\n\nRaises:\n    ValueError: If the flight is not found.\n\"\"\"",
+  "params": {
+    "properties": {
+      "flight_number": {
+        "description": "The flight number.",
+        "title": "Flight Number",
+        "type": "string"
+      },
+      "date": {
+        "description": "The date of the flight.",
+        "title": "Date",
+        "type": "string"
+      }
+    },
+    "required": [
+      "flight_number",
+      "date"
+    ],
+    "title": "parameters",
+    "type": "object"
+  },
+  "returns": {
+    "properties": {
+      "returns": {
+        "description": "The status of the flight.",
+        "title": "Returns",
+        "type": "string"
+      }
+    },
+    "required": [
+      "returns"
+    ],
+    "title": "returns",
+    "type": "object"
+  },
+  "tool_type": "read"
+}

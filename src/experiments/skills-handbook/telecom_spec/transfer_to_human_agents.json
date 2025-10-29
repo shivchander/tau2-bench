@@ -1,0 +1,33 @@
+{
+  "name": "transfer_to_human_agents",
+  "doc": "def transfer_to_human_agents(summary: str) -> str:\n    \"\"\"\nTransfer the user to a human agent, with a summary of the user's issue.\nOnly transfer if\n -  the user explicitly asks for a human agent\n -  given the policy and the available tools, you cannot solve the user's issue.\n\nArgs:\n    summary: A summary of the user's issue.\n\nReturns:\n    A message indicating the user has been transferred to a human agent.\n\"\"\"",
+  "params": {
+    "properties": {
+      "summary": {
+        "description": "A summary of the user's issue.",
+        "title": "Summary",
+        "type": "string"
+      }
+    },
+    "required": [
+      "summary"
+    ],
+    "title": "parameters",
+    "type": "object"
+  },
+  "returns": {
+    "properties": {
+      "returns": {
+        "description": "A message indicating the user has been transferred to a human agent.",
+        "title": "Returns",
+        "type": "string"
+      }
+    },
+    "required": [
+      "returns"
+    ],
+    "title": "returns",
+    "type": "object"
+  },
+  "tool_type": "generic"
+}

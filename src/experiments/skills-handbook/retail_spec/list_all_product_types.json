@@ -1,0 +1,24 @@
+{
+  "name": "list_all_product_types",
+  "doc": "def list_all_product_types() -> str:\n    \"\"\"List the name and product id of all product types.\nEach product type has a variety of different items with unique item ids and options.\nThere are only 50 product types in the store.\n\nReturns:\n    str: A JSON string mapping product names to their product IDs, sorted alphabetically by name.\n\"\"\"",
+  "params": {
+    "properties": {},
+    "title": "parameters",
+    "type": "object"
+  },
+  "returns": {
+    "properties": {
+      "returns": {
+        "description": "A JSON string mapping product names to their product IDs, sorted alphabetically by name.",
+        "title": "Returns",
+        "type": "string"
+      }
+    },
+    "required": [
+      "returns"
+    ],
+    "title": "returns",
+    "type": "object"
+  },
+  "tool_type": "read"
+}
